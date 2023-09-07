@@ -3,6 +3,7 @@
 
 <!--HEAD-->
 <head>
+    <script src="Scripts/show_hide.js"></script>
     <meta name="author" content="Mark Sadnik">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,7 @@
         <div class="middle">
             <form method="post" action="" class="form">
                 <div class="username">
-                    <div class="field_title" id="">
+                    <div class="field_title" id="user_title">
                         Username
                     </div>
                     <div>
@@ -37,10 +38,15 @@
                 </div>
                 <div class="password">
                     <div class="field_title" id="pass_title">
-                        Password
+                        <div class="pass_head">
+                            Password
+                        </div>
+                        <div class="show_con">
+                            <button type="button" class="show_button" id="show_btn" onclick="click_show_button()">Show</button>
+                        </div>
                     </div>
                     <div>
-                        <input type="text" name="password" class="field">
+                        <input type="password" name="password" id="pass_field" class="field">
                     </div>
                 </div>
             </form>
