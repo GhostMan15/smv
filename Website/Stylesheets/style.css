@@ -9,14 +9,14 @@
     
     background-size: cover;
     background-position: center;
-    animation: change 20s infinite ease-in-out;
+    animation: change 40s infinite ease-in-out ;
     
 }
-.logo {
-width: 250px;
-height: 75px;
-cursor: pointer;
-transform: translateX(-70px);
+.logo{
+    width: 250px;
+    height: 75px;
+    cursor: pointer;
+    transform: translateX(-70px);
 }
 .navbar {
     width: 85%;
@@ -55,29 +55,29 @@ transform: translateX(-70px);
 @keyframes change
 { 
     
-0%
-{
- background-image: url(../Pictures/ozadje4.png);
-}
+    0%
+    {
+    background-image: url(../Pictures/ozadje4.png);
+    }
 
-25%
-{
- background-image: url(../Pictures/ozadje2.png);
-}
-
-50%
-{
- background-image: url(../Pictures/ozadje1.png);
-}
-
-75%
-{
- background-image: url(../Pictures/ozadje3.png);
-}
-
-100%
-{
+    25%
+    {
     background-image: url(../Pictures/ozadje2.png);
-}
+    }
+
+    50%
+    {
+    background-image: url(../Pictures/ozadje1.png);
+    }
+
+    75%
+    {
+    background-image: url(../Pictures/ozadje3.png);
+    }
+
+    100%
+    {
+        background-image: url(../Pictures/ozadje2.png);
+    }
 
 }
