@@ -19,7 +19,7 @@ body{
     border-radius: 12px;
     display: grid;
     justify-content: center;
-    grid-template-rows: 30% 60% 20%;
+    grid-template-rows: 35% 40% 25%;
     padding: 2em;
 }
 
@@ -30,14 +30,12 @@ body{
 
 .middle{
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    display: grid;
+    grid-template-rows: 50% 40%;
 }
 
 .logo{
     width: 15vw;
-}
-
-form > div{
-    padding: 1.25em;
 }
 
 .field{
@@ -87,10 +85,29 @@ form > div{
     border-radius: 10px;
     background-color: rgba(27, 28, 49, 0.001);
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-size: 1.3em;
+    font-size: 1.3vw;
     font-weight: bold;
 }
 
 .submit_btn:hover{
     background-color: rgb(22, 23, 39);
+}
+
+.error{
+    text-align: center;
+    color: rgb(255, 80, 80);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+.bottom{
+    display: grid;
+    grid-template-rows: 20%, 80%;
+    justify-content: center;
+}
+
+.bottom > div{
+    text-align: center;
+    padding: 10px;
 }
