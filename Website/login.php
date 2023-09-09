@@ -1,7 +1,56 @@
 <?php
 include("Scripts/config.php");
+//START THE SESSION
+session_start();
 
+$error = "";
+$allgood = true;
 
+//EXECUTE ON SUBMITTING OF FORM 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = mysqli_escape_string($db, $_POST["username"]);
+    $password = mysqli_escape_string($db, $_POST["password"]);
+
+    //Check if the credentials are empty
+    if($username == "" || $password == ""){
+        $error = "Your username / password cannot be empty.";
+        $allgood = false;
+    }
+
+    //if all is good, execute query to check credentials
+    if($allgood){
+        //query for a user with the given credentials
+        $sql1 = "SELECT * FROM `user` WHERE `username` = '$username' AND `geslo` = '$password'";
+        $result1 = mysqli_query($db, $sql1);
+        $row = mysqli_fetch_assoc($result1);
+        $count = mysqli_num_rows($result1);
+
+        //If there is a result, allow login and store user data in session
+        if($count == 1){
+            $_SESSION["id"] = $row["id_user"];
+            $_SESSION["username"] = $username;
+            header("location: homepage.html");
+        }
+
+        //if there is no result, deny access
+        else{
+            $error = "Your login credentials are invalid.";
+            $allgood = false;
+        }
+    }
+
+    //print out error if there is any
+    if($error != ""){
+        echo "
+            <script>
+                let error_msg = '$error';
+                let error_item = document.getElementById('error_login');
+                
+                error_item.innerHTML += ' | ' + error_msg;
+            </script>
+        ";
+    }
+}
 ?>
 
 <!DOCTYPE html>
