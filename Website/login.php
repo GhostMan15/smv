@@ -3,6 +3,7 @@ include("Scripts/config.php");
 //START THE SESSION
 session_start();
 
+$_SESSION["login_error"] = "";
 $error = "";
 $allgood = true;
 
@@ -29,26 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($count == 1){
             $_SESSION["id"] = $row["id_user"];
             $_SESSION["username"] = $username;
-            header("location: homepage.html");
+            $_SESSION["user_type"] = $row["user_type"];
+            header("location: home.php");
         }
 
         //if there is no result, deny access
         else{
             $error = "Your login credentials are invalid.";
             $allgood = false;
+            $_SESSION["login_error"] = $error;
         }
-    }
-
-    //print out error if there is any
-    if($error != ""){
-        echo "
-            <script>
-                let error_msg = '$error';
-                let error_item = document.getElementById('error_login');
-                
-                error_item.innerHTML += ' | ' + error_msg;
-            </script>
-        ";
     }
 }
 ?>
@@ -124,3 +115,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!--BODY-->
 
 </html>
+
+<?php
+//print out error if there is any
+if(isset($_SESSION["login_error"])){
+    $error = $_SESSION["login_error"];
+    echo "
+        <script>
+            let error_msg = '$error';
+            let error_item = document.getElementById('error_login');
+            
+            error_item.innerHTML = error_msg;
+        </script>
+    ";
+}
+?>
