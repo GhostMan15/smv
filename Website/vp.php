@@ -23,7 +23,7 @@ else {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vaš profil</title>
-    <link rel="stylesheet" type="text/css" href="Stylesheets/style1.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/vp.css">
     <link rel="stylesheet" type="text/css" href="Stylesheets/navbar.css">
 </head>
 
@@ -42,8 +42,27 @@ else {
         </div>
 
         <div class="contentVP">
-            <h1> Vaš Profil </h1><br><br>
+            <h1>Vaš Profil</h1>
+            
+            <br>
 
+            <div class="user_info">
+                <div class="name">
+                    
+                </div>
+                <div class="password">
+
+                </div>
+                <div class="about">
+
+                </div>
+                <div class="">
+
+                </div>
+                <div>
+
+                </div>
+            </div>
             Ime: xxx <img src="Pictures/edit.png" class="edit"></img><br><br>
             Password: *** <img src="Pictures/edit.png" class="edit"></img><br><br>
             O meni: <img src="Pictures/edit.png" class="edit"></img><br><br>
