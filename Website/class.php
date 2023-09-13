@@ -22,7 +22,7 @@
             <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
             <ul>
                 <li> <a href='home.php'>Domov</a></li>
-                <li> <a href='class.php'>Predmeti</a></li>
+                <li id="checked"> <a href='class.php'>Predmeti</a></li>
                 <li> <a href='$$$'>Učenci</a></li>
                 <li> <a href='vp.php'>Vaš Profil</a></li>
                 <li> <a href='login.php'>Odjava</a></li>

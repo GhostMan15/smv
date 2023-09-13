@@ -36,13 +36,13 @@ else {
                 <li> <a href="home.php">Domov</a></li>
                 <li> <a href="$$$">Moduli</a></li>
                 <li> <a href="$$$">Predmeti</a></li>
-                <li> <a href="vp.php">Vaš Profil</a></li>
+                <li id="checked"> <a href="vp.php">Vaš Profil</a></li>
                 <li> <a href="login.php">Odjava</a></li>
             </ul>
         </div>
 
-        <div class="contentVP">
-            <h1>Vaš Profil</h1>
+        <form class="contentVP">
+            <h1></h1>
             
             <br>
 
@@ -63,11 +63,7 @@ else {
 
                 </div>
             </div>
-            Ime: xxx <img src="Pictures/edit.png" class="edit"></img><br><br>
-            Password: *** <img src="Pictures/edit.png" class="edit"></img><br><br>
-            O meni: <img src="Pictures/edit.png" class="edit"></img><br><br>
-            sngojgsdkogjoghjgldhkg
-        </div>
+        </form>
 
 
     </div>
