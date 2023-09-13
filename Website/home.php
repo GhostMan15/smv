@@ -40,7 +40,7 @@ else {
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='$$$'>Učenci</a></li>
-                    <li> <a href='vp.php'>Vaš Profil</a></li>
+                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";
@@ -52,7 +52,7 @@ else {
                 <ul>
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='vp.php'>Vaš Profil</a></li>
+                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";
@@ -65,7 +65,7 @@ else {
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='$$$'>Uporabniki</a></li>
-                    <li> <a href='vp.php'>Vaš Profil</a></li>
+                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";

@@ -51,8 +51,8 @@
     border-right: 5px solid;
   
     animation: 
-     typing 2s steps(14),
-     cursor .6s step-end infinite alternate;
+        typing 2s steps(14),
+        cursor .6s step-end infinite alternate;
 }
 
 @keyframes cursor {     /* TUKI JE ZATO DA SE ONA CRTICA NA KONCU BLNKA (zdelo se mi je zelo kul) */
@@ -75,8 +75,11 @@
 }
 
 .contentVP {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
-    width: 60%;
+    width: 50%;
     color: white;
     font-size: 35px;
     border: solid 3px #fff;
@@ -84,13 +87,146 @@
     border-radius: 13px;
     border-top: 15px;
     border-bottom: 15px;
+    backdrop-filter: blur(8px);
+    padding: 10px;
+}
+
+.user_title{
+    display: flex;
+    flex-direction: row;   
+    justify-content: center; 
 }
 
 .user_info{
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
+.user_info > div{
+    font-size: 1.5vw;
+    padding: 0.3vw;
+    margin: 0.3vw;
+}
+
+.password{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.about{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+}
+
+.teacher{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    justify-content: center;
+    text-align: center;
+}
+
+.list_prof{
+    justify-content: center;
+    list-style-type: none;
+    font-size: 0.9vw;
+    text-align: center;
+}
+
+.left{
+    text-align: right;
+}
+
+.right{
+    text-align: left;
+}
+
+.input_field{
+    background-color: rgba(44,53,62,0);
+    border: none;
+    font-size: 1vw;
+}
+
+.normal_field{
+    width: 20ch;
+    outline: none;
+    margin-left: 10px;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
+}
+
+.user_name{
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+textarea{
+    width: 50ch;
+    /*height: 15ch;*/
+    resize: none;
+    padding: 0.25vw;
+    margin: 0.25vw;
+    text-align: center;
+    color: rgb(228, 228, 228);
+    font-style: italic;
+}
+
+.role_vp{
+    font-size: 1vw;
+    font-style: italic;
+}
+
+.vp_pfp{
+    width: 4vw;
+    height: 4vw;
+    object-fit: cover;
+    border-radius: 5vw;
+    border: 2px solid white;
+}
+
+/*
+.img_wrap{
+    margin-top: 1vw;
+}
+*/
+
+.user_name_wrap{
+    display: grid;
+    text-align: left;
+    grid-template-rows: 50% 50%;
+    padding: 0 10px;
+}
+
+.user_name_wrap > div{
+    margin: 0.25vw 0;
+}
+
+.show_button{
+    display: none;
+    border-radius: 2vw;
+    font-size: 0.9vw;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid white;
+    padding: 0.25em;
+    color: white;
+}
+
+.submit_btn{
+    border-radius: 2vw;
+    font-size: 1vw;
+    background-color: rgba(255, 255, 255, 0);
+    border: 1px solid white;
+    padding: 0.35em;
+    color: white;
+}
+
+.submit_btn:hover{
+    background-color: rgba(45,54,64,0.5);
+}
+
+/*
 .edit{
     width: 29px;
     height: 29px;
@@ -99,5 +235,6 @@
 
 .edit:hover{
     transform: scale(1.5);
- 
 }
+*/
+
