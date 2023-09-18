@@ -109,7 +109,7 @@
     margin: 0.3vw;
 }
 
-.password{
+.password, .pfp{
     display: grid;
     grid-template-columns: auto auto;
 }
@@ -223,6 +223,20 @@ textarea{
 
 .submit_btn:hover{
     background-color: rgba(45,54,64,0.5);
+}
+
+.file_upload{
+    margin: 0 0.5vw;
+}
+
+.error{
+    color: red;
+    width: 100vw;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    margin: 1vw 0;
+    font-weight: bold;
 }
 
 /*

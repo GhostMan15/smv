@@ -15,13 +15,48 @@ else {
     $user_type =  $_SESSION["user_type"];
 }
 
+$_SESSION['profile_error'] = "";
+$error = "";
+$allgood = true;
+
 //on save changes
 if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
+    //get form text data
     $password = mysqli_escape_string($db, $_POST['password']);
     $more = mysqli_escape_string($db, $_POST['opis']);
 
-    $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '$id';";
-    $update_result = mysqli_query($db, $update_query);
+    //get image data
+    $image = $_FILES["image"];
+    $image_name = $_FILES["image"]["name"];
+    $image_temp_name = $_FILES["image"]["tmp_name"];
+    $image_size = $_FILES["image"]["size"];
+    $image_error = $_FILES["image"]["error"];
+    $image_type =  $_FILES["image"]["type"];
+    $image_ext = explode(".", $image_name);
+    $image_real_ext = strtolower(end($image_ext));
+
+    //Check for an empty password
+    if($password == ""){
+        $error = "Your password cannot be empty.";
+        $allgood = false;
+    }
+
+    //Check for spaces in password 
+    if(str_contains($password, " ")){
+        $error .= "<br>Your password cannot contain spaces.";
+    }   
+
+    //If all is good, try to save data and profile picture
+    if($allgood){
+        //save picture if a user uploaded it, and it has no error
+        if($image_name != "" && $image_error != ""){
+
+        }
+
+        //save text data into db
+        $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '$id';";
+        $update_result = mysqli_query($db, $update_query);
+    }
 }
 ?>
 
@@ -86,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
         </div>
 
         <!--EDIT MODE-->
-        <form class="contentVP" method="post" action="">
+        <form class="contentVP" method="post" action="" enctype="multipart/form-data">
 
         <?php
             //check if the user id is defined in the link
@@ -125,18 +160,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
                     echo        "</p>
                             </div>
-                        </div>  
-                        <div class='img_wrap'>
-                            <img class='vp_pfp' src='Pictures/stock_pfp.png'>
-                        </div>
-                    </div>
-                    <!--TITLE-->";
+                        </div> ";
 
                     //edit mode
                     if($_GET['id'] == $id){
                         echo"
+                            <div class='img_wrap'>
+                                <img class='vp_pfp' src='Pictures/stock_pfp.png'>
+                            </div>
+                        </div>
+                        <!--TITLE-->
+
                         <!--DETAILS-->
                         <div class='user_info'>
+                            <div class='pfp'>
+                                <div class='left'>Spremeni sliko:</div>
+                                <div class='right file_upload'>
+                                    <input type='file' name='image' class='file_upload' accept='.png, .jpeg, .jpg, .webp'>
+                                </div>
+                            </div>
                             <div class='password'>
                                 <div class='left'>Geslo:</div>
                                 <div class='pass_wrap right'>
@@ -181,6 +223,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                     //readonly mode
                     else{
                         echo"
+                            <div class='img_wrap'>
+                                <img class='vp_pfp' src='Pictures/stock_pfp.png'>
+                            </div>
+                        </div>
+                        <!--TITLE-->
+
                         <!--DETAILS-->
                         <div class='user_info'>
                             <div class='teachers'>
@@ -228,6 +276,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
         </form>
         <!--EDIT MODE-->
+
+        <!--ERROR-->
+        <div class="error"></div>
+        <!--ERROR-->
     </div>
 
 </body>
