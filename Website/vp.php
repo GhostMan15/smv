@@ -16,8 +16,12 @@ else {
 }
 
 //on save changes
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
+    $password = mysqli_escape_string($db, $_POST['password']);
+    $more = mysqli_escape_string($db, $_POST['opis']);
 
+    $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '$id';";
+    $update_result = mysqli_query($db, $update_query);
 }
 ?>
 
@@ -43,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //teachers
             if ($user_type == '1') {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
@@ -56,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //students
             else if ($user_type == '2') {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo2.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
@@ -68,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             //admin
             else {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
@@ -203,6 +207,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                         </div>
+                        <script>
+                            document.getElementById('textarea_field').style.outline = 'none';
+                        </script>
                         <!--DETAILS-->
                         ";
                     }
@@ -210,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 //if the user doesn't exist, redirect to home page
                 else{
-                    header("location: home.php");
+                    header("location: vp.php?id=" . $id);
                 }
             }
             //if not, redirect to home page
@@ -224,51 +231,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
 </body>
-
-<!--TITLE-
-            <div class="user_title">
-                <div class="user_name_wrap">
-                    <div class="user_name">
-                        <p>MarkSadnik</p>
-                    </div>
-                    <div class="role_vp">
-                        <p>Učenec</p>
-                    </div>
-                </div>  
-                <div class="img_wrap">
-                    <img class="vp_pfp" src="Pictures/stock_pfp.png">
-                </div>
-            </div>
-            TITLE-->
-
-            <!--DETAILS
-            <div class="user_info">
-                <div class="password">
-                    <div class="left">Geslo:</div>
-                    <div class="pass_wrap right">
-                        <input name="password" type="password" class="input_field normal_field" onfocus="on_change(1)" onblur="on_change(2)" oninput="on_change(3)" onchange="" id="pass_field" maxlength="50" placeholder="[vpišite geslo]">
-                        <button type="button" id="show_btn" class="show_button" onclick="click_show_button()">Show</button>
-                    </div>
-                </div>
-                <div class="teachers">
-                    <div class="">Profesorji:</div>
-                    <div class="">
-                        <ul class="list_prof">    
-                            <li>Koren</li>
-                            <li>Koren</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="about">
-                    <div class="">Več o meni:</div>
-                    <div class="about_wrap">
-                        <textarea name="opis" class="input_field" maxlength="255" placeholder="[Dodajte opis]" id="textarea_field" oninput="textAreaSize()">[uporabnik dodal dodatnih informacij]</textarea>
-                    </div>
-                </div>
-                <div class="submit">
-                    <input type="submit" class="submit_btn" value="Shrani spremembe">
-                </div>
-            </div>
-            DETAILS-->
-
 </html>
