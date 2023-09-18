@@ -14,6 +14,11 @@ else {
     $id = $_SESSION["id"];
     $user_type =  $_SESSION["user_type"];
 }
+
+//on save changes
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -78,90 +83,134 @@ else {
 
         <!--EDIT MODE-->
         <form class="contentVP" method="post" action="">
+
         <?php
             //check if the user id is defined in the link
             if (isset($_GET['id'])) {
-                $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $id . "';";
+
+                //search for user with the given id
+                $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
                 $sql_result = mysqli_query($db, $sql_query);
                 $returned_rows = mysqli_fetch_assoc($sql_result);
-                
-                echo"
-                    <!--TITLE-->
-                    <div class='user_title'>
-                        <div class='user_name_wrap'>
-                            <div class='user_name'>
-                                <p>" . $returned_rows["username"] . "</p>
-                            </div>
-                            <div class='role_vp'>
-                                <p>";
-                                
-                if($returned_rows["user_type"] == 0){
-                    echo "Admin";
-                }
-                else if($returned_rows["user_type"] == 1){
-                    echo "Profesor";
-                }
-                else{
-                    echo "Učenec";
-                }
+                $count = mysqli_num_rows($sql_result);
 
-                echo        "</p>
-                        </div>
-                    </div>  
-                    <div class='img_wrap'>
-                        <img class='vp_pfp' src='Pictures/stock_pfp.png'>
-                    </div>
-                </div>
-                <!--TITLE-->";
-
-                //edit mode
-                if($_GET['id'] == $id){
-
+                //display info if there is a result
+                if($count != 0){
                     echo"
-                    <!--DETAILS-->
-                    <div class='user_info'>
-                        <div class='password'>
-                            <div class='left'>Geslo:</div>
-                            <div class='pass_wrap right'>
-                                <input name='password' type='password' value='" . $returned_rows["geslo"] . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='on_change(3)' id='pass_field' maxlength='50' placeholder='[vpišite geslo]'>
-                                <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Show</button>
-                            </div>
-                        </div>
-                        <div class='teachers'>
-                            <div>Profesorji:</div>
-                            <div>
-                                <ul class='list_prof'>    
-                                    <li>Koren</li>
-                                    <li>Koren</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class='about'>
-                            <div>Več o meni:</div>
-                            <div class='about_wrap'>
-                                <textarea name='opis' class='input_field' maxlength='255' placeholder='[uporabnik ni dodal dodatnih informacij]' id='textarea_field' oninput='textAreaSize()'>
-                                ";
-
-                    if($returned_rows["opis"] == ""){
-                        echo "[uporabnik ni dodal dodatnih informacij]";
+                        <!--TITLE-->
+                        <div class='user_title'>
+                            <div class='user_name_wrap'>
+                                <div class='user_name'>
+                                    <p>" . $returned_rows["username"] . "</p>
+                                </div>
+                                <div class='role_vp'>
+                                    <p>";
+                    
+                    //Check if the user is admin
+                    if($returned_rows["user_type"] == 0){
+                        echo "Admin";
                     }
+                    //Check if the user is a professor
+                    else if($returned_rows["user_type"] == 1){
+                        echo "Profesor";
+                    }
+                    //Check if the user is a student
                     else{
-                        echo $returned_rows["opis"];
+                        echo "Učenec";
                     }
-                    echo "
-                                </textarea>
+
+                    echo        "</p>
                             </div>
-                        </div>
-                        <div class='submit'>
-                            <input type='submit' class='submit_btn' value='Shrani spremembe'>
+                        </div>  
+                        <div class='img_wrap'>
+                            <img class='vp_pfp' src='Pictures/stock_pfp.png'>
                         </div>
                     </div>
-                    <!--DETAILS-->
-                    ";
-                }
-                //readonly mode
-                else{
+                    <!--TITLE-->";
 
+                    //edit mode
+                    if($_GET['id'] == $id){
+                        echo"
+                        <!--DETAILS-->
+                        <div class='user_info'>
+                            <div class='password'>
+                                <div class='left'>Geslo:</div>
+                                <div class='pass_wrap right'>
+                                    <input name='password' type='password' value='" . $returned_rows["geslo"] . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required>
+                                    <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Show</button>
+                                    <script defer>
+                                        passwordFieldWidth();
+                                    </script>
+                                </div>
+                            </div>
+                            <div class='teachers'>
+                                <div>Profesorji:</div>
+                                <div>
+                                    <ul class='list_prof'>    
+                                        <li>Koren</li>
+                                        <li>Koren</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class='about'>
+                                <div>Več o uporabniku:</div>
+                                <div class='about_wrap'>
+                                    <textarea name='opis' class='input_field' maxlength='255' placeholder='[uporabnik ni dodal dodatnih informacij]' id='textarea_field' oninput='textAreaSize()'>";
+                        
+                        if($returned_rows["opis"] == ""){
+                            echo "[uporabnik ni dodal dodatnih informacij]";
+                        }
+                        else{
+                            echo $returned_rows["opis"];
+                        }
+
+                        echo "</textarea>
+                                </div>
+                            </div>
+                            <div class='submit'>
+                                <input type='submit' class='submit_btn' value='Shrani spremembe'>
+                            </div>
+                        </div>
+                        <!--DETAILS-->
+                        ";
+                    }
+                    //readonly mode
+                    else{
+                        echo"
+                        <!--DETAILS-->
+                        <div class='user_info'>
+                            <div class='teachers'>
+                                <div>Profesorji:</div>
+                                <div>
+                                    <ul class='list_prof'>    
+                                        <li>Koren</li>
+                                        <li>Koren</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class='about'>
+                                <div>Več o uporabniku:</div>
+                                <div class='about_wrap'>
+                                    <textarea name='opis' class='input_field' maxlength='255' placeholder='[uporabnik ni dodal dodatnih informacij]' id='textarea_field' oninput='textAreaSize()' readonly>";
+
+                        if($returned_rows["opis"] == ""){
+                            echo "[uporabnik ni dodal dodatnih informacij]";
+                        }
+                        else{
+                            echo $returned_rows["opis"];
+                        }
+                        echo "</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <!--DETAILS-->
+                        ";
+                    }
+                }
+                
+                //if the user doesn't exist, redirect to home page
+                else{
+                    header("location: home.php");
                 }
             }
             //if not, redirect to home page
@@ -170,7 +219,13 @@ else {
             }
             ?>
 
-            <!--TITLE-
+        </form>
+        <!--EDIT MODE-->
+    </div>
+
+</body>
+
+<!--TITLE-
             <div class="user_title">
                 <div class="user_name_wrap">
                     <div class="user_name">
@@ -215,13 +270,5 @@ else {
                 </div>
             </div>
             DETAILS-->
-        </form>
-        <!--EDIT MODE-->
-
-        <!--READ ONLY MODE-->
-        <!--READ ONLY MODE-->
-    </div>
-
-</body>
 
 </html>

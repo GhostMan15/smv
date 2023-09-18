@@ -204,7 +204,6 @@ textarea{
 }
 
 .show_button{
-    display: none;
     border-radius: 2vw;
     font-size: 0.9vw;
     background-color: rgba(255, 255, 255, 0);
