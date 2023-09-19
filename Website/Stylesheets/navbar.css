@@ -38,7 +38,9 @@
     font-size-adjust: 20px;
 }
 
-#checked{
+#checked, .checked{
     font-weight: bold;
 }
+
+
 /*NAVBAR*/

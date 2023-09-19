@@ -37,20 +37,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
     //Check for an empty password
     if($password == ""){
-        $error = "Your password cannot be empty.";
+        $error = "Your password cannot be empty. <br>";
         $allgood = false;
     }
 
     //Check for spaces in password 
     if(str_contains($password, " ")){
-        $error .= "<br>Your password cannot contain spaces.";
+        $error .= "Your password cannot contain spaces. <br>";
     }   
 
     //If all is good, try to save data and profile picture
     if($allgood){
         //save picture if a user uploaded it, and it has no error
-        if($image_name != "" && $image_error != ""){
+        if($image_name != "" && $image_error == ""){
+            $img_new_name = "pfp_" . $id;
+            $img_new_filename = $img_new_name . "." . $image_real_ext;
+            $img_full_path = "Pictures/Profile_pictures/" . $img_new_filename;
+            //fopen($img_full_path, "w+");
 
+            //file upload fail
+            if(!move_uploaded_file($image_temp_name, $img_full_path)){
+                $error .= "There was a problem while uploading your image. <br>";
+            }
+        }
+        else{
+            $error .= "There was a problem with your image. <br>";
         }
 
         //save text data into db

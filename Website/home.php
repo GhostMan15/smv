@@ -50,7 +50,7 @@ else {
                 echo "
                 <a href='homepage.html'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
-                    <li id='checked'> <a href='home.php'>Domov</a></li>
+                    <li id='checked'><a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
