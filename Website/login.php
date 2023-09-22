@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="form middle">
             <div class="username">
                 <div class="field_title" id="user_title">
-                    Username
+                    Uporabniško ime
                 </div>
                 <div>
                     <input type="text" name="username" class="field" id="user_field" required onblur="delete_spaces()">
@@ -86,10 +86,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="password">
                 <div class="field_title" id="pass_title">
                     <div class="pass_head">
-                        Password
+                        Geslo
                     </div>
                     <div class="show_con">
-                        <button type="button" class="show_button" id="show_btn" onclick="click_show_button()">Show</button>
+                        <button type="button" class="show_button" id="show_btn" onclick="click_show_button()">Pokaži</button>
                     </div>
                 </div>
                 <div>
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="bottom">
             <div class="error" id="error_login"></div>
             <div>
-                <input type="submit" class="submit_btn" value="Login">
+                <input type="submit" class="submit_btn" value="Prijava">
             </div>
         </div>
         <!--BUTTON-->

@@ -103,13 +103,18 @@
     justify-content: center;
 }
 
-.user_info > div{
-    font-size: 1.5vw;
-    padding: 0.3vw;
-    margin: 0.3vw;
+
+.title{
+    font-weight: bold;
 }
 
-.password, .pfp{
+.user_info > div{
+    font-size: 1.1vw;
+    padding: 0.3vw;
+    margin: 0.2vw 0.3vw; 
+}
+
+.password, .pfp, .identity{
     display: grid;
     grid-template-columns: auto auto;
 }
@@ -152,7 +157,6 @@
 .normal_field{
     width: 20ch;
     outline: none;
-    margin-left: 10px;
     color: white;
     border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
@@ -185,12 +189,6 @@ textarea{
     border-radius: 5vw;
     border: 2px solid white;
 }
-
-/*
-.img_wrap{
-    margin-top: 1vw;
-}
-*/
 
 .user_name_wrap{
     display: grid;
@@ -225,18 +223,24 @@ textarea{
     background-color: rgba(45,54,64,0.5);
 }
 
-.file_upload{
-    margin: 0 0.5vw;
-}
-
 .error{
-    color: red;
+    color: lightblue;
     width: 100vw;
     display: grid;
     justify-content: center;
     text-align: center;
+    font-size: 0.9vw;
     margin: 1vw 0;
     font-weight: bold;
+}
+
+.identity > div{
+    margin: 0 0.25vw;
+}
+
+.name_inner{
+    font-size: 1.05vw;
+    padding-top: 0.1vw;
 }
 
 /*

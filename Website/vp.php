@@ -9,7 +9,6 @@ if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
 }
 //if the user is logged in, allow access
 else {
-    //echo"<script>alert('". $_SESSION["id"]. "');</script>";
     $username = $_SESSION["username"];
     $id = $_SESSION["id"];
     $user_type =  $_SESSION["user_type"];
@@ -40,19 +39,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
     //Check for an empty password
     if($password == ""){
-        $error = "Your password cannot be empty. <br>";
+        $error = "Vaše novo geslo ne sme biti prazno. <br>";
         $allgood = false;
     }
 
     //Check for spaces in password 
     if(str_contains($password, " ")){
-        $error .= "Your password cannot contain spaces. <br>";
+        $error .= "Vaše geslo ne sme vsebovati presledkov. <br>";
         $allgood = false;
     }   
 
     //check if an uploaded image is of the right format
     if(!in_array($image_real_ext, $formats) && $image_name != ""){
-        $error .= "The image is not of a supported format (.jpg, .png, and .webp ONLY).";
+        $error .= "Slika ni v pravilnem formatu (dovoljeni so samo .jpg, .png, in .webp).";
         $allgood = false;
     }
 
@@ -64,18 +63,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
         //save picture if a user uploaded it, and it has no error
         if($image_temp_name != null && $image_name != ""){
+            //get old user data - image type
+            $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
+            $sql_result = mysqli_query($db, $sql_query);
+            $returned_rows = mysqli_fetch_assoc($sql_result);
+            
+            //assemble new filename
             $img_new_name = "pfp_" . $id;
             $img_new_filename = $img_new_name . "." . $image_real_ext;
-            $img_root = "Pictures\Profile_Pictures";
+            $img_root = "Pictures/Profile_Pictures/";
             $img_full_path = $img_root . $img_new_filename;
-            //unlink($img_full_path);
-            //fopen($img_full_path, "w+");
+            //delete old pfp
+            unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
 
             //file upload success
             if(move_uploaded_file($image_temp_name, $img_full_path)){
                 $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '$id';";
                 $img_update_result = mysqli_query($db, $img_update_query);
             }
+
             //file upload fail - set stock pfp as profile picture
             else{
                 $stock_path = $img_root . "unknown.jpg";
@@ -86,13 +92,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                 }
                 //file copy fail
                 else{
-                    $error .= "Backup image failed to load. <br>";
+                    $error .= "Nadomestne slike ni šlo naložiti. Se opravičujemo za napako. <br>";
                 }
             }
-        }
-        else{
-            echo"<script>alert('". $image_real_ext. "');</script>";
-            $error .= "There was a problem with your image. <br>";
+            
         }
     }
 }
@@ -158,15 +161,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
         ?>
         </div>
 
+
+
+
         <!--EDIT MODE-->
         <form class="contentVP" enctype='multipart/form-data' action='' method='post'>
 
         <?php
             //check if the user id is defined in the link
             if (isset($_GET['id'])) {
-                //get image type from 'img_ext' column
-                /*$img_type_query = "SELECT `img_ext` FROM `user` WHERE `id_user` = '".$_GET['id']."';";*/
-                //search for user with the given id
                 $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
                 $sql_result = mysqli_query($db, $sql_query);
                 $returned_rows = mysqli_fetch_assoc($sql_result);
@@ -203,8 +206,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                         <div class='img_wrap'>";
 
                     //if the user has a profile picture, display it
-                    if($returned_rows["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_$id." . $returned_rows["img_ext"])){
-                        echo "<img class='vp_pfp' src='Pictures/Profile_Pictures/pfp_$id." . $returned_rows["img_ext"] . "'>";
+                    if($returned_rows["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $_GET['id'] . "." . $returned_rows["img_ext"])){
+                        echo "<img class='vp_pfp' src='Pictures/Profile_Pictures/pfp_". $_GET['id'] . "." . $returned_rows["img_ext"] . "'>";
                     }
                     //if the user doesn't have a picture, display stock pfp
                     else{
@@ -221,24 +224,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                         echo"
                         <!--DETAILS-->
                         <div class='user_info'>
+                            <div class='identity'>
+                                <div class='left title'>Ime in priimek:</div>
+                                <div class='right name_inner'>" . $returned_rows['ime'] . ", " . $returned_rows['priimek'] . "</div>
+                            </div>
                             <div class='pfp'>
-                                <div class='left'>Spremeni sliko:</div>
+                                <div class='left title'>Spremeni sliko:</div>
                                 <div class='right file_upload'>
                                     <input type='file' name='image' class='file_upload' accept='.png, .jpeg, .jpg, .webp'>
                                 </div>
                             </div>
                             <div class='password'>
-                                <div class='left'>Geslo:</div>
+                                <div class='left title'>Geslo:</div>
                                 <div class='pass_wrap right'>
                                     <input name='password' type='password' value='" . $returned_rows["geslo"] . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required>
-                                    <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Show</button>
+                                    <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Pokaži</button>
                                     <script defer>
                                         passwordFieldWidth();
                                     </script>
                                 </div>
                             </div>
                             <div class='teachers'>
-                                <div>Profesorji:</div>
+                                <div class='title'>Profesorji:</div>
                                 <div>
                                     <ul class='list_prof'>    
                                         <li>Koren</li>
@@ -246,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                                     </ul>
                                 </div>
                             </div>
-                            <div class='about'>
+                            <div class='about title'>
                                 <div>Več o uporabniku:</div>
                                 <div class='about_wrap'>
                                     <textarea name='opis' class='input_field' maxlength='255' placeholder='[uporabnik ni dodal dodatnih informacij]' id='textarea_field' oninput='textAreaSize()'>";
@@ -273,8 +280,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                         echo"
                         <!--DETAILS-->
                         <div class='user_info'>
+                            <div class='identity'>
+                                <div class='left title'>Ime in priimek:</div>
+                                <div class='right name_inner'>" . $returned_rows['ime'] . ", " . $returned_rows['priimek'] . "</div>
+                            </div>
                             <div class='teachers'>
-                                <div>Profesorji:</div>
+                                <div class='title'>Profesorji:</div>
                                 <div>
                                     <ul class='list_prof'>    
                                         <li>Koren</li>
@@ -283,7 +294,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                                 </div>
                             </div>
                             <div class='about'>
-                                <div>Več o uporabniku:</div>
+                                <div class='title'>Več o uporabniku:</div>
                                 <div class='about_wrap'>
                                     <textarea name='opis' class='input_field' maxlength='255' placeholder='[uporabnik ni dodal dodatnih informacij]' id='textarea_field' oninput='textAreaSize()' readonly>";
 
@@ -318,6 +329,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
         </form>
         <!--EDIT MODE-->
+
+
 
         <!--ERROR-->
         <div class="error">

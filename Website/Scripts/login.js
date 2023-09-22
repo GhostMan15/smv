@@ -4,14 +4,14 @@ function click_show_button(){
     let password_field = document.getElementById('pass_field');
 
     //if the password is hidden, make text field show data by changing its type to text
-    if(button == 'Show'){
+    if(button == 'Pokaži'){
         password_field.type = 'text';
-        document.getElementById('show_btn').innerHTML = 'Hide';
+        document.getElementById('show_btn').innerHTML = 'Skrij';
     }
     //if the password isnt hidden, hide the pass by changing type back to password
     else{
         password_field.type = 'password';
-        document.getElementById('show_btn').innerHTML = 'Show';
+        document.getElementById('show_btn').innerHTML = 'Pokaži';
     }
 }
 
@@ -21,8 +21,6 @@ function delete_spaces(){
     let password = document.getElementById('pass_field').value;
     let error = document.getElementById('error_login');
     let error_msg = "Your user name / password cannot contain spaces. Spaces have been removed";
-    //console.log("username: " + username + "||  password: " + password);
-    //let search_flag = new RegExp(" ", "g");
     
     let changed_username = username.replace(/ /g, "");
     let changed_password = password.replace(/ /g, "");
