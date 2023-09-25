@@ -98,16 +98,25 @@ body{
     color: rgb(255, 80, 80);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-weight: bold;
-    font-size: 1vw;
+    font-size: 0.75vw;
 }
 
 .bottom{
     display: grid;
-    grid-template-rows: 20%, 80%;
+    grid-template-rows: 15%, 20% 60%;
     justify-content: center;
 }
 
 .bottom > div{
     text-align: center;
     padding: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.link{
+    color: white;
+}
+
+.reg_con{
+    font-size: 0.75vw;
 }

@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Check if the credentials are empty
     if($username == "" || $password == ""){
-        $error = "Your username / password cannot be empty.";
+        $error = "Vaše uporabniško ime oz. geslo ne smeta biti prazna.";
         $allgood = false;
     }
 
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //if there is no result, deny access
         else{
-            $error = "Your login credentials are invalid.";
+            $error = "Vaši vpisni podatki so nepravilni oz. se ne ujemajo.";
             $allgood = false;
             $_SESSION["login_error"] = $error;
         }
@@ -48,14 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 
 <!--HEAD-->
-
 <head>
     <script src="Scripts/login.js"></script>
     <meta name="author" content="Mark Sadnik">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Stylesheets/login.css">
-    <title>Login to Ultis</title>
+    <title>Prijava v ulits</title>
 </head>
 <!--HEAD-->
 
@@ -102,6 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!--BUTON-->
         <div class="bottom">
             <div class="error" id="error_login"></div>
+            <div class="reg_con">
+                Še nimaš računa? Ustvari ga <a href="register.php" class='link'>tukaj</a>!
+            </div>
             <div>
                 <input type="submit" class="submit_btn" value="Prijava">
             </div>

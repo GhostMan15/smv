@@ -20,7 +20,7 @@ function delete_spaces(){
     let username = document.getElementById('user_field').value;
     let password = document.getElementById('pass_field').value;
     let error = document.getElementById('error_login');
-    let error_msg = "Your user name / password cannot contain spaces. Spaces have been removed";
+    let error_msg = "Vaše uporabniško ime / geslo ne sme imeti presledkov. Presledke smo odstranili.";
     
     let changed_username = username.replace(/ /g, "");
     let changed_password = password.replace(/ /g, "");
