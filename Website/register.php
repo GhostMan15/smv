@@ -25,11 +25,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //supported formats
     $formats = ["jpg", "jpeg", "png", "webp"];
+    $numeric = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
     //check for empty name and surname
     if($name == "" || $surname == ""){
         $error .= "Prosim izpolnite ime in priimek. <br>";
         $allgood = false;
+    }
+
+    //check for numeric values in name
+    if(preg_match("[0-9]", $name) || preg_match("~[0-9]+~", $surname)){
+        $error .= "Vaše ime oz. priimek ne smeta vsebovati številk. <br>";
     }
 
     //check for an empty pass
@@ -62,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username_result = mysqli_query($db, $username_query);
         $username_count = mysqli_num_rows($username_result);
 
-        //if the username is avalible, allow INSERT statement
+        //if the username isnt availible, generate new usernames until one is free (NameSurname1, 2, 3, 4, ...)
         if($username_count != 0){
             $sub_username = "";
             for($i = 1; $username_count != 0; $i++){
@@ -74,8 +80,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $new_username = $sub_username;
         }
 
+        //insert query - create new account, and get new user's data
         $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, 2, '$name', '$surname', '$password', '$new_username', NULL, NULL);";
         $insert_result = mysqli_query($db, $insert_query);
+        $data_query = "SELECT * FROM `user` WHERE `username` = '$new_username';";
+        $data_result = mysqli_query($db, $data_query);
+        $data_rows = mysqli_fetch_assoc($data_result);
+
+        $message = "Vaše novo uporabniško ime je $new_username. ";
+
+        //check if an image was uploaded
+        if($image_temp_name != null && $image_name != ""){
+            //assemble new filename
+            $img_new_name = "pfp_" . $data_rows['id_user'];
+            $img_new_filename = $img_new_name . "." . $image_real_ext;
+            $img_root = "Pictures/Profile_Pictures/";
+            $img_full_path = $img_root . $img_new_filename;
+
+            //file upload success
+            if(move_uploaded_file($image_temp_name, $img_full_path)){
+                $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '". $data_rows['id_user'] ."';";
+                $img_update_result = mysqli_query($db, $img_update_query);
+                $message .= "\nPriloženo sliko smo nastavili kot vašo profilsko sliko. ";
+            }
+
+            //file upload fail - set stock pfp as profile picture
+            else{
+                $stock_path = $img_root . "unknown.jpg";
+                //file copy success
+                if(copy($stock_path, $img_new_name.".jpg")){
+                    $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $data_rows['id_user'] ."';";
+                    $img_update_result = mysqli_query($db, $img_update_query);
+                    $message .= "\nPriložene slike nismo morali obdelati. Zamenjali smo jo s privzeto profilsko sliko. ";
+                }
+                //file copy fail
+                else{
+                    $message .= "\nPriložene slike nismo morali obdelati. Pozneje lahko novo sliko naložite na 'Vaš profil' zavihku. ";
+                }
+            }
+            
+        }
+
+        //set session state variables
+        $_SESSION["id"] = $data_rows['id_user']; 
+        $_SESSION["username"] = $new_username;
+        $_SESSION["user_type"] = $data_rows['user_type'];
+
+        //display message
+        echo "<script>alert($message)</script>";
+
+        //redirect to homepage
+        header("location: home.php");
     }
 }
 ?>
@@ -136,11 +191,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="picture">
-                <!--<div class="title">
-                    Slika<span class="star_blue">*</span>
-                </div>-->
-                <div>
-                    <input type="file" class="file_upload" name="image" value="" accept=".png, .jpg, .jpeg, .webp">
+                <div class="pic_inner">
+                    <input type="file" class="file_upload" name="image" accept=".png, .jpg, .jpeg, .webp">
                 </div>
             </div>
         </div>

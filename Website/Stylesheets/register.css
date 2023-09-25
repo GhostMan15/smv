@@ -121,3 +121,10 @@ body{
 .submit_btn:hover{
     background-color: rgb(27, 28, 49);
 }
+
+.picture{
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto;
+    justify-content: center;
+}
