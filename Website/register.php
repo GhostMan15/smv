@@ -63,17 +63,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username_count = mysqli_num_rows($username_result);
 
         //if the username is avalible, allow INSERT statement
-        if($username_count == 0){
-            $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, 2, '$name', '$surname', '$password', '$new_username', NULL, NULL);";
-        }
-
-        //if not, create new usernames, until one is avalible
-        else{
-            $sub_username = $new_username;
+        if($username_count != 0){
+            $sub_username = "";
             for($i = 1; $username_count != 0; $i++){
-
+                $sub_username = $new_username . "$i";
+                $username_query = "SELECT `username` FROM `user` WHERE `username` = '$sub_username';";
+                $username_result = mysqli_query($db, $username_query);
+                $username_count = mysqli_num_rows($username_result);
             }
+            $new_username = $sub_username;
         }
+
+        $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, 2, '$name', '$surname', '$password', '$new_username', NULL, NULL);";
+        $insert_result = mysqli_query($db, $insert_query);
     }
 }
 ?>

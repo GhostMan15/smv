@@ -114,7 +114,7 @@
     margin: 0.2vw 0.3vw; 
 }
 
-.password, .pfp, .identity{
+.password, .identity{
     display: grid;
     grid-template-columns: auto auto;
 }
@@ -242,6 +242,38 @@ textarea{
 .name_inner{
     font-size: 1.05vw;
     padding-top: 0.1vw;
+}
+
+.file_upload{
+    text-align: center;
+    display: grid;
+    justify-content: center;
+}
+
+.file_upload::file-selector-button{
+    color: rgba(25,26,47,0);
+    background-color: rgba(25,26,47,0);
+    background-image: url("../Pictures/camera_icon.png");
+    background-size: cover;
+    height: 3vw;
+    width: 3vw;
+    outline: none;
+    border: 0.1vw solid white;
+    border-radius: 1vw;
+    font-size: 0.75vw;
+}
+
+.file_upload::file-selector-button:hover{
+    background-color: rgb(25,26,47);
+    border: 0.2vw solid white;
+}
+
+.pfp{
+    text-align: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
 }
 
 /*

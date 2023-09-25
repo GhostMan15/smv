@@ -73,8 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
             $img_new_filename = $img_new_name . "." . $image_real_ext;
             $img_root = "Pictures/Profile_Pictures/";
             $img_full_path = $img_root . $img_new_filename;
+            
             //delete old pfp
-            unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
+            if(file_exists($img_root . $img_new_name . "." . $returned_rows['img_ext'])){
+                unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
+            }
 
             //file upload success
             if(move_uploaded_file($image_temp_name, $img_full_path)){
@@ -228,12 +231,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                                 <div class='left title'>Ime in priimek:</div>
                                 <div class='right name_inner'>" . $returned_rows['ime'] . ", " . $returned_rows['priimek'] . "</div>
                             </div>
+                            <!--
                             <div class='pfp'>
                                 <div class='left title'>Spremeni sliko:</div>
                                 <div class='right file_upload'>
                                     <input type='file' name='image' class='file_upload' accept='.png, .jpeg, .jpg, .webp'>
                                 </div>
                             </div>
+                            -->
                             <div class='password'>
                                 <div class='left title'>Geslo:</div>
                                 <div class='pass_wrap right'>
@@ -244,6 +249,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                                     </script>
                                 </div>
                             </div>
+                            <div class='pfp'>
+                                <div class=''>
+                                    <input type='file' name='image' class='file_upload' accept='.png, .jpeg, .jpg, .webp'>
+                                </div>
+                            </div>
+                            <!--
+                            <div class='password'>
+                                <div class='left title'>Geslo:</div>
+                                <div class='pass_wrap right'>
+                                    <input name='password' type='password' value='" . $returned_rows["geslo"] . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required>
+                                    <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Pokaži</button>
+                                    <script defer>
+                                        passwordFieldWidth();
+                                    </script>
+                                </div>
+                            </div>
+                            -->
                             <div class='teachers'>
                                 <div class='title'>Profesorji:</div>
                                 <div>
