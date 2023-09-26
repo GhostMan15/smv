@@ -18,8 +18,9 @@
 
 <body>
     <div class="banner">
+        
         <div class="navbar">
-            <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
+            <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a> 
             <ul>
                 <li> <a href='home.php'>Domov</a></li>
                 <li id="checked"> <a href='class.php'>Predmeti</a></li>
@@ -29,7 +30,13 @@
             </ul>
         </div>
     </div>
+    <div> <img src='Pictures/quote2.png' style="width: 450px; height: 149px; transform: translate(133%, -149px);" class='logo'> </div>
 </body>
 <!--BODY-->
+<script>
+        function random(){
 
+            document.getElementById("one").innerHTML = Math.floor(Math.random() * 10);
+                }
+</script>
 </html>
