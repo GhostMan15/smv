@@ -17,10 +17,10 @@
 <!--BODY-->
 
 <body>
-    <div class="banner">
+    <div class="bannerr">
         
         <div class="navbar">
-            <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a> 
+            <a href='homepage.html'><img src='Pictures/logo1.png' class="logo"></a> 
             <ul>
                 <li> <a href='home.php'>Domov</a></li>
                 <li id="checked"> <a href='class.php'>Predmeti</a></li>
@@ -29,14 +29,37 @@
                 <li> <a href='login.php'>Odjava</a></li>
             </ul>
         </div>
-    </div>
-    <div> <img src='Pictures/quote2.png' style="width: 450px; height: 149px; transform: translate(133%, -149px);" class='logo'> </div>
+        <div class="slikicaDIV"> <img class="slikica" src='Pictures/quote.png' id="slikaID"> </div>
+        <div class="Predmeti"> 
+            <div class="PredmetiMini">
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Slo &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Mat &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
+            </div>
+         </div>
+      </div>
+     
+    
+    
 </body>
 <!--BODY-->
 <script>
-        function random(){
-
-            document.getElementById("one").innerHTML = Math.floor(Math.random() * 10);
-                }
+    var t = 0;
+        while(true){
+            t = Math.floor(Math.random() * 4);
+            if(t != 0){
+                break;
+            }
+        }
+            
+            document.getElementById('slikaID').src = 'Pictures/quote' + t + '.png';
+            
+                
 </script>
 </html>

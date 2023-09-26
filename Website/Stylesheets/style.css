@@ -6,7 +6,6 @@
 .banner {
     width: 100%;
     height: 100vh;
-    
     background-size: cover;
     background-position: center;
     animation: change 40s infinite ease-in-out ;
@@ -96,7 +95,7 @@
      cursor .6s step-end infinite alternate;
 }
 
-@keyframes cursor {     /* TUKI JE ZATO DA SE ONA CRTICA NA KONCU BLNKA (zdelo se mi je zelo kul) */
+@keyframes cursor {     /* TUKI JE ZATO DA SE ONA CRTICA NA KONCU BLNKA (zdelo se mi je kul) */
     
     50% { border-color: transparent; }
     
