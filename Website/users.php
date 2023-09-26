@@ -13,8 +13,11 @@ else {
     $id = $_SESSION["id"];
     $user_type = $_SESSION["user_type"];
 }
+//check if user is admin, if not redirect to homepage
+if ($user_type != "0") {
+    header("location: home.php");
+}
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -34,17 +37,13 @@ else {
 <!--BODY-->
 
 <body>
-
-    <!--CONTENT-->
-    <div class="bannerVP">
-
-        <!--NAVBAR-->
-        <div class="navbar_wrap">
-            <div class="navbar">
-                <?php
-                //teachers
-                if ($user_type == '1') {
-                    echo "
+    <!--NAVBAR-->
+    <div class="navbar_wrap">
+        <div class="navbar">
+            <?php
+            //teachers
+            if ($user_type == '1') {
+                echo "
                 <a href='home.php'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
@@ -54,10 +53,10 @@ else {
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";
-                }
-                //students
-                else if ($user_type == '2') {
-                    echo "
+            }
+            //students
+            else if ($user_type == '2') {
+                echo "
                 <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
@@ -66,10 +65,10 @@ else {
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";
-                }
-                //admin
-                else {
-                    echo "
+            }
+            //admin
+            else {
+                echo "
                 <a href='home.php'><img src='Pictures/logo.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
@@ -79,11 +78,14 @@ else {
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";
-                }
-                ?>
-            </div>
+            }
+            ?>
         </div>
-        <!--NAVBAR-->
+    </div>
+    <!--NAVBAR-->
+
+    <!--CONTENT-->
+    <div class="main">
 
     </div>
     <!--CONTENT-->

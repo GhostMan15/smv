@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //supported formats
     $formats = ["jpg", "jpeg", "png", "webp"];
-    $numeric = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+    $numeric = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
 
     //check for empty name and surname
     if($name == "" || $surname == ""){
@@ -33,9 +33,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allgood = false;
     }
 
-    //check for numeric values in name
-    if(preg_match("[0-9]", $name) || preg_match("~[0-9]+~", $surname)){
+    //check for numeric values in name and surname
+    $isNumeric = false;
+
+    for($i = 0; $i < strlen($name); $i++){
+        for($j = 0; $j < count($numeric); $j++){
+            if($name[$i] == $numeric[$j]){
+                $isNumeric = true;
+                break;
+            }
+        }
+    }
+
+    for($i = 0; $i < strlen($surname); $i++){
+        for($j = 0; $j < count($numeric); $j++){
+            if($surname[$i] == $numeric[$j]){
+                $isNumeric = true;
+                break;
+            }
+        }
+    }
+
+    if($isNumeric){
         $error .= "Vaše ime oz. priimek ne smeta vsebovati številk. <br>";
+        $allgood = false;
     }
 
     //check for an empty pass
@@ -47,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //check for spaces in pass
     if(str_contains($password, " ")){
         $error .= "Vaše geslo ne sme imeti presledkov <br>";
+        $allgood = false;
     }
 
     //check for correct image format, if there is even an image
