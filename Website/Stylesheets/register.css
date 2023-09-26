@@ -128,3 +128,31 @@ body{
     grid-template-rows: auto;
     justify-content: center;
 }
+
+.pass_top{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+}
+
+.pass_title{
+    text-align: left;
+}
+
+.show_con{
+    text-align: right;
+}
+
+.show_button{
+    color: white;
+    background-color: rgba(27, 28, 49, 0.001);
+    outline: none;
+    border: 1px solid white;
+    font-size: 1vw;
+    margin-top: 0.15vw;
+    border-radius: 1vw;
+}
+
+.show_button:hover{
+    background-color: rgb(27, 28, 49);
+}

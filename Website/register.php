@@ -182,11 +182,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <div class="password">
-                <div class="title">
-                    Geslo<span class="star">*</span>
+                <div class="pass_top">
+                    <div class="title pass_title">
+                        Geslo<span class="star">*</span>
+                    </div>
+                    <div class="show_con">
+                        <button type="button" class="show_button" id="show_btn" onclick="click_show_button()">Pokaži</button>
+                    </div>
                 </div>
                 <div class="password_inner">
-                    <input type="password" class="text_field" name="geslo" maxlength="50" placeholder="Brez presledkov, max. 50 črk" required>
+                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="Brez presledkov, max. 50 črk" required>
                 </div>
             </div>
 
@@ -213,6 +218,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!--BOTTOM-->
 
     </form>
+
+    <script src="Scripts/login.js"></script>
 </body>
 <!--BODY-->
 

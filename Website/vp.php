@@ -155,7 +155,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='$$$'>Uporabniki</a></li>
+                    <li> <a href='users.php'>Uporabniki</a></li>
                     <li id='checked'> <a href='vp.php'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
