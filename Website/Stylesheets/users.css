@@ -1,14 +1,83 @@
 body{
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
 }
 
 .navbar_wrap{
-    backdrop-filter: blur(12px);
     background-color: #19172C;
 }
 
+.main{
+    margin-top: 10px;
+    width: 100vw;
+    display: grid;
+    justify-content: center;
+}
+
+.container{
+    display: grid;
+    grid-template-rows: auto auto;
+    width: 75vw;
+}
+
+.top{
+    display: grid;
+    justify-content: left;
+}
+
+.add_btn{
+    font-size: 1vw;
+    color: black;
+    border: 1px solid black;
+    width: 3vw;
+    background-color: white;
+    padding: 5px;
+    border-radius: 0.5vw;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+
+.add_pic{
+    width: 2vw;
+}
+
+.add_btn:hover, .btn_link:hover{
+    background-color: rgb(147, 207, 147);;
+}
+
+.content{
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.title{
+    font-size: 1.15vw;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+.content > div{
+    margin: 5px; 
+}
+
+.btn_pic{
+    width: 0.75vw;
+}
+
+.title_btn{
+    font-size: 1.15vw;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: white;
+    padding: 5px 0;
+    border: none;
+}
+
+.title_btn:hover{
+    text-decoration: underline;
+}
 
 

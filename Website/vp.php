@@ -151,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
             //admin
             else {
                 echo "
-                <a href='home.php'><img src='Pictures/logo.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo0.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>

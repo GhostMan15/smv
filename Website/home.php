@@ -60,7 +60,7 @@ else {
             //admin
             else {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo.png' class='logo'></a>
+                <a href='homepage.html'><img src='Pictures/logo0.png' class='logo'></a>
                 <ul>
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
