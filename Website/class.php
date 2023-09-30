@@ -110,7 +110,7 @@ else {
             }
         }
             
-            document.getElementById('slikaID').src = 'Pictures/quote' + t + '.png';
+            document.getElementById('slikaID').src = 'Pictures/quot' + t + '.png';
             
                 
 </script>
