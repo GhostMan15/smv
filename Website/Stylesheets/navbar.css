@@ -12,6 +12,9 @@
     display: flex;
     justify-content: space-between;
 }
+.navbar_div{
+    background-color: #19172C;
+  }
 
 .logo{
     width: 250px;
