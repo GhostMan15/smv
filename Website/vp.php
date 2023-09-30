@@ -19,7 +19,7 @@ $error = "";
 $allgood = true;
 
 //on save changes
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_type == '0' || $_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
     //get form text data
     $password = mysqli_escape_string($db, $_POST['password']);
     $more = mysqli_escape_string($db, $_POST['opis']);
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
     //If all is good, try to save data and profile picture
     if($allgood){
         //save text data into db
-        $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '$id';";
+        $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '". $_GET['id'] ."';";
         $update_result = mysqli_query($db, $update_query);
 
         //save picture if a user uploaded it, and it has no error
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
             $returned_rows = mysqli_fetch_assoc($sql_result);
             
             //assemble new filename
-            $img_new_name = "pfp_" . $id;
+            $img_new_name = "pfp_" . $_GET['id'];
             $img_new_filename = $img_new_name . "." . $image_real_ext;
             $img_root = "Pictures/Profile_Pictures/";
             $img_full_path = $img_root . $img_new_filename;
@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
 
             //file upload success
             if(move_uploaded_file($image_temp_name, $img_full_path)){
-                $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '$id';";
+                $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '" . $_GET['id'] . "';";
                 $img_update_result = mysqli_query($db, $img_update_query);
             }
 
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                 $stock_path = $img_root . "unknown.jpg";
                 //file copy success
                 if(copy($stock_path, $img_new_name.".jpg")){
-                    $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '$id';";
+                    $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $_GET['id'] ."';";
                     $img_update_result = mysqli_query($db, $img_update_query);
                 }
                 //file copy fail
@@ -222,8 +222,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
                         <!--TITLE-->
                         ";
 
-                    //edit mode
-                    if($_GET['id'] == $id){
+                    //edit mode - if user is admin, or it's his own account
+                    if($_SESSION["user_type"] = 'admin'|| $_GET['id'] == $id){
                         echo"
                         <!--DETAILS-->
                         <div class='user_info'>

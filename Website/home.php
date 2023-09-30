@@ -35,7 +35,7 @@ else {
             //teachers
             if ($user_type == '1') {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
@@ -48,7 +48,7 @@ else {
             //students
             else if ($user_type == '2') {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo2.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
                     <li id='checked'><a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
@@ -60,7 +60,7 @@ else {
             //admin
             else {
                 echo "
-                <a href='homepage.html'><img src='Pictures/logo0.png' class='logo'></a>
+                <a href='home.php'><img src='Pictures/logo0.png' class='logo'></a>
                 <ul>
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
