@@ -1,3 +1,19 @@
+<?php
+include("Scripts/config.php");
+//START THE SESSION
+session_start();
+
+//if the user isn't logged in / session variables aren't set, redirect to login
+if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
+    header("location: login.php");
+}
+//if the user is logged in, allow access
+else {
+    $username = $_SESSION["username"];
+    $id = $_SESSION["id"];
+    $user_type =  $_SESSION["user_type"];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,17 +35,53 @@
 <body>
     <div class="bannerr">
         
-        <div class="navbar">
-            <a href='homepage.html'><img src='Pictures/logo1.png' class="logo"></a> 
-            <ul>
-                <li> <a href='home.php'>Domov</a></li>
-                <li id="checked"> <a href='class.php'>Predmeti</a></li>
-                <li> <a href='$$$'>Učenci</a></li>
-                <li> <a href='vp.php'>Vaš Profil</a></li>
-                <li> <a href='login.php'>Odjava</a></li>
-            </ul>
-        </div>
-        <div class="slikicaDIV"> <img class="slikica" src='Pictures/quote.png' id="slikaID"> </div>
+    <?php
+            //teachers
+            if ($user_type == '1') {
+                echo "<div class='navbar_div'> <div class = 'navbar'>
+                <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
+                <ul>
+                    <li> <a href='home.php'>Domov</a></li>
+                    <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                    <li> <a href='$$$.php'>Učenci</a></li>
+                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
+                    <li> <a href='login.php'>Odjava</a></li>
+                </ul>
+                </div>
+                </div>
+                ";
+            }
+            //students
+            else if ($user_type == '2') {
+                echo "<div class='navbar_div'> <div class = 'navbar'>
+                <a href='homepage.html'><img src='Pictures/logo2.png' class='logo'></a>
+                <ul>
+                    <li><a href='home.php'>Domov</a></li>
+                    <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
+                    <li> <a href='login.php'>Odjava</a></li>
+                </ul>
+                </div>
+                </div>
+                ";
+            }
+            //admin
+            else {
+                echo "<div class='navbar_div'> <div class = 'navbar'>
+                <a href='homepage.html'><img src='Pictures/logo0.png' class='logo'></a>
+                <ul>
+                    <li> <a href='home.php'>Domov</a></li>
+                    <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                    <li> <a href='users.php'>Uporabniki</a></li>
+                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
+                    <li> <a href='login.php'>Odjava</a></li>
+                </ul>
+                </div>
+                </div>
+                ";
+            }
+            ?>
+        <div class="slikicaDIV"> <img class="slikica" id="slikaID"> </div>
         <div class="Predmeti"> 
             <div class="PredmetiMini">
                 <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
