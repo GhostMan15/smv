@@ -69,7 +69,7 @@ body{
 }
 
 .title_btn{
-    font-size: 1.15vw;
+    font-size: 1.25vw;
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: white;
     padding: 5px 0;
@@ -79,4 +79,55 @@ body{
 .title_btn:hover{
     text-decoration: underline;
 }
+
+.table{
+    font-size: 1vw;
+}
+
+.delete_btn, .profile_btn{
+    background-color: white;
+    border: none;
+}
+
+.delete_img{
+    width: 1.5vw;
+    height: 1.5vw;
+    border: none;
+    object-fit: contain;
+}
+
+.delete_btn{
+    padding: 0.2vw;
+    border: 1px solid black;
+    border-radius: 0.75vw;
+    margin-right: 5px;
+}
+
+.delete_btn:hover{
+    background-color: rgb(255, 155, 155);
+}
+
+.profile_img{
+    width: 1.75vw;
+    height: 1.75vw;
+    border-radius: 1.75vw;
+    padding: 1px;
+    border: 1px solid black;
+    object-fit: cover;
+}
+
+.profile_img:hover{
+    background-color: blue;
+}
+
+.user_link{
+    color: black;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.user_link:hover{
+    text-decoration: underline;
+}
+
 

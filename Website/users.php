@@ -23,7 +23,6 @@ if ($user_type != "0") {
 <html>
 
 <!--HEAD-->
-
 <head>
     <meta charset="UTF-8">
     <meta name="author" content="Mark Sadnik">
@@ -98,108 +97,129 @@ if ($user_type != "0") {
             <!--ROWS-->
             <div class="content">
                 <!--STUDENTS-->
-                <div class="students_con">
-                    <div class="students_title title">
-                        <button class="title_btn">Učenci (5) <img src="Pictures/triangle_up.png" class="btn_pic" id="pic1" onclick="toggle(1)"></button>
-                    </div>
-                    <div class="students_list" id="table1">
-                        <table class="student_table table">
-                            <tr>
-                                <td class="username_Data">
-                                    Liam Smith
-                                </td>
-                                <td>
-                                    Izbriši
-                                </td>
-                                <td>
-                                    Profil
-                                </td>
-                            </tr>
+                <?php
 
-                            <tr>
-                                <td class="username_Data">
-                                    Liam Smithsadasddddddddddddd
-                                </td>
-                                <td>
-                                    Izbriši
-                                </td>
-                                <td>
-                                    Profil
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                //get all students from db
+                $student_query = "SELECT * FROM `user` WHERE `user_type` = '2';";
+                $student_result = mysqli_query($db, $student_query);
+                $student_rows = mysqli_fetch_assoc($student_result);
+                $student_count = mysqli_num_rows($student_result);
+
+                echo"
+                <div class='students_con'>
+                        <div class='students_title title'>
+                            <button class='title_btn'>Učenci ($student_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic1' onclick='toggle(1)'></button>
+                        </div>
+                        <div class='students_list' id='table1'>
+                            <table class='student_table table'>
+                ";
+
+                while($row = mysqli_fetch_assoc($student_result)){
+                    echo "
+                                <tr>
+                                    <td class='username_data'>
+                                        <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
+                                    </td>
+                                    <td class='delete_data'>
+                                        <button type='button' class='delete_btn table_btn'><img class='delete_img img' src='Pictures/delete.png'></button>
+                                    </td>
+                                    <td class='profile_data'>
+                                        <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                                    </td>
+                                </tr>
+                    ";
+                }
+
+                echo"
+                </table>
                 </div>
+                </div>";
+                
+                ?>
                 <!--STUDENTS-->
 
                 <!--TEACHERS-->
-                <div class="teachers_con">
-                    <div class="teachers_title title">
-                        <button class="title_btn">Profesorji (20) <img src="Pictures/triangle_up.png" class="btn_pic" id="pic2" onclick="toggle(2)"></button>
-                    </div>
-                    <div class="teachers_list" id="table2">
-                        <table class="teacher_table table">
-                            <tr>
-                                <td class="username_Data">
-                                    Liam Smith
-                                </td>
-                                <td>
-                                    Izbriši
-                                </td>
-                                <td>
-                                    Profil
-                                </td>
-                            </tr>
+                <?php
 
-                            <tr>
-                                <td class="username_Data">
-                                    Liam Smithsadasddddddddddddd
-                                </td>
-                                <td>
-                                    Izbriši
-                                </td>
-                                <td>
-                                    Profil
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                //get all teachers from db
+                $teachers_query = "SELECT * FROM `user` WHERE `user_type` = '1';";
+                $teachers_result = mysqli_query($db, $teachers_query);
+                $teachers_rows = mysqli_fetch_assoc($teachers_result);
+                $teachers_count = mysqli_num_rows($teachers_result);
+
+                echo"
+                <div class='teachers_con'>
+                        <div class='teachers_title title'>
+                            <button class='title_btn'>Profesorji ($teachers_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic2' onclick='toggle(2)'></button>
+                        </div>
+                        <div class='teachers_list' id='table2'>
+                            <table class='teacher_table table'>
+                ";
+
+                while($row = mysqli_fetch_assoc($teachers_result)){
+                    echo "
+                                <tr>
+                                    <td class='username_data'>
+                                        <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
+                                    </td>
+                                    <td class='delete_data'>
+                                        <button type='button' class='delete_btn table_btn'><img class='delete_img img' src='Pictures/delete.png'></button>
+                                    </td>
+                                    <td class='profile_data'>
+                                        <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                                    </td>
+                                </tr>
+                    ";
+                }
+
+                echo"
+                </table>
                 </div>
+                </div>";
+                
+                ?>
                 <!--TEACHERS-->
 
                 <!--ADMIN-->
-                <div class="admin_con">
-                    <div class="admin_title title">
-                        <button class="title_btn">Administratorji (3) <img src="Pictures/triangle_up.png" class="btn_pic" id="pic3" onclick="toggle(3)"></button>
-                    </div>
-                    <div class="admin_list" id="table3">
-                        <table class="admin_table table">
-                            <tr>
-                                <td class="username_Data">
-                                    Liam Smith
-                                </td>
-                                <td>
-                                    Izbriši
-                                </td>
-                                <td>
-                                    Profil
-                                </td>
-                            </tr>
+                <?php
 
-                            <tr>
-                                <td class="username_Data">
-                                    Liam Smithsadasddddddddddddd
-                                </td>
-                                <td>
-                                    Izbriši
-                                </td>
-                                <td>
-                                    Profil
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                //get all admins from db
+                $admin_query = "SELECT * FROM `user` WHERE `user_type` = '0';";
+                $admin_result = mysqli_query($db, $admin_query);
+                $admin_rows = mysqli_fetch_assoc($admin_result);
+                $admin_count = mysqli_num_rows($admin_result);
+
+                echo"
+                <div class='admin_con'>
+                        <div class='admin_title title'>
+                            <button class='title_btn'>Administratorji (". $admin_count - 1 .") <img src='Pictures/triangle_up.png' class='btn_pic' id='pic3' onclick='toggle(3)'></button>
+                        </div>
+                        <div class='admin_list' id='table3'>
+                            <table class='admin_table table'>
+                ";
+
+                while($row = mysqli_fetch_assoc($admin_result)){
+                    echo "
+                                <tr>
+                                    <td class='username_data'>";
+
+                    if($row['id_user'] != $id){
+                        echo "          <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ." </a>";
+                    }
+                    echo            "</td>
+                                    <td class='profile_data'>
+                                        <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                                    </td>
+                                </tr>
+                    ";
+                }
+
+                echo"
+                </table>
                 </div>
+                </div>";
+                
+                ?>
                 <!--ADMIN-->
             </div>
             <!--ROWS-->
@@ -207,13 +227,32 @@ if ($user_type != "0") {
     </div>
     <!--CONTENT-->
 
+    <!--TEMPLATE--
+    <div class="admin_con">
+                    <div class="admin_title title">
+                        <button class="title_btn">Administratorji (3)<img src="Pictures/triangle_up.png" class="btn_pic" id="pic3" onclick="toggle(3)"></button>
+                    </div>
+                    <div class="admin_list" id="table3">
+                        <table class="admin_table table">
+                            <tr>
+                                <td class="username_data">
+                                    Liam Smith
+                                </td>
+                                <td class="delete_data">
+                                    <button type="button" class="delete_btn"><img class="delete_img img" src="Pictures/delete.png"></button>
+                                </td>
+                                <td class="profile_data">
+                                    <button type="button" class="profile_btn"><img class="profile_img img"></button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+    -->
+
+
     <!--SCRIPT-->
     <script src="Scripts/register.js"></script>
-    <script>
-        document.getElementById('table1').style.display = "none";
-        document.getElementById('table2').style.display = "none";
-        document.getElementById('table3').style.display = "none";
-    </script>
     <!--SCRIPT-->
 </body>
 <!--BODY-->

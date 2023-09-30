@@ -1,7 +1,19 @@
+document.getElementById('table1').style.display = "none";
+document.getElementById('table2').style.display = "none";
+document.getElementById('table3').style.display = "none";
+
 var show1 = false, show2 = false, show3 = false;
 
 function redirect(){
-    window.location.href = "register.php?admin=1"
+    window.location.href = "register.php?admin=1";
+}
+
+function profile(x){
+    window.open("vp.php?id=" + x, "__blank__");
+}
+
+function delete_user(x){
+    window.location.href = "Scripts/delete.php?id=" + x;
 }
 
 function toggle(x){
