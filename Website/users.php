@@ -105,7 +105,7 @@ if ($user_type != "0") {
                     <div class="students_list" id="table1">
                         <table class="student_table table">
                             <tr>
-                                <td>
+                                <td class="username_Data">
                                     Liam Smith
                                 </td>
                                 <td>
@@ -117,7 +117,7 @@ if ($user_type != "0") {
                             </tr>
 
                             <tr>
-                                <td>
+                                <td class="username_Data">
                                     Liam Smithsadasddddddddddddd
                                 </td>
                                 <td>
@@ -140,7 +140,7 @@ if ($user_type != "0") {
                     <div class="teachers_list" id="table2">
                         <table class="teacher_table table">
                             <tr>
-                                <td>
+                                <td class="username_Data">
                                     Liam Smith
                                 </td>
                                 <td>
@@ -152,7 +152,7 @@ if ($user_type != "0") {
                             </tr>
 
                             <tr>
-                                <td>
+                                <td class="username_Data">
                                     Liam Smithsadasddddddddddddd
                                 </td>
                                 <td>
@@ -175,7 +175,7 @@ if ($user_type != "0") {
                     <div class="admin_list" id="table3">
                         <table class="admin_table table">
                             <tr>
-                                <td>
+                                <td class="username_Data">
                                     Liam Smith
                                 </td>
                                 <td>
@@ -187,7 +187,7 @@ if ($user_type != "0") {
                             </tr>
 
                             <tr>
-                                <td>
+                                <td class="username_Data">
                                     Liam Smithsadasddddddddddddd
                                 </td>
                                 <td>
@@ -209,6 +209,11 @@ if ($user_type != "0") {
 
     <!--SCRIPT-->
     <script src="Scripts/register.js"></script>
+    <script>
+        document.getElementById('table1').style.display = "none";
+        document.getElementById('table2').style.display = "none";
+        document.getElementById('table3').style.display = "none";
+    </script>
     <!--SCRIPT-->
 </body>
 <!--BODY-->
