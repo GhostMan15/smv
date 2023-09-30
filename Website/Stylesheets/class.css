@@ -10,7 +10,7 @@
 .slikicaDIV{
     width: 450px; 
     height: 149px; 
-    transform: translate(100%, -149px);
+    transform: translate(110%, -149px);
 }
 .Predmeti{
     display: grid;
@@ -29,7 +29,7 @@
     
 
 }
-a:link {
+.PredmetiMini a:link {
     color: black;
     background-color: transparent;
     text-decoration: none;

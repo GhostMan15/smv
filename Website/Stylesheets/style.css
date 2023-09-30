@@ -104,3 +104,25 @@
 @keyframes typing {
     from { width: 0; }
 }
+#checked, .checked{
+    font-weight: bold;
+}
+.FooterContent{
+    width: 100%;
+    height: 130px;
+background-color: black;
+display: flex;
+justify-content: center;
+text-align: center;
+
+}
+.Ikonca{
+    width: 120px;
+    height: 45px;
+    cursor: pointer;
+    margin:auto;
+    
+}
+.FooterNav{
+
+}

@@ -87,6 +87,19 @@ else {
             <div id=tekst>Skupaj zmoremo!</div>
         </div>
     </div>
+    <div class="FooterContent">
+        <div class="Ikonca">
+        <a href='home.php'><img src='Pictures/logo.png' class='Ikonca'></a>
+        </div>
+        <div class="FooterNav">
+            <ul>
+                <li><a href="">Domov</a></li>
+                <li><a href="">O nas</a></li>
+                <li><a href="">Stopite v stik</a></li>
+            </ul>
+        </div>
+
+    </div>
 
 </body>
 
