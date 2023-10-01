@@ -13,6 +13,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = mysqli_escape_string($db, $_POST["geslo"]);
     $image = $_FILES["image"];
 
+    //set user type - student (2)
+    $level = 2;
+    if(isset($_POST["level"])){
+        $level = mysqli_escape_string($db, $_POST["level"]);
+    }
+
     //get image data
     $image = $_FILES["image"];
     $image_name = $_FILES["image"]["name"];
@@ -27,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $formats = ["jpg", "jpeg", "png", "webp"];
     $numeric = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
 
+    
     //check for empty name and surname
     if($name == "" || $surname == ""){
         $error .= "Prosim izpolnite ime in priimek. <br>";
@@ -58,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error .= "Vaše ime oz. priimek ne smeta vsebovati številk. <br>";
         $allgood = false;
     }
+
 
     //check for an empty pass
     if($password == ""){
@@ -103,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         //insert query - create new account, and get new user's data
-        $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, 2, '$name', '$surname', '$password', '$new_username', NULL, NULL);";
+        $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, '$level', '$name', '$surname', '$password', '$new_username', NULL, NULL);";
         $insert_result = mysqli_query($db, $insert_query);
         $data_query = "SELECT * FROM `user` WHERE `username` = '$new_username';";
         $data_result = mysqli_query($db, $data_query);
@@ -143,13 +151,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
         }
 
-        //set session state variables
+        //set session state variables, if the logged in user isn't an admin
+        /*if(!isset($_SESSION["user_type"])){
+            
+        }*/
+
         $_SESSION["id"] = $data_rows['id_user']; 
         $_SESSION["username"] = $new_username;
         $_SESSION["user_type"] = $data_rows['user_type'];
-
-        //display message
-        echo "<script>alert($message)</script>";
+    
+        //pass message through session to home.php
+        $_SESSION["register_message"] = $message;
 
         //redirect to homepage
         header("location: home.php");
@@ -222,6 +234,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="file" class="file_upload" name="image" accept=".png, .jpg, .jpeg, .webp">
                 </div>
             </div>
+            
+            <?php
+            //if user is admin - render dropdown
+            if(isset($_SESSION['id'])){
+                $id = $_SESSION['id'];
+
+                $type_query = "SELECT * FROM `user` WHERE `id_user` = '$id';";
+                $type_result = mysqli_query($db, $type_query);
+                $type_assoc = mysqli_fetch_assoc($type_result);
+                $user_type = $type_assoc['user_type'];
+                $_SESSION["user_type"] = $user_type;
+
+                echo"
+                <div class='level'>
+                    <div class='title'>
+                        Nivo uporabnika:
+                        <select name='level' class='level_dropdown'>
+                            <option value='2'>Učenec</option>
+                            <option value='1'>Profesor</option>
+                        </select>
+                    </div>
+                </div>
+                ";
+            }    
+            ?>
+
         </div>
         <!--MIDDLE-->
 

@@ -11,7 +11,13 @@ if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
 else {
     $username = $_SESSION["username"];
     $id = $_SESSION["id"];
-    $user_type =  $_SESSION["user_type"];
+    
+    //double check user type - there were some issues with this session variable
+    $type_query = "SELECT * FROM `user` WHERE `id_user` = '$id';";
+    $type_result = mysqli_query($db, $type_query);
+    $type_assoc = mysqli_fetch_assoc($type_result);
+    $user_type =  $type_assoc['user_type'];
+    $_SESSION["user_type"] = $user_type;
 }
 
 $_SESSION['profile_error'] = "";
@@ -19,87 +25,92 @@ $error = "";
 $allgood = true;
 
 //on save changes
-if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_type == '0' || $_SERVER["REQUEST_METHOD"] == "POST" && $id == $_GET['id']) {
-    //get form text data
-    $password = mysqli_escape_string($db, $_POST['password']);
-    $more = mysqli_escape_string($db, $_POST['opis']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if($user_type == 0 || $id == $_GET['id']){
+        //get form text data
+        $password = mysqli_escape_string($db, $_POST['password']);
+        $more = mysqli_escape_string($db, $_POST['opis']);
 
-    //get image data
-    $image = $_FILES["image"];
-    $image_name = $_FILES["image"]["name"];
-    $image_temp_name = $_FILES["image"]["tmp_name"];
-    $image_size = $_FILES["image"]["size"];
-    $image_error = $_FILES["image"]["error"];
-    $image_type =  $_FILES["image"]["type"];
-    $image_ext = explode(".", $image_name);
-    $image_real_ext = strtolower(end($image_ext));
+        //get image data
+        $image = $_FILES["image"];
+        $image_name = $_FILES["image"]["name"];
+        $image_temp_name = $_FILES["image"]["tmp_name"];
+        $image_size = $_FILES["image"]["size"];
+        $image_error = $_FILES["image"]["error"];
+        $image_type =  $_FILES["image"]["type"];
+        $image_ext = explode(".", $image_name);
+        $image_real_ext = strtolower(end($image_ext));
 
-    //supported formats
-    $formats = ["jpg", "jpeg", "png", "webp"];
+        //supported formats
+        $formats = ["jpg", "jpeg", "png", "webp"];
 
-    //Check for an empty password
-    if($password == ""){
-        $error = "Vaše novo geslo ne sme biti prazno. <br>";
-        $allgood = false;
-    }
+        //Check for an empty password
+        if($password == ""){
+            $error = "Vaše novo geslo ne sme biti prazno. <br>";
+            $allgood = false;
+        }
 
-    //Check for spaces in password 
-    if(str_contains($password, " ")){
-        $error .= "Vaše geslo ne sme vsebovati presledkov. <br>";
-        $allgood = false;
-    }   
+        //Check for spaces in password 
+        if(str_contains($password, " ")){
+            $error .= "Vaše geslo ne sme vsebovati presledkov. <br>";
+            $allgood = false;
+        }   
 
-    //check if an uploaded image is of the right format
-    if(!in_array($image_real_ext, $formats) && $image_name != ""){
-        $error .= "Slika ni v pravilnem formatu (dovoljeni so samo .jpg, .png, in .webp).";
-        $allgood = false;
-    }
+        //check if an uploaded image is of the right format
+        if(!in_array($image_real_ext, $formats) && $image_name != ""){
+            $error .= "Slika ni v pravilnem formatu (dovoljeni so samo .jpg, .png, in .webp).";
+            $allgood = false;
+        }
 
-    //If all is good, try to save data and profile picture
-    if($allgood){
-        //save text data into db
-        $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '". $_GET['id'] ."';";
-        $update_result = mysqli_query($db, $update_query);
+        //If all is good, try to save data and profile picture
+        if($allgood){
+            //save text data into db
+            $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '". $_GET['id'] ."';";
+            $update_result = mysqli_query($db, $update_query);
 
-        //save picture if a user uploaded it, and it has no error
-        if($image_temp_name != null && $image_name != ""){
-            //get old user data - image type
-            $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
-            $sql_result = mysqli_query($db, $sql_query);
-            $returned_rows = mysqli_fetch_assoc($sql_result);
-            
-            //assemble new filename
-            $img_new_name = "pfp_" . $_GET['id'];
-            $img_new_filename = $img_new_name . "." . $image_real_ext;
-            $img_root = "Pictures/Profile_Pictures/";
-            $img_full_path = $img_root . $img_new_filename;
-            
-            //delete old pfp
-            if(file_exists($img_root . $img_new_name . "." . $returned_rows['img_ext'])){
-                unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
-            }
+            //save picture if a user uploaded it, and it has no error
+            if($image_temp_name != null && $image_name != ""){
+                //get old user data - image type
+                $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
+                $sql_result = mysqli_query($db, $sql_query);
+                $returned_rows = mysqli_fetch_assoc($sql_result);
+                
+                //assemble new filename
+                $img_new_name = "pfp_" . $_GET['id'];
+                $img_new_filename = $img_new_name . "." . $image_real_ext;
+                $img_root = "Pictures/Profile_Pictures/";
+                $img_full_path = $img_root . $img_new_filename;
+                
+                //delete old pfp
+                if(file_exists($img_root . $img_new_name . "." . $returned_rows['img_ext'])){
+                    unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
+                }
 
-            //file upload success
-            if(move_uploaded_file($image_temp_name, $img_full_path)){
-                $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '" . $_GET['id'] . "';";
-                $img_update_result = mysqli_query($db, $img_update_query);
-            }
-
-            //file upload fail - set stock pfp as profile picture
-            else{
-                $stock_path = $img_root . "unknown.jpg";
-                //file copy success
-                if(copy($stock_path, $img_new_name.".jpg")){
-                    $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $_GET['id'] ."';";
+                //file upload success
+                if(move_uploaded_file($image_temp_name, $img_full_path)){
+                    $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '" . $_GET['id'] . "';";
                     $img_update_result = mysqli_query($db, $img_update_query);
                 }
-                //file copy fail
+
+                //file upload fail - set stock pfp as profile picture
                 else{
-                    $error .= "Nadomestne slike ni šlo naložiti. Se opravičujemo za napako. <br>";
+                    $stock_path = $img_root . "unknown.jpg";
+                    //file copy success
+                    if(copy($stock_path, $img_new_name.".jpg")){
+                        $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $_GET['id'] ."';";
+                        $img_update_result = mysqli_query($db, $img_update_query);
+                    }
+                    //file copy fail
+                    else{
+                        $error .= "Nadomestne slike ni šlo naložiti. Se opravičujemo za napako. <br>";
+                    }
                 }
+                
             }
-            
         }
+    }
+    else{
+        $error .= "Žal <br>";
     }
 }
 ?>
@@ -123,8 +134,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_type == '0' || $_SERVER["REQUE
     <div class="bannerVP">
         <div class="navbar">
         <?php
+            /*echo"<script>
+                alert($user_type);
+                alert($id);
+            </script>";*/
+
             //teachers
-            if ($user_type == '1') {
+            if ($user_type == 1) {
                 echo "
                 <a href='home.php'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
@@ -137,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_type == '0' || $_SERVER["REQUE
                 ";
             }
             //students
-            else if ($user_type == '2') {
+            else if ($user_type == 2) {
                 echo "
                 <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
@@ -149,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_type == '0' || $_SERVER["REQUE
                 ";
             }
             //admin
-            else {
+            else if ($user_type == 0){
                 echo "
                 <a href='home.php'><img src='Pictures/logo0.png' class='logo'></a>
                 <ul>
@@ -223,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && $user_type == '0' || $_SERVER["REQUE
                         ";
 
                     //edit mode - if user is admin, or it's his own account
-                    if($_SESSION["user_type"] = 'admin'|| $_GET['id'] == $id){
+                    if($_SESSION["user_type"] = 'admin' && $returned_rows["user_type"] != 0 || $_GET['id'] == $id){
                         echo"
                         <!--DETAILS-->
                         <div class='user_info'>

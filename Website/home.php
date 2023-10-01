@@ -11,7 +11,19 @@ if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
 else {
     $username = $_SESSION["username"];
     $id = $_SESSION["id"];
-    $user_type =  $_SESSION["user_type"];
+    
+    //double check user type - there were some issues with this session variable
+    $type_query = "SELECT * FROM `user` WHERE `id_user` = '$id';";
+    $type_result = mysqli_query($db, $type_query);
+    $type_assoc = mysqli_fetch_assoc($type_result);
+    $user_type =  $type_assoc['user_type'];
+    $_SESSION["user_type"] = $user_type;
+}
+
+//display message from register.php, if there is one
+if(isset($_SESSION["register_message"])){
+    $msg = $_SESSION["register_message"];
+    echo"<script>alert($msg);</script>";
 }
 ?>
 
@@ -71,15 +83,6 @@ else {
                 ";
             }
             ?>
-            <!--
-            <ul>
-                <li> <a href="$$$">Domov</a></li>
-                <li> <a href="$$$">Moduli</a></li>
-                <li> <a href="$$$">Predmeti</a></li>
-                <li> <a href="$$$">Vaš Profil</a></li>
-                <li> <a href="login.php">Odjava</a></li>
-            </ul>
-            -->
         </div>
 
         <div class="content">
