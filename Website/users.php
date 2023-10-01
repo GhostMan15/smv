@@ -53,8 +53,8 @@ if ($user_type != 0 && $user_type != 1) {
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='$$$'>Učenci</a></li>
-                    <li id='checked'> <a href='vp.php'>Vaš Profil</a></li>
+                    <li id='checked'> <a href='users.php'>Učenci</a></li>
+                    <li> <a href='vp.php'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>
                 ";
@@ -93,11 +93,18 @@ if ($user_type != 0 && $user_type != 1) {
         <div class="container">
 
             <!--TOP-->
-            <div class="top">
-                <div class="top_inner">
-                    <button type="button" class="add_btn" onclick="redirect()"><img src="Pictures/add_pfp.png" class="add_pic"></button>
-                </div>
-            </div>
+            <?php
+            //if user is admin, show 'add' button
+            if($user_type == 0){
+                echo"
+                <div class='top'>
+                    <div class='top_inner'>
+                        <button type='button' class='add_btn' onclick='redirect()'><img src='Pictures/add_pfp.png' class='add_pic'></button>
+                    </div>
+                </div";
+            }
+            
+            ?>
             <!--TOP-->
 
             <!--ROWS-->

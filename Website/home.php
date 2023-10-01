@@ -51,7 +51,7 @@ if(isset($_SESSION["register_message"])){
                 <ul>
                     <li id='checked'> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='$$$'>Učenci</a></li>
+                    <li> <a href='users.php'>Učenci</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
                     <li> <a href='login.php'>Odjava</a></li>
                 </ul>

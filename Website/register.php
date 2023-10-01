@@ -246,17 +246,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $user_type = $type_assoc['user_type'];
                 $_SESSION["user_type"] = $user_type;
 
-                echo"
-                <div class='level'>
-                    <div class='title'>
-                        Nivo uporabnika:
-                        <select name='level' class='level_dropdown'>
-                            <option value='2'>Učenec</option>
-                            <option value='1'>Profesor</option>
-                        </select>
+                if($user_type == 0){
+                    echo"
+                    <div class='level'>
+                        <div class='title'>
+                            Nivo uporabnika:
+                            <select name='level' class='level_dropdown'>
+                                <option value='2'>Učenec</option>
+                                <option value='1'>Profesor</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                ";
+                    ";
+                }
             }    
             ?>
 
