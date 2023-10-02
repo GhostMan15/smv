@@ -55,7 +55,7 @@ if ($user_type != 0 && $user_type != 1) {
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li id='checked'> <a href='users.php'>Učenci</a></li>
                     <li> <a href='vp.php'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -67,7 +67,7 @@ if ($user_type != 0 && $user_type != 1) {
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li id='checked'> <a href='vp.php'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -80,7 +80,7 @@ if ($user_type != 0 && $user_type != 1) {
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li id='checked'> <a href='users.php'>Uporabniki</a></li>
                     <li> <a href='vp.php'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -172,9 +172,6 @@ if ($user_type != 0 && $user_type != 1) {
                                     <tr>
                                         <td class='username_data'>
                                             <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
-                                        </td>
-                                        <td class='delete_data'>
-                                            <button type='button' class='delete_btn table_btn'><img class='delete_img img' src='Pictures/delete.png'></button>
                                         </td>
                                         <td class='profile_data'>
                                             <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>

@@ -5,7 +5,7 @@ session_start();
 
 //if the user isn't logged in / session variables aren't set, redirect to login
 if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
-    header("location: login.php");
+    header("location: Scripts/logout.php");
 }
 //if the user is logged in, allow access
 else {
@@ -43,9 +43,9 @@ else {
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='$$$.php'>Učenci</a></li>
+                    <li> <a href='users.php'>Učenci</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 </div>
                 </div>
@@ -59,7 +59,7 @@ else {
                     <li><a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 </div>
                 </div>
@@ -74,7 +74,7 @@ else {
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='users.php'>Uporabniki</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 </div>
                 </div>

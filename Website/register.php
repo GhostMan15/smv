@@ -250,7 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo"
                     <div class='level'>
                         <div class='title'>
-                            Nivo uporabnika:
+                            Nivo:
                             <select name='level' class='level_dropdown'>
                                 <option value='2'>Učenec</option>
                                 <option value='1'>Profesor</option>
@@ -272,7 +272,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo $error;
                 ?>
             </div>
-            <div class="login_text">Že imaš račun? Prijavi se <a href="login.php" class="link">tukaj</a>.</div>
+            <div class="login_text">
+                <p>Že imaš račun? Prijavi se <a href="login.php" class="link">tukaj</a>.</p>
+            </div>
             <div class="submit">
                 <input type="submit" class="submit_btn" value="Registriraj"> 
             </div>

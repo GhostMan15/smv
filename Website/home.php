@@ -53,7 +53,7 @@ if(isset($_SESSION["register_message"])){
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='users.php'>Učenci</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -65,7 +65,7 @@ if(isset($_SESSION["register_message"])){
                     <li id='checked'><a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -78,7 +78,7 @@ if(isset($_SESSION["register_message"])){
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='users.php'>Uporabniki</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }

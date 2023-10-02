@@ -148,7 +148,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='users.php'>Učenci</a></li>
                     <li id='checked'> <a href='vp.php'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -160,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li id='checked'> <a href='vp.php'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }
@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='users.php'>Uporabniki</a></li>
                     <li id='checked'> <a href='vp.php'>Vaš Profil</a></li>
-                    <li> <a href='login.php'>Odjava</a></li>
+                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
                 </ul>
                 ";
             }    
@@ -239,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ";
 
                     //edit mode - if user is admin, or it's his own account
-                    if($_SESSION["user_type"] = 'admin' && $returned_rows["user_type"] != 0 || $_GET['id'] == $id){
+                    if($_SESSION["user_type"] == 0 && $returned_rows["user_type"] != 0 || $_GET['id'] == $id){
                         echo"
                         <!--DETAILS-->
                         <div class='user_info'>
