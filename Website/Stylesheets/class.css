@@ -10,58 +10,41 @@
 .slikicaDIV{
     width: 450px; 
     height: 149px; 
-    transform: translate(110%, -149px);
+    transform: translate(133%, -149px);
 }
 .Predmeti{
-    display: grid;
+  font-size: 20px;
     width: 70%;
     margin: auto;
-
-}
-.PredmetiMini{
-    width:auto;
-    height: 350px;
     border: 1px solid black;
-    margin-bottom: 18px;
-    border-radius: 0.5vw;
-    padding: 17px;
-    color: black;
-    
-
+    border-radius: 17px;
 }
-.PredmetiMini a:link {
+.miza{
+ padding: 19px;
+ justify-content: center;
+  display:inline;
+}
+
+a:link {
     color: black;
     background-color: transparent;
     text-decoration: none;
-    font-weight: normal;
-    font-size: 23px;
-    transition: all 30ms;
-    text-transform: none;
   }
   
   a:visited {
     color: black;
     background-color: transparent;
     text-decoration: none;
-    font-weight: normal;
-    font-size: 23px;
-    
   }
   
   a:hover {
-    color: blue;
-    background-color: transparent;
-    text-decoration: underline;
-    font-weight: normal;
-    font-size: 23px;
-    
-  }
-  a:active {
     color: red;
     background-color: transparent;
     text-decoration: underline;
-    font-weight: normal;
-    font-size: 23px;
- 
-    
+  }
+  
+  a:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline;
   }

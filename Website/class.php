@@ -82,19 +82,16 @@ else {
             }
             ?>
         <div class="slikicaDIV"> <img class="slikica" id="slikaID"> </div>
-        <div class="Predmeti"> 
-            <div class="PredmetiMini">
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Slo &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Mat &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-                <h1><a href ='###'> Nup &nbsp;&nbsp;&nbsp;&nbsp;--&nbsp;&nbsp;&nbsp;&nbsp;  Ucitelj1, Ucitelj2, Ucitelj3 </a></h1>
-            </div>
-         </div>
+        <div class="Predmeti">
+        <table class="miza">
+           <tr> <td> <a href="$$$"> Slovenščina <td> <tr>
+           <tr> <td> <a href="$$$"> Matematika <td> <tr>
+           <tr> <td> <a href="$$$"> Napredna uporaba kugdgk <td> <tr>
+           <tr> <td> <a href="$$$"> Sociologija <td> <tr>
+           <tr> <td> <a href="$$$"> Športna <td> <tr>
+           <tr> <td> <a href="$$$"> Razvijanje spletnih aplikacij <td> <tr>
+        </table>
+        </div>
       </div>
      
     
@@ -109,7 +106,6 @@ else {
                 break;
             }
         }
-            
             document.getElementById('slikaID').src = 'Pictures/quot' + t + '.png';
             
                 
