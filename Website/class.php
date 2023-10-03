@@ -13,6 +13,8 @@ else {
     $id = $_SESSION["id"];
     $user_type =  $_SESSION["user_type"];
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,12 +86,18 @@ else {
         <div class="slikicaDIV"> <img class="slikica" id="slikaID"> </div>
         <div class="Predmeti">
         <table class="miza">
-           <tr> <td> <a href="$$$"> Slovenščina <td> <tr>
-           <tr> <td> <a href="$$$"> Matematika <td> <tr>
-           <tr> <td> <a href="$$$"> Napredna uporaba kugdgk <td> <tr>
-           <tr> <td> <a href="$$$"> Sociologija <td> <tr>
-           <tr> <td> <a href="$$$"> Športna <td> <tr>
-           <tr> <td> <a href="$$$"> Razvijanje spletnih aplikacij <td> <tr>
+        <?php  
+           $predmeti_query = "SELECT * FROM `predmeti`;";
+           $predmeti_res = mysqli_query($db, $predmeti_query);
+           $predmeti_row = mysqli_fetch_assoc($predmeti_res);
+           $stevilo_predmetov = mysqli_num_rows($predmeti_res);
+
+           while($rows = mysqli_fetch_assoc($predmeti_res)){
+            echo" 
+            <tr class='miza'><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a> <td><tr>
+            ";
+           }
+           ?>
         </table>
         </div>
       </div>
