@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //file upload fail - set stock pfp as profile picture
                 else{
-                    $stock_path = $img_root . "unknown.jpg";
+                    $stock_path = "Pictures/unknown.jpg";
                     //file copy success
                     if(copy($stock_path, $img_new_name.".jpg")){
                         $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $_GET['id'] ."';";
@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     }
                     //if the user doesn't have a picture, display stock pfp
                     else{
-                        echo "<img class='vp_pfp' src='Pictures/Profile_Pictures/unknown.jpg'>";
+                        echo "<img class='vp_pfp' src='Pictures/unknown.jpg'>";
                     }
 
                     echo"   </div>
