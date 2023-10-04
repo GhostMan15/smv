@@ -41,7 +41,7 @@ else {
             //teachers
             if ($user_type == '1') {
                 echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
+                <a href='index.html'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
@@ -56,7 +56,7 @@ else {
             //students
             else if ($user_type == '2') {
                 echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='homepage.html'><img src='Pictures/logo2.png' class='logo'></a>
+                <a href='index.html'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
                     <li><a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
@@ -70,7 +70,7 @@ else {
             //admin
             else {
                 echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='homepage.html'><img src='Pictures/logo0.png' class='logo'></a>
+                <a href='index.html'><img src='Pictures/logo0.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
