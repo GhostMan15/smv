@@ -81,7 +81,7 @@ CREATE TABLE `user` (
   `user_type` int(11) DEFAULT 2 CHECK (`user_type` in (0,1,2)),
   `ime` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `priimek` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `geslo` varchar(50) DEFAULT NULL,
+  `geslo` varchar(255) DEFAULT NULL,
   `username` varchar(100) DEFAULT NULL,
   `opis` varchar(255) DEFAULT NULL,
   `img_ext` varchar(10) DEFAULT NULL
