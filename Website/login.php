@@ -14,29 +14,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Check if the credentials are empty
     if($username == "" || $password == ""){
-        $error = "Vaše uporabniško ime oz. geslo ne smeta biti prazna.";
+        $error .= "Vaše uporabniško ime oz. geslo ne smeta biti prazna. <br>";
         $allgood = false;
     }
 
     //if all is good, execute query to check credentials
     if($allgood){
         //query for a user with the given credentials
-        $sql1 = "SELECT * FROM `user` WHERE `username` = '$username' AND `geslo` = '$password'";
+        $sql1 = "SELECT * FROM `user` WHERE `username` = '$username'";
         $result1 = mysqli_query($db, $sql1);
         $row = mysqli_fetch_assoc($result1);
         $count = mysqli_num_rows($result1);
 
-        //If there is a result, allow login and store user data in session
+        //If there is a result, check input password against hash in pass
         if($count == 1){
-            $_SESSION["id"] = $row["id_user"];
-            $_SESSION["username"] = $username;
-            $_SESSION["user_type"] = $row["user_type"];
-            header("location: home.php");
+            if(password_verify($password, $row['geslo'])){
+                $_SESSION["id"] = $row["id_user"];
+                $_SESSION["username"] = $username;
+                $_SESSION["user_type"] = $row["user_type"];
+                $_SESSION['pass'] = $password;
+                header("location: home.php");
+            }
+            else{
+                $error .= "Vaše geslo je nepravilno. <br>";
+                $allgood = false;
+                $_SESSION["login_error"] = $error;
+            }
         }
 
         //if there is no result, deny access
         else{
-            $error = "Vaši vpisni podatki so nepravilni oz. se ne ujemajo.";
+            $error .= "Vaše uporabniško ime ne obstaja. <br>";
             $allgood = false;
             $_SESSION["login_error"] = $error;
         }

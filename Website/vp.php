@@ -4,7 +4,7 @@ include("Scripts/config.php");
 session_start();
 
 //if the user isn't logged in / session variables aren't set, redirect to login
-if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
+if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"], $_SESSION['pass'])) {
     header("location: login.php");
 }
 //if the user is logged in, allow access
@@ -16,6 +16,7 @@ else {
     $type_query = "SELECT * FROM `user` WHERE `id_user` = '$id';";
     $type_result = mysqli_query($db, $type_query);
     $type_assoc = mysqli_fetch_assoc($type_result);
+    $pass = $_SESSION['pass'];
     $user_type =  $type_assoc['user_type'];
     $_SESSION["user_type"] = $user_type;
 }
@@ -43,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //supported formats
         $formats = ["jpg", "jpeg", "png", "webp"];
+        $numeric = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
 
         //Check for an empty password
         if($password == ""){
@@ -62,51 +64,95 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $allgood = false;
         }
 
+
+        //check minimum password specifications - at least 12 chars, one uppercase letter, one number
+        if(strlen($password) < 12){
+            $allgood = false;
+            $error .= "Vaše geslo mora vsebovati vsaj 12 znakov.";
+        }
+
+        $containsNumber = false; 
+        $containsUppercase = false;
+
+        for($i = 0; $i < strlen($password); $i++){
+            
+            for($j = 0; $j < count($numeric); $j++){
+                if($password[$i] == $numeric[$j]){
+                    $containsNumber = true;
+                    break;
+                }
+            }
+
+            if(ctype_upper($password[$i])){
+                $containsUppercase = true;
+            }
+        }
+
+        if($containsNumber == false){
+            $allgood = false;
+            $error .= "Vaše geslo mora imeti vsaj eno številko. <br>";
+        }
+
+        if($containsUppercase == false){
+            $allgood = false;
+            $error .= "Vaše geslo mora vsebovati vsaj eno veliko črko. <br>";
+        }
+
+
         //If all is good, try to save data and profile picture
         if($allgood){
+            //hash the password
+            $hash_pass = password_hash($password, PASSWORD_DEFAULT);
+
             //save text data into db
-            $update_query = "UPDATE `user` SET `geslo` = '$password', `opis` = '$more' WHERE `id_user` = '". $_GET['id'] ."';";
-            $update_result = mysqli_query($db, $update_query);
+            $update_query = "UPDATE `user` SET `geslo` = '$hash_pass', `opis` = '$more' WHERE `id_user` = '". $_GET['id'] ."';";
+            //UPDATE success
+            if(mysqli_query($db, $update_query)){
+                $_SESSION['pass'] = $password;
+                //save picture if a user uploaded it, and it has no error
+                if($image_temp_name != null && $image_name != ""){
+                    //get old user data - image type
+                    $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
+                    $sql_result = mysqli_query($db, $sql_query);
+                    $returned_rows = mysqli_fetch_assoc($sql_result);
+                    
+                    //assemble new filename
+                    $img_new_name = "pfp_" . $_GET['id'];
+                    $img_new_filename = $img_new_name . "." . $image_real_ext;
+                    $img_root = "Pictures/Profile_Pictures/";
+                    $img_full_path = $img_root . $img_new_filename;
+                    
+                    //delete old pfp
+                    if(file_exists($img_root . $img_new_name . "." . $returned_rows['img_ext'])){
+                        unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
+                    }
 
-            //save picture if a user uploaded it, and it has no error
-            if($image_temp_name != null && $image_name != ""){
-                //get old user data - image type
-                $sql_query = "SELECT * FROM `user` WHERE `id_user` = '" . $_GET['id'] . "';";
-                $sql_result = mysqli_query($db, $sql_query);
-                $returned_rows = mysqli_fetch_assoc($sql_result);
-                
-                //assemble new filename
-                $img_new_name = "pfp_" . $_GET['id'];
-                $img_new_filename = $img_new_name . "." . $image_real_ext;
-                $img_root = "Pictures/Profile_Pictures/";
-                $img_full_path = $img_root . $img_new_filename;
-                
-                //delete old pfp
-                if(file_exists($img_root . $img_new_name . "." . $returned_rows['img_ext'])){
-                    unlink($img_root . $img_new_name . "." . $returned_rows['img_ext']);
-                }
-
-                //file upload success
-                if(move_uploaded_file($image_temp_name, $img_full_path)){
-                    $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '" . $_GET['id'] . "';";
-                    $img_update_result = mysqli_query($db, $img_update_query);
-                }
-
-                //file upload fail - set stock pfp as profile picture
-                else{
-                    $stock_path = "Pictures/unknown.jpg";
-                    //file copy success
-                    if(copy($stock_path, $img_new_name.".jpg")){
-                        $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $_GET['id'] ."';";
+                    //file upload success
+                    if(move_uploaded_file($image_temp_name, $img_full_path)){
+                        $img_update_query = "UPDATE `user` SET `img_ext` = '$image_real_ext' WHERE `id_user` = '" . $_GET['id'] . "';";
                         $img_update_result = mysqli_query($db, $img_update_query);
                     }
-                    //file copy fail
+
+                    //file upload fail - set stock pfp as profile picture
                     else{
-                        $error .= "Nadomestne slike ni šlo naložiti. Se opravičujemo za napako. <br>";
+                        $stock_path = "Pictures/unknown.jpg";
+                        //file copy success
+                        if(copy($stock_path, $img_new_name.".jpg")){
+                            $img_update_query = "UPDATE `user` SET `img_ext` = 'jpg' WHERE `id_user` = '". $_GET['id'] ."';";
+                            $img_update_result = mysqli_query($db, $img_update_query);
+                        }
+                        //file copy fail
+                        else{
+                            $error .= "Nadomestne slike ni šlo naložiti. Se opravičujemo za napako. <br>";
+                        }
                     }
+                    
                 }
-                
             }
+            else{
+                $error .= "Vaših podatkov se ni dalo posodobiti. Se opravičujemo za napako. <br>";
+            }
+
         }
     }
     else{
@@ -258,7 +304,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class='password'>
                                 <div class='left title'>Geslo:</div>
                                 <div class='pass_wrap right'>
-                                    <input name='password' type='password' value='" . $returned_rows["geslo"] . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required>
+                                    <input name='password' type='password' value='" . $_SESSION['pass']  . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required>
                                     <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Pokaži</button>
                                     <script defer>
                                         passwordFieldWidth();

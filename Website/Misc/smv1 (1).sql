@@ -245,7 +245,6 @@ ALTER TABLE `predmeti`
 ALTER TABLE `ucilnica`
   ADD PRIMARY KEY (`id_predmet`),
   ADD KEY `fk_user_id` (`id_user`);
-ADD user_type int not null;
 
 --
 -- Indeksi tabele `user`
