@@ -32,22 +32,30 @@ a:link {
     color: black;
     background-color: transparent;
     text-decoration: none;
+    display: inline-block;
+    
   }
   
   a:visited {
     color: black;
     background-color: transparent;
     text-decoration: none;
+    display: inline-block;
+    position: relative;
   }
   
   a:hover {
     color: red;
     background-color: transparent;
     text-decoration: underline;
+    display: inline-block;
+    position: relative;
   }
   
   a:active {
     color: yellow;
     background-color: transparent;
     text-decoration: underline;
+    display: inline-block;
+    position: relative;
   }
