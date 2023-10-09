@@ -197,6 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["id"] = $data_rows['id_user']; 
         $_SESSION["username"] = $new_username;
         $_SESSION["user_type"] = $data_rows['user_type'];
+        $_SESSION['pass'] = $password;
     
         //pass message through session to home.php
         $_SESSION["register_message"] = $message;
