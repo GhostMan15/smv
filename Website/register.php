@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //supported formats
     $formats = ["jpg", "jpeg", "png", "webp"];
     $numeric = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+    $specials = ["č", "Č", "š", "Š", "ž", "Ž", "ć", "Ć"];
 
     
     //check for empty name and surname
@@ -79,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allgood = false;
     }
 
-
+    
     //check minimum password specifications - at least 12 chars, one uppercase letter, one number
     if(strlen($password) < 12){
         $allgood = false;
@@ -88,17 +89,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $containsNumber = false; 
     $containsUppercase = false;
+    $containsSpecials = false;
 
     for($i = 0; $i < strlen($password); $i++){
         
         for($j = 0; $j < count($numeric); $j++){
             if($password[$i] == $numeric[$j]){
                 $containsNumber = true;
-                break;
             }
         }
 
-        if(ctype_upper($password[$i]) || $password[$i] == 'Ž' || $password[$i] == 'Š' || $password[$i] == 'Č' || $password[$i] == 'Ć'){
+        /*
+        for($k = 0; $k < count($specials); $k++){
+            if($password[$i] == $specials[$k]){
+                $containsSpecials = true;
+                break;
+            }
+        }
+        */
+
+        if(ctype_upper($password[$i])){
             $containsUppercase = true;
         }
     }
@@ -112,6 +122,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allgood = false;
         $error .= "Vaše geslo mora vsebovati vsaj eno veliko črko. <br>";
     }
+
+    /*
+    if($containsSpecials){
+        $allgood = false;
+        $error .= "Vaše geslo ne sme vsebovati šumnikov. <br>";
+    }
+    */
 
 
     //check for correct image format, if there is even an image
