@@ -89,8 +89,8 @@ else {
         <?php  
            $predmeti_query = "SELECT * FROM `predmeti`;";
            $predmeti_res = mysqli_query($db, $predmeti_query);
-           $predmeti_row = mysqli_fetch_assoc($predmeti_res);
-           $stevilo_predmetov = mysqli_num_rows($predmeti_res);
+       
+           
 
            while($rows = mysqli_fetch_assoc($predmeti_res)){
             echo" 
