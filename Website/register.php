@@ -79,6 +79,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allgood = false;
     }
 
+
+    //check minimum password specifications - at least 12 chars, one uppercase letter, one number
+    if(strlen($password) < 12){
+        $allgood = false;
+        $error .= "Vaše geslo mora vsebovati vsaj 12 znakov.";
+    }
+
+    $containsNumber = false; 
+    $containsUppercase = false;
+
+    for($i = 0; $i < strlen($password); $i++){
+        
+        for($j = 0; $j < count($numeric); $j++){
+            if($password[$i] == $numeric[$j]){
+                $containsNumber = true;
+                break;
+            }
+        }
+
+        if(ctype_upper($password[$i])){
+            $containsUppercase = true;
+        }
+    }
+
+    if($containsNumber == false){
+        $allgood = false;
+        $error .= "Vaše geslo mora imeti vsaj eno številko. <br>";
+    }
+
+    if($containsUppercase == false){
+        $allgood = false;
+        $error .= "Vaše geslo mora vsebovati vsaj eno veliko črko. <br>";
+    }
+
+
     //check for correct image format, if there is even an image
     if(!in_array($image_real_ext, $formats) && $image_name != ""){
         $error .= "Slika ni v pravilnem formatu (dovoljeni so samo .jpg, .png, in .webp).";
@@ -110,8 +145,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $new_username = $sub_username;
         }
 
+        //hash password
+        $hash_pass = password_hash($password, PASSWORD_DEFAULT);
+
         //insert query - create new account, and get new user's data
-        $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, '$level', '$name', '$surname', '$password', '$new_username', NULL, NULL);";
+        $insert_query = "INSERT INTO `user` (`id_user`, `user_type`, `ime`, `priimek`, `geslo`, `username`, `opis`, `img_ext`) VALUES (DEFAULT, '$level', '$name', '$surname', '$hash_pass', '$new_username', NULL, NULL);";
         $insert_result = mysqli_query($db, $insert_query);
         $data_query = "SELECT * FROM `user` WHERE `username` = '$new_username';";
         $data_result = mysqli_query($db, $data_query);
@@ -225,7 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="password_inner">
-                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="Brez presledkov, max. 50 črk" required>
+                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="min. 12 črk, ena velika črka, ena številka" required>
                 </div>
             </div>
 

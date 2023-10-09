@@ -41,7 +41,7 @@ else {
             //teachers
             if ($user_type == '1') {
                 echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='homepage.html'><img src='Pictures/logo1.png' class='logo'></a>
+                <a href='index.html'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
@@ -56,7 +56,7 @@ else {
             //students
             else if ($user_type == '2') {
                 echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='homepage.html'><img src='Pictures/logo2.png' class='logo'></a>
+                <a href='index.html'><img src='Pictures/logo2.png' class='logo'></a>
                 <ul>
                     <li><a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
@@ -70,7 +70,7 @@ else {
             //admin
             else {
                 echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='homepage.html'><img src='Pictures/logo0.png' class='logo'></a>
+                <a href='index.html'><img src='Pictures/logo0.png' class='logo'></a>
                 <ul>
                     <li> <a href='home.php'>Domov</a></li>
                     <li id='checked'> <a href='class.php'>Predmeti</a></li>
@@ -87,16 +87,43 @@ else {
         <div class="Predmeti">
         <table class="miza">
         <?php  
+        
            $predmeti_query = "SELECT * FROM `predmeti`;";
            $predmeti_res = mysqli_query($db, $predmeti_query);
-       
-           
+           $predmeti_row = mysqli_fetch_assoc($predmeti_res);
+           $stevilo_predmetov = mysqli_num_rows($predmeti_res);
 
-           while($rows = mysqli_fetch_assoc($predmeti_res)){
-            echo" 
-            <tr class='miza'><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a> <td><tr>
-            ";
+           while($rows = mysqli_fetch_assoc($predmeti_res)){      //tuki se izpisejo vsi predmeti iz db
+            if($predmeti_num > $i && $i != $predmeti_num)
+            {
+                 $i++;
+                 echo" 
+                <tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a> <td><tr>
+                ";
            }
+                else{
+                    
+                    echo "<tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a> <td><tr> <br> <tr><td rowspan='2'><hr><td><tr>";
+                }
+          
+           }
+           
+           
+           @$id = $_GET['id'];
+           $moduli_query = "SELECT * FROM `model` WHERE `id_predmet` = '$id';";
+           $moduli_res = mysqli_query($db, $moduli_query);
+
+           
+           if (isset($id)){
+           {
+            while($vrstice = mysqli_fetch_assoc($moduli_res)){
+                echo "<tr><td> <a href='$$$' class= 'modul'> $vrstice[Naslov] </a> <td><tr>";
+            }
+           }
+            
+            
+        } 
+
            ?>
         </table>
         </div>
