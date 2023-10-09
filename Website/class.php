@@ -90,20 +90,20 @@ else {
         
            $predmeti_query = "SELECT * FROM `predmeti`;";
            $predmeti_res = mysqli_query($db, $predmeti_query);
-           $predmeti_row = mysqli_fetch_assoc($predmeti_res);
-           $stevilo_predmetov = mysqli_num_rows($predmeti_res);
+           $predmeti_num = mysqli_num_rows($predmeti_res);
+           $i = 1;
 
            while($rows = mysqli_fetch_assoc($predmeti_res)){      //tuki se izpisejo vsi predmeti iz db
             if($predmeti_num > $i && $i != $predmeti_num)
             {
                  $i++;
                  echo" 
-                <tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a> <td><tr>
+                <tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a></td></tr>
                 ";
            }
                 else{
                     
-                    echo "<tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a> <td><tr> <br> <tr><td rowspan='2'><hr><td><tr>";
+                    echo "<tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a></td></tr> <tr><td rowspan='1'><hr></td></tr>";
                 }
           
            }
@@ -117,7 +117,7 @@ else {
            if (isset($id)){
            {
             while($vrstice = mysqli_fetch_assoc($moduli_res)){
-                echo "<tr><td> <a href='$$$' class= 'modul'> $vrstice[Naslov] </a> <td><tr>";
+                echo "<tr><td> <a href='$$$'> $vrstice[Naslov] </a> </td></tr>";
             }
            }
             
