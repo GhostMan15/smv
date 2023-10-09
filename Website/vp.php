@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             }
 
-            if(ctype_upper($password[$i])){
+            if(ctype_upper($password[$i]) || $password[$i] == 'Ž' || $password[$i] == 'Š' || $password[$i] == 'Č' || $password[$i] == 'Ć'){
                 $containsUppercase = true;
             }
         }
