@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allgood = false;
     }
 
-    
+
     //check minimum password specifications - at least 12 chars, one uppercase letter, one number
     if(strlen($password) < 12){
         $allgood = false;
@@ -281,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="password_inner">
-                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="min. 12 črk, ena velika črka, ena številka" required>
+                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="min. 12 črk, 1 velika črka in številka, brez šumnikov" required>
                 </div>
             </div>
 
