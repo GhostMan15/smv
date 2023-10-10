@@ -3,7 +3,7 @@ include("Scripts/config.php");
 //START THE SESSION
 session_start();
 
-if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"], $_SESSION['pass'], $_GET['gradivo'])) {
+if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"], $_SESSION['pass'])) {
     header("location: login.php");
 }
 
@@ -37,52 +37,56 @@ else {
 <!--HEAD-->
 
 <body>
-    <?php
-    //teachers
-    if ($user_type == '1') {
-        echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='index.html'><img src='Pictures/logo1.png' class='logo'></a>
-                <ul>
-                    <li> <a href='home.php'>Domov</a></li>
-                    <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='users.php'>Učenci</a></li>
-                    <li> <a href='vp.php?id=" . $id . "'>Vaš Profil</a></li>
-                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
-                </ul>
-                </div>
-                </div>
-                ";
-    }
-    //students
-    else if ($user_type == '2') {
-        echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='index.html'><img src='Pictures/logo2.png' class='logo'></a>
-                <ul>
-                    <li><a href='home.php'>Domov</a></li>
-                    <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='vp.php?id=" . $id . "'>Vaš Profil</a></li>
-                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
-                </ul>
-                </div>
-                </div>
-                ";
-    }
-    //admin
-    else {
-        echo "<div class='navbar_div'> <div class = 'navbar'>
-                <a href='index.html'><img src='Pictures/logo0.png' class='logo'></a>
-                <ul>
-                    <li> <a href='home.php'>Domov</a></li>
-                    <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='users.php'>Uporabniki</a></li>
-                    <li> <a href='vp.php?id=" . $id . "'>Vaš Profil</a></li>
-                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
-                </ul>
-                </div>
-                </div>
-                ";
-    }
-    ?>
+    <div class="bannerVP">
+        <div class="navbar">
+            <?php
+            //teachers
+            if ($user_type == '1') {
+                echo "<div class='navbar_div'> <div class = 'navbar'>
+                        <a href='index.html'><img src='Pictures/logo1.png' class='logo'></a>
+                        <ul>
+                            <li> <a href='home.php'>Domov</a></li>
+                            <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                            <li> <a href='users.php'>Učenci</a></li>
+                            <li> <a href='vp.php?id=" . $id . "'>Vaš Profil</a></li>
+                            <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                        </ul>
+                        </div>
+                        </div>
+                        ";
+            }
+            //students
+            else if ($user_type == '2') {
+                echo "<div class='navbar_div'> <div class = 'navbar'>
+                        <a href='index.html'><img src='Pictures/logo2.png' class='logo'></a>
+                        <ul>
+                            <li><a href='home.php'>Domov</a></li>
+                            <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                            <li> <a href='vp.php?id=" . $id . "'>Vaš Profil</a></li>
+                            <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                        </ul>
+                        </div>
+                        </div>
+                        ";
+            }
+            //admin
+            else {
+                echo "<div class='navbar_div'> <div class = 'navbar'>
+                        <a href='index.html'><img src='Pictures/logo0.png' class='logo'></a>
+                        <ul>
+                            <li> <a href='home.php'>Domov</a></li>
+                            <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                            <li> <a href='users.php'>Uporabniki</a></li>
+                            <li> <a href='vp.php?id=" . $id . "'>Vaš Profil</a></li>
+                            <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                        </ul>
+                        </div>
+                        </div>
+                        ";
+            }
+            ?>
+        </div>
+    </div>
 </body>
 
 </html>
