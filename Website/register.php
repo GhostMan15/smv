@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //supported formats
     $formats = ["jpg", "jpeg", "png", "webp"];
     $numeric = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+    $specials = ["č", "Č", "š", "Š", "ž", "Ž", "ć", "Ć"];
 
     
     //check for empty name and surname
@@ -88,15 +89,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $containsNumber = false; 
     $containsUppercase = false;
+    $containsSpecials = false;
 
     for($i = 0; $i < strlen($password); $i++){
         
         for($j = 0; $j < count($numeric); $j++){
             if($password[$i] == $numeric[$j]){
                 $containsNumber = true;
+            }
+        }
+
+        /*
+        for($k = 0; $k < count($specials); $k++){
+            if($password[$i] == $specials[$k]){
+                $containsSpecials = true;
                 break;
             }
         }
+        */
 
         if(ctype_upper($password[$i])){
             $containsUppercase = true;
@@ -112,6 +122,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allgood = false;
         $error .= "Vaše geslo mora vsebovati vsaj eno veliko črko. <br>";
     }
+
+    /*
+    if($containsSpecials){
+        $allgood = false;
+        $error .= "Vaše geslo ne sme vsebovati šumnikov. <br>";
+    }
+    */
 
 
     //check for correct image format, if there is even an image
@@ -197,6 +214,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION["id"] = $data_rows['id_user']; 
         $_SESSION["username"] = $new_username;
         $_SESSION["user_type"] = $data_rows['user_type'];
+        $_SESSION['pass'] = $password;
     
         //pass message through session to home.php
         $_SESSION["register_message"] = $message;
@@ -263,7 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                 </div>
                 <div class="password_inner">
-                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="min. 12 črk, ena velika črka, ena številka" required>
+                    <input type="password" class="text_field" id='pass_field' name="geslo" maxlength="50" placeholder="min. 12 črk, 1 velika črka in številka, brez šumnikov" required>
                 </div>
             </div>
 

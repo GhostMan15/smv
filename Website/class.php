@@ -98,14 +98,13 @@ else {
             {
                  $i++;
                  echo" 
-                <tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a></td></tr>
+                <tr><td> <a href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a></td></tr>
                 ";
            }
                 else{
                     
-                    echo "<tr><td> <a href='class.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a></td></tr> <tr><td rowspan='1'><hr></td></tr>";
+                    echo "<tr><td> <a href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a></td></tr> <tr><td rowspan='1'></td></tr>";
                 }
-          
            }
            
            
@@ -120,7 +119,6 @@ else {
                 echo "<tr><td> <a href='$$$'> $vrstice[Naslov] </a> </td></tr>";
             }
            }
-            
             
         } 
 
