@@ -239,32 +239,45 @@ if ($user_type != 0 && $user_type != 1) {
                     //get all admins from db
                     $admin_query = "SELECT * FROM `user` WHERE `user_type` = '0';";
                     $admin_result = mysqli_query($db, $admin_query);
-                    $admin_rows = mysqli_fetch_assoc($admin_result);
                     $admin_count = mysqli_num_rows($admin_result);
 
                     echo"
                     <div class='admin_con'>
                             <div class='admin_title title'>
-                                <button class='title_btn'>Administratorji (". $admin_count - 1 .") <img src='Pictures/triangle_up.png' class='btn_pic' id='pic3' onclick='toggle(3)'></button>
+                                <button class='title_btn'>Administratorji (". $admin_count .") <img src='Pictures/triangle_up.png' class='btn_pic' id='pic3' onclick='toggle(3)'></button>
                             </div>
                             <div class='admin_list' id='table3'>
                                 <table class='admin_table table'>
                     ";
 
-                    while($row = mysqli_fetch_assoc($admin_result)){
-                        echo "
+                    while($admin_rows = mysqli_fetch_assoc($admin_result)){
+                        
+                        if($admin_rows['id_user'] == $id){
+                            echo "
                                     <tr>
-                                        <td class='username_data'>";
-
-                        if($row['id_user'] != $id){
-                            echo "          <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ." </a>";
-                        }
-                        echo            "</td>
+                                        <td class='username_data'>
+                                        <a class='user_link' href='vp.php?id=". $admin_rows['id_user'] ."' target='__blank__'>". $admin_rows['username'] . " (Jaz)</a>
+                                        </td>
                                         <td class='profile_data'>
-                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $admin_rows['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
                                         </td>
                                     </tr>
                         ";
+                        }
+
+                        else{
+                            echo "
+                                    <tr>
+                                        <td class='username_data'>
+                                        <a class='user_link' href='vp.php?id=". $admin_rows['id_user'] ."' target='__blank__'>". $admin_rows['username'] ." </a>
+                                        </td>
+                                        <td class='profile_data'>
+                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $admin_rows['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                                        </td>
+                                    </tr>
+                        ";
+                        }
+                        
                     }
 
                     echo"
