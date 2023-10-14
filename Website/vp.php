@@ -449,9 +449,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo $error;
         ?>
         </div>
-
-    
         <!--ERROR-->
+
+        <script>on_change(2);</script>
     </div>
 
 </body>
