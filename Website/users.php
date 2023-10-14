@@ -137,11 +137,24 @@ if ($user_type != 0 && $user_type != 1) {
                                         <td class='delete_data'>
                                             <button type='button' class='delete_btn table_btn'><img class='delete_img img' src='Pictures/delete.png'></button>
                                         </td>
-                                        <td class='profile_data'>
-                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
-                                        </td>
-                                    </tr>
                         ";
+                        
+                        if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"] ."'></button>
+                            </td>
+                            ";
+                        }
+                        else{
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                            </td>
+                            ";
+                        }
+                        
+                        echo"</tr>";
                     }
 
                     echo"
@@ -161,7 +174,7 @@ if ($user_type != 0 && $user_type != 1) {
                     echo"
                     <div class='students_con'>
                             <div class='students_title title'>
-                                <button class='title_btn'>Moji učenci ($student_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic1' onclick='toggle(1)'></button>
+                                <button class='title_btn'>Učenci ($student_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic1' onclick='toggle(1)'></button>
                             </div>
                             <div class='students_list' id='table1'>
                                 <table class='student_table table'>
@@ -173,11 +186,24 @@ if ($user_type != 0 && $user_type != 1) {
                                         <td class='username_data'>
                                             <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
                                         </td>
-                                        <td class='profile_data'>
-                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
-                                        </td>
-                                    </tr>
                         ";
+                        
+                        if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"] ."'></button>
+                            </td>
+                            ";
+                        }
+                        else{
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                            </td>
+                            ";
+                        }
+                        
+                        echo"</tr>";
                     }
 
                     echo"
@@ -192,6 +218,7 @@ if ($user_type != 0 && $user_type != 1) {
                 <!--TEACHERS-->
                 <?php
 
+                //admin
                 if($user_type == 0){
                     //get all teachers from db
                     $teachers_query = "SELECT * FROM `user` WHERE `user_type` = '1';";
@@ -202,10 +229,10 @@ if ($user_type != 0 && $user_type != 1) {
                     echo"
                     <div class='teachers_con'>
                             <div class='teachers_title title'>
-                                <button class='title_btn'>Profesorji ($teachers_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic2' onclick='toggle(2)'></button>
+                                <button class='title_btn'>Učitelji ($teachers_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic2' onclick='toggle(2)'></button>
                             </div>
                             <div class='teachers_list' id='table2'>
-                                <table class='teacher_table table'>
+                                <table class='teachers_table table'>
                     ";
 
                     while($row = mysqli_fetch_assoc($teachers_result)){
@@ -217,11 +244,67 @@ if ($user_type != 0 && $user_type != 1) {
                                         <td class='delete_data'>
                                             <button type='button' class='delete_btn table_btn'><img class='delete_img img' src='Pictures/delete.png'></button>
                                         </td>
-                                        <td class='profile_data'>
-                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
-                                        </td>
-                                    </tr>
                         ";
+                        
+                        if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"] ."'></button>
+                            </td>
+                            ";
+                        }
+                        else{
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                            </td>
+                            ";
+                        }
+                        
+                        echo"</tr>";
+                    }
+
+                    echo"
+                    </table>
+                    </div>
+                    </div>";
+                }
+
+                //teacher
+                else if($user_type == 1){
+                    echo"
+                    <div class='teachers_con'>
+                            <div class='teachers_title title'>
+                                <button class='title_btn'>Sodelavci ($student_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic2' onclick='toggle(2)'></button>
+                            </div>
+                            <div class='teachers_list' id='table2'>
+                                <table class='teachers_table table'>
+                    ";
+
+                    while($row = mysqli_fetch_assoc($student_result)){
+                        echo "
+                                    <tr>
+                                        <td class='username_data'>
+                                            <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
+                                        </td>
+                        ";
+                        
+                        if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"] ."'></button>
+                            </td>
+                            ";
+                        }
+                        else{
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                            </td>
+                            ";
+                        }
+                        
+                        echo"</tr>";
                     }
 
                     echo"
@@ -250,18 +333,14 @@ if ($user_type != 0 && $user_type != 1) {
                                 <table class='admin_table table'>
                     ";
 
-                    while($admin_rows = mysqli_fetch_assoc($admin_result)){
+                    while($row = mysqli_fetch_assoc($admin_result)){
                         
-                        if($admin_rows['id_user'] == $id){
+                        if($row['id_user'] == $id){
                             echo "
                                     <tr>
                                         <td class='username_data'>
-                                        <a class='user_link' href='vp.php?id=". $admin_rows['id_user'] ."' target='__blank__'>". $admin_rows['username'] . " (Jaz)</a>
+                                        <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] . " (Jaz)</a>
                                         </td>
-                                        <td class='profile_data'>
-                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $admin_rows['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
-                                        </td>
-                                    </tr>
                         ";
                         }
 
@@ -269,14 +348,30 @@ if ($user_type != 0 && $user_type != 1) {
                             echo "
                                     <tr>
                                         <td class='username_data'>
-                                        <a class='user_link' href='vp.php?id=". $admin_rows['id_user'] ."' target='__blank__'>". $admin_rows['username'] ." </a>
-                                        </td>
-                                        <td class='profile_data'>
-                                            <button type='button' class='profile_btn table_btn' onclick='profile(". $admin_rows['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
-                                        </td>
-                                    </tr>
+                                        <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ." </a>
+                                        </td>            
                         ";
                         }
+
+                        if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"] ."'></button>
+                            </td>
+                            ";
+                        }
+
+                        else{
+                            echo"
+                            <td class='profile_data'>
+                                <button type='button' class='profile_btn table_btn' onclick='profile(". $row['id_user'] .")'><img class='profile_img img' src='Pictures/stock_pfp.png'></button>
+                            </td>
+                            ";
+                        }
+
+                        echo"
+                        </tr>
+                        ";
                         
                     }
 
@@ -315,8 +410,7 @@ if ($user_type != 0 && $user_type != 1) {
                     </div>
                 </div>
     -->
-
-
+    
     <!--SCRIPT-->
     <script src="Scripts/register.js"></script>
     <!--SCRIPT-->

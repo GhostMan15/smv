@@ -1,0 +1,86 @@
+body{
+    width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+h2{
+    margin: 7px 0 0 0;
+}
+
+.title{
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+textarea{
+    width: 100%;
+    resize: none;
+    /*border: none;*/
+    text-align: left;
+}
+
+.container{
+    margin-top: 15px;
+    width: 100vw;
+    display: grid;
+    justify-content: center;
+}
+
+.content{
+    display: grid;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: auto;
+    width: 85vw;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 7.5px 15px;
+
+}
+
+/*NAVBAR*/
+
+.navbar {
+    width: 85%;
+    margin: auto;
+    padding: 35px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar_div{
+    background-color: #19172C;
+}
+
+.logo{
+    width: 250px;
+    height: 75px;
+    cursor: pointer;
+    transform: translateX(-70px);
+}
+
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    transition: all 500ms;
+}
+
+.navbar ul li a:hover{
+    font-size:35px;
+    font-size-adjust: 20px;
+}
+
+#checked, .checked{
+    font-weight: bold;
+}
+
+/*NAVBAR*/

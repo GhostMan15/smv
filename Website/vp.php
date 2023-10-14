@@ -108,7 +108,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $update_query = "UPDATE `user` SET `geslo` = '$hash_pass', `opis` = '$more' WHERE `id_user` = '". $_GET['id'] ."';";
             //UPDATE success
             if(mysqli_query($db, $update_query)){
-                $_SESSION['pass'] = $password;
+                if($id == $_GET['id']){
+                    $_SESSION['pass'] = $password;
+                }
                 //save picture if a user uploaded it, and it has no error
                 if($image_temp_name != null && $image_name != ""){
                     //get old user data - image type
@@ -300,8 +302,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <input type='file' name='image' class='file_upload' accept='.png, .jpeg, .jpg, .webp'>
                                 </div>
                             </div>
-                            -->
-                            <div class='password'>
+                            -->";
+
+                            if($_GET['id'] == $id){
+                                echo"
+                                <div class='password'>
                                 <div class='left title'>Geslo:</div>
                                 <div class='pass_wrap right'>
                                     <input name='password' type='password' value='" . $_SESSION['pass']  . "' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required>
@@ -310,7 +315,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         passwordFieldWidth();
                                     </script>
                                 </div>
-                            </div>
+                                </div>
+                                ";
+                            }
+                            else{
+                                echo"
+                                <div class='password'>
+                                <div class='left title'>Geslo:</div>
+                                <div class='pass_wrap right'>
+                                    <input name='password' type='password' value='' class='input_field normal_field' onfocus='on_change(1)' onblur='on_change(2)' oninput='passwordFieldWidth()' id='pass_field' maxlength='50' required placeholder='[ponastavite geslo]'>
+                                    <button type='button' id='show_btn' class='show_button' onclick='click_show_button()'>Pokaži</button>
+                                    <script defer>
+                                        passwordFieldWidth();
+                                    </script>
+                                </div>
+                                </div>
+                                ";
+                            }
+                            
+                            echo"
                             <div class='pfp'>
                                 <div class=''>
                                     <input type='file' name='image' class='file_upload' accept='.png, .jpeg, .jpg, .webp'>
@@ -328,6 +351,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 </div>
                             </div>
                             -->
+                            <!--
                             <div class='teachers'>
                                 <div class='title'>Profesorji:</div>
                                 <div>
@@ -337,6 +361,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </ul>
                                 </div>
                             </div>
+                            -->
                             <div class='about title'>
                                 <div>Več o uporabniku:</div>
                                 <div class='about_wrap'>
@@ -368,6 +393,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <div class='left title'>Ime in priimek:</div>
                                 <div class='right name_inner'>" . $returned_rows['ime'] . ", " . $returned_rows['priimek'] . "</div>
                             </div>
+                            <!--
                             <div class='teachers'>
                                 <div class='title'>Profesorji:</div>
                                 <div>
@@ -377,6 +403,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </ul>
                                 </div>
                             </div>
+                            -->
                             <div class='about'>
                                 <div class='title'>Več o uporabniku:</div>
                                 <div class='about_wrap'>

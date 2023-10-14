@@ -28,9 +28,10 @@ function passwordFieldWidth(){
     let password = document.getElementById('pass_field').value;
     let length = password.length;
 
+
     document.getElementById('pass_field').style.width = "0ch";
-    if(length < 5){
-        document.getElementById('pass_field').style.width = 5 + 'ch';
+    if(length < 15){
+        document.getElementById('pass_field').style.width = 15 + 'ch';
     }
     else{
         document.getElementById('pass_field').style.width = length + 'ch';
