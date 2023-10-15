@@ -19,6 +19,13 @@ body{
     margin-bottom: 5px;
 }
 
+.accepted{
+    font-size: 0.75vw;
+    color: gray;
+    font-style: italic;
+    text-decoration: none;
+}
+
 .content{
     display: grid;
     grid-template-rows: auto auto auto;
@@ -162,6 +169,47 @@ td{
     background-color: rgb(85, 136, 85);
 }
 
+.submit_title{
+    display: inline-flex;
+    /*grid-template-rows: auto;
+    grid-template-columns: auto auto;*/
+}
+
+.download_link{
+    text-decoration: none;
+    color: black;
+}
+
+.download_link:hover{
+    text-decoration: underline;
+}
+
+.delete_text{
+    text-decoration: none;
+    color: red;
+}
+
+.delete_text:hover{
+    color: green;
+}
+
+.error{
+    text-align: center;
+    font-size: 1vw;
+    color: red;
+}
+
+.date_picker{
+    font-size: 1vw;
+    text-decoration: none;
+    border: none;
+    font-family: sans-serif;
+}
+
+.submitted_text{
+    color: green;
+}
+
 /*NAVBAR*/
 
 .navbar {
@@ -204,5 +252,6 @@ td{
 #checked, .checked{
     font-weight: bold;
 }
+
 
 /*NAVBAR*/
