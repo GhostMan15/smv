@@ -28,38 +28,6 @@
 }
 
 
-a:link {
-    color: black;
-    background-color: transparent;
-    text-decoration: none;
-    display: inline-block;
-    
-  }
-  
-  a:visited {
-    color: black;
-    background-color: transparent;
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
-  }
-  
-  a:hover {
-    color: red;
-    background-color: transparent;
-    text-decoration: underline;
-    display: inline-block;
-    position: relative;
-  }
-  
-  a:active {
-    color: yellow;
-    background-color: transparent;
-    text-decoration: underline;
-    display: inline-block;
-    position: relative;
-  }
-  
   .vsebina{
     padding: 2vw;
     font-size: 2vw;
@@ -77,4 +45,41 @@ a:link {
     left: 35px;
     padding-top: 10px;
   }
+  .navbar-a{
+    margin-left: 4%;
+    margin-right: 4%;
+    position: relative;
+    padding: 0 10px;
+}
+tr a{
+  position: relative;
+    text-decoration:none;
+    color: grey;
+}
+tr a:link{
+    text-decoration:none;
+    color: grey;
+}
+tr a:hover{
+    text-decoration:none;
+    color: black;
+}
+tr a:after{
+    content: "";
+    position: absolute;
+    background-color: palevioletred;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -5px;
+    transition: 0.3s;
+}
+
+tr a:hover:after{
+    width: 100%;
+}
+
+
+
+
  

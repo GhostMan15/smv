@@ -23,6 +23,7 @@ else {
     <link rel="stylesheet" href="Stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="Stylesheets/class.css">
     <link rel="stylesheet" type="text/css" href="Stylesheets/navbar.css">
+    <link rel="stylesheet" type="text/css" href="Stylesheets/course.css">
     <title>Ultis</title>
 </head>
 <body>
@@ -82,10 +83,11 @@ else {
 
                 $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
                 $model_res = mysqli_query($db, $model_query);
-                $model = mysqli_fetch_assoc($model_res);
                 $model_num = mysqli_num_rows($model_res);
-                $i = 1;
-                
+                $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modela` = '$id';";
+                $grad_Res = mysqli_query($db, $grad_query);
+                $grad_num = mysqli_num_rows($grad_Res);
+                $g = 0;
                 
 
 
@@ -95,19 +97,15 @@ else {
                 <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
                  </div>
                  <div class='vsebina-poglavje'>             <!--MODEL-->";
-                        if (isset($id)){
-                            {
-                                while($rows = mysqli_fetch_assoc($model_res)){      
-                                    if($model_num >= $i)
-                                    {
-                                         $i++;
-                                         echo" 
-                                        $rows[Naslov]
-                                        ";
-                                    }
-                             }
-                            }
-                        } echo"<hr>";
+                        
+                 while($rows = mysqli_fetch_assoc($model_res)){      
+                    echo"<a href = '$$$'>$rows[Naslov] </a> <br>";
+                   
+                       
+                   }
+            
+                            
+                 echo"<hr>";
 
     echo "                 <div class='poglavje-vsebina'><img src='Pictures/doc_icon.png' width='30px' height='30px'> <a href='$$$'> Vaja1 </a>  <!--GRADIVA -->
                       </div>
