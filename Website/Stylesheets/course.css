@@ -25,3 +25,13 @@
 .vsebina-poglavje a:hover:after{
       width: 100%;
  }
+
+ .gradivo{
+      margin-top: 10px;
+      margin-bottom: 10px;
+  
+ }
+ .gradivo-item{
+      padding-left: 15px;
+      
+ }
