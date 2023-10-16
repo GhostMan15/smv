@@ -1,0 +1,27 @@
+.vsebina-poglavje a {
+    position: relative;
+    text-decoration:none;
+    color: grey;
+ }
+.vsebina-poglavje a:link{
+      text-decoration:none;
+      color: grey;
+ }
+.vsebina-poglavje a:hover{
+      text-decoration:none;
+      color: black;
+ }
+.vsebina-poglavje a:after{
+      content: "";
+      position: absolute;
+      background-color: palevioletred;
+      height: 3px;
+      width: 0;
+      left: 0;
+      bottom: -5px;
+      transition: 0.3s;
+ }
+  
+.vsebina-poglavje a:hover:after{
+      width: 100%;
+ }
