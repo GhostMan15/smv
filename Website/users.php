@@ -111,13 +111,13 @@ if ($user_type != 0 && $user_type != 1) {
             <div class="content">
                 <!--STUDENTS-->
                 <?php
+                //get all students from db
+                $student_query = "SELECT * FROM `user` WHERE `user_type` = '2';";
+                $student_result = mysqli_query($db, $student_query);
+                $student_count = mysqli_num_rows($student_result);
+
                 //admin
                 if($user_type == 0){
-                    //get all students from db
-                    $student_query = "SELECT * FROM `user` WHERE `user_type` = '2';";
-                    $student_result = mysqli_query($db, $student_query);
-                    $student_count = mysqli_num_rows($student_result);
-
                     echo"
                     <div class='students_con'>
                             <div class='students_title title'>
@@ -164,11 +164,6 @@ if ($user_type != 0 && $user_type != 1) {
 
                 //professor
                 else if($user_type == 1){
-                    //get all students from db
-                    $student_query = "SELECT * FROM `user` WHERE `user_type` = '2';";
-                    $student_result = mysqli_query($db, $student_query);
-                    $student_count = mysqli_num_rows($student_result);
-
                     echo"
                     <div class='students_con'>
                             <div class='students_title title'>
@@ -215,14 +210,13 @@ if ($user_type != 0 && $user_type != 1) {
 
                 <!--TEACHERS-->
                 <?php
-
+                //get all teachers from db
+                $teachers_query = "SELECT * FROM `user` WHERE `user_type` = '1';";
+                $teachers_result = mysqli_query($db, $teachers_query);
+                $teachers_count = mysqli_num_rows($teachers_result);
+                
                 //admin
                 if($user_type == 0){
-                    //get all teachers from db
-                    $teachers_query = "SELECT * FROM `user` WHERE `user_type` = '1';";
-                    $teachers_result = mysqli_query($db, $teachers_query);
-                    $teachers_count = mysqli_num_rows($teachers_result);
-
                     echo"
                     <div class='teachers_con'>
                             <div class='teachers_title title'>
@@ -269,15 +263,10 @@ if ($user_type != 0 && $user_type != 1) {
 
                 //teacher
                 else if($user_type == 1){
-                    //get all teachers from db
-                    $teachers_query = "SELECT * FROM `user` WHERE `user_type` = '1';";
-                    $teachers_result = mysqli_query($db, $teachers_query);
-                    $teachers_count = mysqli_num_rows($teachers_result);
-
                     echo"
                     <div class='teachers_con'>
                             <div class='teachers_title title'>
-                                <button class='title_btn'>Učitelji ($teachers_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic2' onclick='toggle(2)'></button>
+                                <button class='title_btn'>Sodelavci ($teachers_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic2' onclick='toggle(2)'></button>
                             </div>
                             <div class='teachers_list' id='table2'>
                                 <table class='teachers_table table'>
@@ -331,13 +320,12 @@ if ($user_type != 0 && $user_type != 1) {
 
                 <!--ADMIN-->
                 <?php
+                //get all admins from db
+                $admin_query = "SELECT * FROM `user` WHERE `user_type` = '0';";
+                $admin_result = mysqli_query($db, $admin_query);
+                $admin_count = mysqli_num_rows($admin_result);
 
                 if($user_type == 0){
-                    //get all admins from db
-                    $admin_query = "SELECT * FROM `user` WHERE `user_type` = '0';";
-                    $admin_result = mysqli_query($db, $admin_query);
-                    $admin_count = mysqli_num_rows($admin_result);
-
                     echo"
                     <div class='admin_con'>
                             <div class='admin_title title'>
@@ -401,30 +389,7 @@ if ($user_type != 0 && $user_type != 1) {
         </div>
     </div>
     <!--CONTENT-->
-
-    <!--TEMPLATE--
-    <div class="admin_con">
-                    <div class="admin_title title">
-                        <button class="title_btn">Administratorji (3)<img src="Pictures/triangle_up.png" class="btn_pic" id="pic3" onclick="toggle(3)"></button>
-                    </div>
-                    <div class="admin_list" id="table3">
-                        <table class="admin_table table">
-                            <tr>
-                                <td class="username_data">
-                                    Liam Smith
-                                </td>
-                                <td class="delete_data">
-                                    <button type="button" class="delete_btn"><img class="delete_img img" src="Pictures/delete.png"></button>
-                                </td>
-                                <td class="profile_data">
-                                    <button type="button" class="profile_btn"><img class="profile_img img"></button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-    -->
-    
+        
     <!--SCRIPT-->
     <script src="Scripts/register.js"></script>
     <!--SCRIPT-->

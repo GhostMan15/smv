@@ -21,6 +21,20 @@ else {
     $_SESSION['user_type'] = $user_type;
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    
+
+    //get file data
+    $file = $_FILES["file"];
+    $file_name = $_FILES["file"]["name"];
+    $file_temp_name = $_FILES["file"]["tmp_name"];
+    $file_size = $_FILES["file"]["size"];
+    $file_error = $_FILES["file"]["error"];
+    $file_type =  $_FILES["file"]["type"];
+    $file_ext = explode(".", $file_name);
+    $file_real_ext = strtolower(end($file_ext));
+}
+
 $allgood = true;
 $error = "";
 ?>
