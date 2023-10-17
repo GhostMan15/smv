@@ -96,7 +96,7 @@ else {
                         
                  while($rows = mysqli_fetch_assoc($model_res)){      
                     
-                    echo"<a href = '$$$'>$rows[Naslov] </a> <br>";
+                    echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
 
 
                     $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
@@ -107,7 +107,7 @@ else {
 
                     while ($rowss = mysqli_fetch_assoc($grad_res)){
                       echo" <div class='gradivo'> 
-                      <div class='gradivo-item'><a href='$$$'> $rowss[naslov] </a> </div>
+                      <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
                       </div>";
                       if ($g >= $grad_num){
                         echo"<hr>";
