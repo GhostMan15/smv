@@ -22,7 +22,9 @@ else {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
+    //get form text data
+    $title = mysqli_escape_string($db, $_POST['title']);
+    $description = mysqli_escape_string($db, $_POST['description']);
 
     //get file data
     $file = $_FILES["file"];
@@ -117,7 +119,7 @@ $error = "";
                 $id_gradiva = $_GET['gradivo']; 
                 $gradivo_query = "
                 SELECT `g`.*, `m`.*, `p`.*, `u`.* FROM `gradiva` `g` JOIN `model` `m`
-                ON `m`.`id_modula` = `g`.`id_modela` JOIN `predmeti` `p`
+                ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
                 ON `p`.`id_predmet` = `m`.`id_predmet` JOIN `ucilnica` `u`
                 ON `u`.`id_predmet` = `p`.`id_predmet`
                 WHERE `g`.`id_gradiva` = '$id_gradiva'
