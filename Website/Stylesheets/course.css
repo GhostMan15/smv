@@ -1,11 +1,23 @@
+.vsebina {
+     font-size: 2vw;
+     padding: 30px;
+}
+.vsebina-naslov{
+     font-size: 3vw;
+     margin-bottom: 20px;
+}
 .vsebina-poglavje a {
     position: relative;
     text-decoration:none;
-    color: grey;
+    color: black;
+    font-size: 1.5vw;
+    font-weight: bold;
+    
+    
  }
 .vsebina-poglavje a:link{
       text-decoration:none;
-      color: grey;
+      color: black;
  }
 .vsebina-poglavje a:hover{
       text-decoration:none;
@@ -21,6 +33,7 @@
       bottom: -5px;
       transition: 0.3s;
  }
+ 
   
 .vsebina-poglavje a:hover:after{
       width: 100%;
@@ -34,4 +47,29 @@
  .gradivo-item{
       padding-left: 15px;
       
- }
+ }.gradivo a {
+     position: relative;
+     text-decoration:none;
+     color: grey;
+     font-size: 1.4vw;
+     
+  }
+ .gradivo a:link{
+       text-decoration:none;
+       color: grey;
+  }
+ .gradivo a:hover{
+       text-decoration:none;
+       color: black;
+  }
+ .gradivo a:after{
+       content: "";
+       position: absolute;
+       background-color: palevioletred;
+       height: 3px;
+       width: 0;
+       left: 0;
+       bottom: -5px;
+       transition: 0.3s;
+  }
+

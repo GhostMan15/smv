@@ -83,7 +83,7 @@ else {
                 ";
             }
             ?>
-        <div class="slikicaDIV"> <img class="slikica" id="slikaID"> </div>
+        
         <div class="Predmeti">
         <table class="miza">
         <?php  
@@ -131,16 +131,5 @@ else {
     
 </body>
 <!--BODY-->
-<script>
-    var t = 0;
-        while(true){
-            t = Math.floor(Math.random() * 4);
-            if(t != 0){
-                break;
-            }
-        }
-            document.getElementById('slikaID').src = 'Pictures/quot' + t + '.png';
-            
-                
-</script>
+
 </html>
