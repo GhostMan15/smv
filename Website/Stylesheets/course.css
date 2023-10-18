@@ -12,8 +12,6 @@
     color: black;
     font-size: 1.5vw;
     font-weight: bold;
-    
-    
  }
 .vsebina-poglavje a:link{
       text-decoration:none;
@@ -72,4 +70,14 @@
        bottom: -5px;
        transition: 0.3s;
   }
+.plusek{
+     border: 1px solid black;
+     border-radius: 6px;
+     width: 17px;
+     height: 17px;
+     justify-content: center;
+     text-align: center;
+     vertical-align: middle;
+     padding: 1px;
+}
 
