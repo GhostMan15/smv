@@ -58,6 +58,43 @@ else {
                     </div>
                     </div>
                     ";
+                            
+                $id = $_GET['id'];
+                $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id';";
+                $predmeti_res = mysqli_query($db, $predmeti_query);
+                $predmet = mysqli_fetch_assoc($predmeti_res);
+
+                $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
+                $model_res = mysqli_query($db, $model_query);
+                
+
+         echo" <div class='vsebina'>
+                <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
+                 </div>
+                 <div class='vsebina-poglavje'>             <!--MODEL-->";
+                        
+                 while($rows = mysqli_fetch_assoc($model_res)){      
+                    
+                    echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
+
+
+                    $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
+                    $grad_res = mysqli_query($db, $grad_query);
+                    $grad_num = mysqli_num_rows($grad_res);
+                    $g = 1;
+
+
+                    while ($rowss = mysqli_fetch_assoc($grad_res)){
+                      echo" <div class='gradivo'> 
+                      <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
+                      </div>";
+                      if ($g >= $grad_num){
+                        echo"<hr>";
+                      }
+                      $g++;
+                    }   
+                   }   
+    
                 }
                 //admin
                 else {
@@ -73,53 +110,46 @@ else {
                     </div>
                     </div>
                     ";
-                }
-                ?>
-                <?php
-                $id = $_GET['id'];
+
+                    $id = $_GET['id'];
                 $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id';";
                 $predmeti_res = mysqli_query($db, $predmeti_query);
                 $predmet = mysqli_fetch_assoc($predmeti_res);
 
                 $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
                 $model_res = mysqli_query($db, $model_query);
-                $model_num = mysqli_num_rows($model_res);
-                $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modela` = '$id';";
-                $grad_Res = mysqli_query($db, $grad_query);
-                $grad_num = mysqli_num_rows($grad_Res);
-                $g = 0;
                 
 
-
-
-
-    echo" <div class='vsebina'>
+         echo" <div class='vsebina'>
                 <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
                  </div>
-                 <div class='vsebina-poglavje'>             <!--MODEL-->";
+                 <div class='vsebina-poglavje'>            <!--MODEL-->";
                         
                  while($rows = mysqli_fetch_assoc($model_res)){      
-                    echo"<a href = '$$$'>$rows[Naslov] </a> <br>";
-                   
-                       
+                
+                    echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
+                    echo"<p class='plusek'> + </p>";
+
+
+                    $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
+                    $grad_res = mysqli_query($db, $grad_query);
+                    $grad_num = mysqli_num_rows($grad_res);
+                    $g = 1;
+
+
+                    while ($rowss = mysqli_fetch_assoc($grad_res)){
+                      echo" <div class='gradivo'> 
+                      <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
+                      </div>";
+                      if ($g >= $grad_num){
+                        echo"<hr>";
+                      }
+                      $g++;
+                    }   
                    }
-            
-                            
-                 echo"<hr>";
+                    
+                }
+                ?>
 
-    echo "                 <div class='poglavje-vsebina'><img src='Pictures/doc_icon.png' width='30px' height='30px'> <a href='$$$'> Vaja1 </a>  <!--GRADIVA -->
-                      </div>
-                    <div class='poglavje-vsebina'><img src='Pictures/doc_icon.png' width='30px' height='30px'> <a href='$$$'> Vaja2 </a>
-                      </div>
-                    <div class='poglavje-vsebina'><img src='Pictures/doc_icon.png' width='30px' height='30px'> <a href='$$$'> Vaja3 </a>
-                      </div>
-                 </div>  
-                 
-                 
-               
-
-    </div>
-    "
-    ?>
 </body>
 </html>

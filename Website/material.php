@@ -21,6 +21,22 @@ else {
     $_SESSION['user_type'] = $user_type;
 }
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //get form text data
+    $title = mysqli_escape_string($db, $_POST['title']);
+    $description = mysqli_escape_string($db, $_POST['description']);
+
+    //get file data
+    $file = $_FILES["file"];
+    $file_name = $_FILES["file"]["name"];
+    $file_temp_name = $_FILES["file"]["tmp_name"];
+    $file_size = $_FILES["file"]["size"];
+    $file_error = $_FILES["file"]["error"];
+    $file_type =  $_FILES["file"]["type"];
+    $file_ext = explode(".", $file_name);
+    $file_real_ext = strtolower(end($file_ext));
+}
+
 $allgood = true;
 $error = "";
 ?>
@@ -103,7 +119,7 @@ $error = "";
                 $id_gradiva = $_GET['gradivo']; 
                 $gradivo_query = "
                 SELECT `g`.*, `m`.*, `p`.*, `u`.* FROM `gradiva` `g` JOIN `model` `m`
-                ON `m`.`id_modula` = `g`.`id_modela` JOIN `predmeti` `p`
+                ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
                 ON `p`.`id_predmet` = `m`.`id_predmet` JOIN `ucilnica` `u`
                 ON `u`.`id_predmet` = `p`.`id_predmet`
                 WHERE `g`.`id_gradiva` = '$id_gradiva'
