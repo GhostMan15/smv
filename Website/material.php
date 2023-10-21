@@ -21,10 +21,17 @@ else {
     $_SESSION['user_type'] = $user_type;
 }
 
+$allgood = true;
+$error = "";
+
+//on form submit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_gradiva = $_GET['gradivo']; 
+
     //get form text data
     $title = mysqli_escape_string($db, $_POST['title']);
     $description = mysqli_escape_string($db, $_POST['description']);
+    $id_gradiva = $_GET['gradivo']; 
 
     //get file data
     $file = $_FILES["file"];
@@ -35,10 +42,164 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $file_type =  $_FILES["file"]["type"];
     $file_ext = explode(".", $file_name);
     $file_real_ext = strtolower(end($file_ext));
-}
 
-$allgood = true;
-$error = "";
+    //not supported
+    $not_supported = ["exe", "ini", "dll"];
+
+    //student
+    if($user_type == 2){
+        //check if user uploaded the file
+        if($image_temp_name != null && $image_name != ""){
+            //check file type
+            for($i = 0; $i < count($not_supported); $i++){
+                if($file_real_ext == $not_supported[$i]){
+                    $allgood = false;
+                    $error .= "Oddana datoteka imeta nedovoljeno končnico <br>";
+                    break;
+                }
+            }
+
+            //check file size
+            if($file_size > 10000000){
+                $allgood = false;
+                $error .= "Oddana datoteka ne sme presegati 10MB velikosti. <br>";
+            }
+
+            //if all is good try to upload
+            if($allgood){
+                $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                $upload_result = mysqli_query($db, $upload_query);
+                $upload_rows = mysqli_fetch_assoc($upload_result);
+                $upload_count = mysqli_num_rows($upload_result);
+
+                //if the user hasnt uploaded a file yet, carry out insert into
+                if($upload_count == 0){
+                    $insert_query = "
+                    INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
+                    VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '0', NULL);
+                    ";
+                    $insert_result = mysqli_query($db, $insert_query);
+
+                    $new_upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                    $new_upload_result = mysqli_query($db, $new_upload_query);
+                    $new_upload_rows = mysqli_fetch_assoc($new_upload_result);
+
+                    $new_id_oddaja = $new_upload_rows['id_oddaja'];
+                    $file_full_path = "Files/" . $new_id_oddaja . "." . $file_real_ext;
+
+                    if(!move_uploaded_file($file_temp_name, $file_full_path)){
+                        $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
+                    }
+                }
+
+                //if the user has uploaded a file already, carry out update
+                else{
+                    $id_oddaja = $upload_rows['id_oddaja'];
+                    if(move_uploaded_file($file_temp_name, $file_full_path)){
+                        $update_query = "
+                        UPDATE `oddaja`
+                        SET `ocena` = NULL, `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
+                        WHERE `id_oddaja` = '$id_oddaja';
+                        ";
+                    }
+                    else{
+                        $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
+                    }
+                }
+            }
+        }
+    }
+
+    //admin, teacher
+    else{
+        //check proper string lengths and that they are not empty
+        if(strlen($description) > 1024){
+            $allgood = false;
+            $error .= "Opis naloge ne sme biti daljši od 1024 znakov <br>";
+        }
+        else if(strlen($title) > 50){
+            $allgood = false;
+            $error .= "Naslov naloge ne sme biti daljši od 50 znakov <br>";
+        }
+        else if(trim($description) == "" || trim($title) == ""){
+            $allgood = false;
+            $error .= "Naslov in opis naloge ne smeta biti prazna <br>";
+        }
+        
+
+        //if all is good do updates and upload files if there was any
+        if($allgood){
+            $gradivo_update = "
+            UPDATE `gradiva`
+            SET `naslov` = '$title', `opis` = '$description'
+            WHERE `id_gradiva` = '$id_gradiva';
+            ";
+            $gradivo_result = mysqli_query($db, $gradivo_result);
+
+            //check if teacher uploaded the file
+            if($image_temp_name != null && $image_name != ""){
+                //check file type
+                for($i = 0; $i < count($not_supported); $i++){
+                    if($file_real_ext == $not_supported[$i]){
+                        $allgood = false;
+                        $error .= "Oddana datoteka imeta nedovoljeno končnico <br>";
+                        break;
+                    }
+                }
+
+                //check file size
+                if($file_size > 10000000){
+                    $allgood = false;
+                    $error .= "Oddana datoteka ne sme presegati 10MB velikosti. <br>";
+                }
+
+                //if all is good try to upload
+                if($allgood){
+                    $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                    $upload_result = mysqli_query($db, $upload_query);
+                    $upload_rows = mysqli_fetch_assoc($upload_result);
+                    $upload_count = mysqli_num_rows($upload_result);
+
+                    //if the user hasnt uploaded a file yet, carry out insert into
+                    if($upload_count == 0){
+                        $insert_query = "
+                        INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
+                        VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '1', NULL);
+                        ";
+                        $insert_result = mysqli_query($db, $insert_query);
+
+                        $new_upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                        $new_upload_result = mysqli_query($db, $new_upload_query);
+                        $new_upload_rows = mysqli_fetch_assoc($new_upload_result);
+
+                        $new_id_oddaja = $new_upload_rows['id_oddaja'];
+                        $file_full_path = "Files/" . $new_id_oddaja . "." . $file_real_ext;
+
+                        if(!move_uploaded_file($file_temp_name, $file_full_path)){
+                            $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
+                        }
+                    }
+
+                    //if the user has uploaded a file already, carry out update
+                    else{
+                        $id_oddaja = $upload_rows['id_oddaja'];
+                        if(move_uploaded_file($file_temp_name, $file_full_path)){
+                            $update_query = "
+                            UPDATE `oddaja`
+                            SET `ocena` = NULL, `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
+                            WHERE `id_oddaja` = '$id_oddaja';
+                            ";
+                        }
+                        else{
+                            $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,0 +1,38 @@
+.container{
+    display: grid;
+    justify-content: center;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto;
+    margin-top: 5px;
+}
+
+.container > div{
+    margin: 0.5vw;
+}
+
+.title{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.25vw;
+    font-weight: bold;
+}
+
+.content{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.oddaja{
+    display: grid;
+    justify-content: center;
+}
+
+iframe{
+    width: 55vw;
+    min-width: 400px;
+    min-height: 100px;
+    border: 1px solid black;
+    border-radius: 15px;
+}
