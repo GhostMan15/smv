@@ -30,9 +30,9 @@
 }
 
 iframe{
-    width: 55vw;
+    width: 50vw;
+    height: 8vw;
+    min-height: 85px;
     min-width: 400px;
-    min-height: 100px;
     border: 1px solid black;
-    border-radius: 15px;
 }

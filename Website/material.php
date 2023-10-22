@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //get form text data
     $title = mysqli_escape_string($db, $_POST['title']);
     $description = mysqli_escape_string($db, $_POST['description']);
-    $id_gradiva = $_GET['gradivo']; 
 
     //get file data
     $file = $_FILES["file"];
@@ -67,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //if all is good try to upload
             if($allgood){
-                $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id' AND `id_gradiva` = '$id_gradiva'";
                 $upload_result = mysqli_query($db, $upload_query);
                 $upload_rows = mysqli_fetch_assoc($upload_result);
                 $upload_count = mysqli_num_rows($upload_result);
@@ -155,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //if all is good try to upload
                 if($allgood){
-                    $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                    $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id' AND `id_gradiva` = '$id_gradiva'";
                     $upload_result = mysqli_query($db, $upload_query);
                     $upload_rows = mysqli_fetch_assoc($upload_result);
                     $upload_count = mysqli_num_rows($upload_result);
