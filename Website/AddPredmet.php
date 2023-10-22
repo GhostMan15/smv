@@ -19,29 +19,23 @@ else {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Stylesheets/AddVaja.css">
+    <link rel="stylesheet" href="Stylesheets/AddPredmet.css">
     <title>Document</title>
 </head>
 <body>
     <?php
          
 
-         $mod = $_GET['id_modula'];
-         $id = $_GET['id_predmet'];
          
-         $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = $id;";
-         $predmeti_res = mysqli_query($db, $predmeti_query);
-         $predmet = mysqli_fetch_assoc($predmeti_res);
-         $keroPoglavje = "SELECT * FROM `model` WHERE `id_modula` = $mod;";
-         $keroPoglavje_res = mysqli_query($db, $keroPoglavje);
-         $poglavje = mysqli_fetch_assoc($keroPoglavje_res);
-
+         
+         
         
     ?>
-    <div class="Main1"> Dodajanje nove vaje v <?php echo $poglavje['Naslov']; ?>
+    <div class="Main1"> Dodajanje novega predmeta
     <div class="Main"> 
         <form action="" method="POST" >
             Naslov: <input type="text" name="naslov" value=""> <br><br>
+            Kratica: <input type="text" name="kratica" value=""> <br><br>
             Opis: <input type="text" name="opis" value=""> <br><br>
             <input type="submit" name="submit" value="Ustvari">
         </form>
@@ -52,13 +46,15 @@ else {
     <?php 
         if (isset($_POST['submit'])) {
             
-            $ime = $_POST['naslov'];
-            $opis = $_POST['opis'];
+            $naslov = $_POST["naslov"];
+            $opis = $_POST["opis"];
+            $kratica = $_POST["kratica"];
+            
 
-            $query = "INSERT INTO `gradiva` VALUES(DEFAULT,'',NULL,'','$ime','$opis','$mod');";      
+            $query = "INSERT INTO `predmeti` VALUES(DEFAULT,'$naslov','$kratica','$opis');";      
             mysqli_query($db, $query);
 
-            header("Location: AddVaja.php?id_predmet=$id&id_modula=$mod");
+            header("Location: AddPredmet.php");
         }
     ?>
     
