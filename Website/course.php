@@ -151,10 +151,11 @@ else {
                     </div>
                     ";
 
-                    $id = $_GET['id'];
+                $id = $_GET['id'];
                 $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id';";
                 $predmeti_res = mysqli_query($db, $predmeti_query);
                 $predmet = mysqli_fetch_assoc($predmeti_res);
+                
 
                 $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
                 $model_res = mysqli_query($db, $model_query);
@@ -166,9 +167,10 @@ else {
                  <div class='vsebina-poglavje'>            <!--MODEL-->";
                         
                  while($rows = mysqli_fetch_assoc($model_res)){      
-                
+                    $idmod = $rows['id_modula'];
                     echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
-                    echo"<div class='asd'><a href=AddVaja.php?id_predmet='$id'><p class='plusek'> + </p></a></div> ";
+                    echo"<div class='asd'><a href=AddVaja.php?id_predmet=$id&id_modula=$idmod><p class='plusek'> + </p></a></div> ";
+                    
 
 
                     $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
