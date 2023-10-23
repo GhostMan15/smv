@@ -26,16 +26,15 @@ body {
 }
 .Main2{
     margin: auto;
-    
     position: relative;
     padding: 15px;
-    margin-top: 20px;
+    margin-top: 50px;
     width: 35%;
-    height: 100px;
+    height: 5vh;
     border-radius: 16px;
     align-items: center;
     text-align: center;
-    justify-content: center
+    justify-content: center;
 }
 
 .forma{
@@ -48,7 +47,7 @@ body {
     position: relative;
     padding: 15px;
     width: 35%;
-    height: 45%;
+    height: 55%;
     border-radius: 16px;
     align-items: center;
     text-align: center;
@@ -60,4 +59,13 @@ body {
 .slika{
     width: 50px;
     height: 50px;
+}
+ 
+.text_field{
+    width: 10vw;
+    color: white;
+    border: 1px solid transparent;
+    border-bottom: 1px solid white;
+    background-color: transparent;
+    outline: none;
 }
