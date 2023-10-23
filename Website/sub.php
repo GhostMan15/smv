@@ -20,6 +20,39 @@ else {
     $user_type = $type_assoc['user_type'];
     $_SESSION['user_type'] = $user_type;
 }
+
+$allgood = true;
+$error = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id_oddaja = $_GET['oddaja'];
+    $grade = mysqli_escape_string($db, $_POST['grade']);
+    $comment = mysqli_escape_string($db, $_POST['comment']);
+    $comment = trim($comment);
+
+    //check if grade is of correct value
+    if($grade > 100 || $grade < 0){
+        $allgood = false;
+        $error .= "Ocena mora biti od 0 do 100 <br>";
+    }
+
+    //check comment length
+    if(strlen($comment) > 100){
+        $allgood = false;
+        $error .= "Komentar mora imeti maksimalno 100 znakov <br>";
+    }
+
+    if($allgood){
+        $update_query = "
+        UPDATE `oddaja`
+        SET `ocena` = '$grade', `komentar` =  '$comment'
+        WHERE `id_oddaja` = '$id_oddaja';
+        ";
+        if(!mysqli_query($db, $update_query)){
+            $error .= "Podatkov ni šlo posodobiti. Se opravičujemo za napako. <br>";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +65,35 @@ else {
 </head>
 
 <body>
-    <form class="container">
+    <form class="container" method="post">
+
+    <?php
+    if(isset($_GET['oddaja'])){
+        $id_oddaja = $_GET['oddaja'];
+        $oddaja_query = "
+        SELECT `o`.*, `g`.*, `m`.*, `p`.*, `u`.*, `us`.*
+        FROM `oddaja` `o` JOIN `gradiva` `g`
+            ON  `g`.`id_gradiva` = `o`.`id_gradiva` JOIN `model` `m`
+            ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
+            ON `p`.`id_predmet` = `m`.`id_predmet` JOIN `ucilnica` `u`
+            ON `u`.`id_predmet` = `p`.`id_predmet` JOIN `user` `us`
+            ON `us`.`id_user` = `u`.`id_user`
+        WHERE `o`.`id_oddaja` = '$id_oddaja';
+        ";
+        $oddaja_result = mysqli_query($db, $oddaja_query);
+        $oddaja_count = mysqli_num_rows($oddaja_result);
+        
+        if($oddaja_count != 0){
+            
+        }
+        else{
+            header("location: class.php");
+        }
+    }
+    else{
+        header("location: class.php");
+    }
+    ?>
 
     <!--TOP-->
         <div class="top">
