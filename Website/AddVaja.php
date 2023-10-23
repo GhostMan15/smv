@@ -41,8 +41,10 @@ else {
     <div class="Main1"> Dodajanje nove vaje v <?php echo $poglavje['Naslov']; ?>
     <div class="Main"> 
         <form action="" method="POST" >
-            Naslov: <input type="text" name="naslov" value=""> <br><br>
-            Opis: <input type="text" name="opis" value=""> <br><br>
+            Naslov: <input type="text" class="text_field" name="naslov" value=""> <br><br>
+            Opis: <input type="text" class="text_field" name="opis" value=""> <br><br>
+            Samo za branje? <input type="radio" name="boolean" value="1"> Da 
+            <input type="radio" name="boolean" value="0"> Ne <br><br>
             <input type="submit" name="submit" value="Ustvari">
         </form>
     </div>
@@ -54,8 +56,9 @@ else {
             
             $ime = $_POST['naslov'];
             $opis = $_POST['opis'];
+            $bool = $_POST['boolean'];
 
-            $query = "INSERT INTO `gradiva` VALUES(DEFAULT,'',NULL,'','$ime','$opis','$mod');";      
+            $query = "INSERT INTO `gradiva` VALUES(DEFAULT,'$bool',NULL,'','$ime','$opis','$mod');";      
             mysqli_query($db, $query);
 
             header("Location: AddVaja.php?id_predmet=$id&id_modula=$mod");
