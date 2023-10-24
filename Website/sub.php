@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php
     if(isset($_GET['oddaja'])){
         $id_oddaja = $_GET['oddaja'];
-        $oddaja_query = "
+        /*$oddaja_query = "
         SELECT `o`.*, `g`.*, `m`.*, `p`.*, `u`.*, `us`.*
         FROM `oddaja` `o` JOIN `gradiva` `g`
             ON  `g`.`id_gradiva` = `o`.`id_gradiva` JOIN `model` `m`
@@ -79,7 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ON `u`.`id_predmet` = `p`.`id_predmet` JOIN `user` `us`
             ON `us`.`id_user` = `u`.`id_user`
         WHERE `o`.`id_oddaja` = '$id_oddaja';
-        ";
+        ";*/
+        $oddaja_query = "SELECT * FROM `oddaja` WHERE  `id_oddaja` = '$id_oddaja';";
         $oddaja_result = mysqli_query($db, $oddaja_query);
         $oddaja_count = mysqli_num_rows($oddaja_result);
         
