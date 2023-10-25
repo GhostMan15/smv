@@ -35,7 +35,6 @@ else {
     <div class='navbar_div'>
             <div class='navbar'>
             <?php
-
                 //teachers
                 if ($user_type == 1) {
                     echo "
@@ -79,7 +78,11 @@ else {
     </div>
     <!--NAV-->
 
-    <!--CONTAINER-->
+    <?php
+    
+    ?>
+
+    <!--CONTAINER
     <div class="container">
         <div class="title">
             <p>
@@ -95,6 +98,6 @@ else {
             </div>
         </div>
     </div>
-    <!--CONTAINER-->
+    CONTAINER-->
 </body>
 </html>

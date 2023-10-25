@@ -356,31 +356,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     if($priloge_row['file_ext'] == 'png' || $priloge_row['file_ext'] == 'jpg' || $priloge_row['file_ext'] == 'jpeg' || $priloge_row['file_ext'] == 'webp'){
                                         echo"
-                                        <img src='Pictures/img_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='delete.php?type=1&id=$id_gradiva' class='delete_text'>(-)</a>
+                                        <img src='Pictures/img_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$priloge_row['id_oddaja']."' class='delete_text'>(-)</a>
                                         ";
                                     }
 
                                     else if($priloge_row['file_ext'] == 'pdf'){
                                         echo"
-                                        <img src='Pictures/pdf_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='delete.php?type=1&id=$id_gradiva' class='delete_text'>(-)</a>
+                                        <img src='Pictures/pdf_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$priloge_row['id_oddaja']."' class='delete_text'>(-)</a>
                                         ";
                                     }
 
                                     else if($priloge_row['file_ext'] == 'zip' || $priloge_row['file_ext'] == 'rar' || $priloge_row['file_ext'] == '7z'){
                                         echo"
-                                        <img src='Pictures/zip_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='delete.php?type=1&id=$id_gradiva' class='delete_text'>(-)</a>
+                                        <img src='Pictures/zip_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$priloge_row['id_oddaja']."' class='delete_text'>(-)</a>
                                         ";
                                     }
 
                                     else if($priloge_row['file_ext'] == 'docx' || $priloge_row['file_ext'] == 'doc'){
                                         echo"
-                                        <img src='Pictures/doc_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='delete.php?type=1&id=$id_gradiva' class='delete_text'>(-)</a>
+                                        <img src='Pictures/doc_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$priloge_row['id_oddaja']."' class='delete_text'>(-)</a>
                                         ";
                                     }
 
                                     else{
                                         echo"
-                                        <img src='Pictures/file_default.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='delete.php?type=1&id=$id_gradiva' class='delete_text'>(-)</a>
+                                        <img src='Pictures/file_default.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$priloge_row['id_oddaja']."' class='delete_text'>(-)</a>
                                         ";
                                     }
                                         

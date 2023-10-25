@@ -13,7 +13,7 @@ function profile(x){
 }
 
 function delete_user(x){
-    window.location.href = "Scripts/delete.php?id=" + x;
+    window.location.href = "Scripts/delete.php?type=2&id=" + x;
 }
 
 function toggle(x){

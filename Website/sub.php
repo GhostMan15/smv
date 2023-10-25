@@ -222,50 +222,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("location: class.php");
     }
     ?>
-
-    <!--TOP
-        <div class="top">
-            PROFILE
-            <div class="profile_con left">
-                <div>
-                    <img src="Pictures/stock_pfp.png" class="pfp_img"> 
-                </div>
-                <div class="username">Uporabniško ime</div>     
-            </div>
-            PROFILE
-
-            OCENA
-            <div class="grade_con right">
-                <span class="title">Ocena:</span> <input type="number" name="grade" class="grade_input" value="90" max="100" maxlength="3" id='grade_input' onfocus="on_change(1)" oninput="on_change(1)" onblur="on_change(2)" required> / 100
-            </div>
-            OCENA
-        </div>
-    TOP-->
-
-
-    <!--BOTTOM
-        <div class="bottom">
-            ODDAJA
-            <div class="file_con left">
-                <div class="title">
-                    Oddaja:
-                </div>
-                <div>
-                    <img src="Pictures/pdf_file.png" class="file_icon"><a href="Pictures/stock_pfp.png" class="link" download="MarkoSadnik">MarkSadnik1_Naloga1.png</a>
-                </div>
-                <div>
-                    <input type="submit" value="Oceni" class="submit_btn">
-                </div>
-            </div>
-            ODDAJA
-
-            KOMENTAR
-            <div class="comment_con right">
-                <span class="title">Komentar:</span> <textarea name="comment" maxlength="100"></textarea>
-            </div>
-            KOMENTAR
-        </div>
-    BOTTOM-->
     </form>
 </body>
 
