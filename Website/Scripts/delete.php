@@ -1,4 +1,5 @@
 <?php
+include("config.php");
 session_start();
 
 if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'], $_GET['type'], $_GET['id'])) {
@@ -51,7 +52,7 @@ if($type == 1){
     }    
     else{
         //redirect home
-        header("location: home.php");
+        header("location: ../home.php");
     }
 }
 
@@ -79,20 +80,20 @@ if($type == 2){
                 $user_del_result = mysqli_query($db, $user_del_query);
 
                 //redirect back to users.php when done
-                header("location: users.php");
+                header("location: ../users.php");
             }
             else{
-                header("location: users.php");
+                header("location: ../users.php");
             }
         }
         else{
-            header("location: vp.php");
+            header("location: ../vp.php");
         }
 
 
     }
     else{
-        header("location: vp.php");
+        header("location: ../vp.php");
     }
 }
 

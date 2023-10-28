@@ -233,7 +233,7 @@ if ($user_type != 0 && $user_type != 1) {
                                             <a class='user_link' href='vp.php?id=". $teachers_row['id_user'] ."' target='__blank__'>". $teachers_row['username'] ."</a>
                                         </td>
                                         <td class='delete_data'>
-                                            <button type='button' class='delete_btn table_btn' onclick='delete_user(". $row['id_user'] .")'><img class='delete_img img' src='Pictures/delete.png'></button>
+                                            <button type='button' class='delete_btn table_btn' onclick='delete_user(". $teachers_row['id_user'] .")'><img class='delete_img img' src='Pictures/delete.png'></button>
                                         </td>
                         ";
                         
