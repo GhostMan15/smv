@@ -277,14 +277,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //query for data in tables gradiva, model, predmeti
                 $id_gradiva = $_GET['gradivo']; 
-                $gradivo_query = "
-                SELECT `g`.*, `m`.*, `p`.*, `u`.* FROM `gradiva` `g` JOIN `model` `m`
+                /*$gradivo_query = "SELECT `g`.*, `m`.*, `p`.* FROM `gradiva` `g` JOIN `model` `m`
                 ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
-                ON `p`.`id_predmet` = `m`.`id_predmet` JOIN `ucilnica` `u`
-                ON `u`.`id_predmet` = `p`.`id_predmet`
-                WHERE `g`.`id_gradiva` = '$id_gradiva'
-                AND `u`.`id_user` = '$id';
-                ";
+                ON `p`.`id_predmet` = `m`.`id_predmet`
+                WHERE `g`.`id_gradiva` = '$id_gradiva';";*/
+                $gradivo_query = "SELECT `g`.*, `m`.`id_modula` AS `m_id_modula`, `p`.`id_predmet` AS `p_id_predmet`, `p`.`ime` AS `p_ime` FROM `gradiva` `g` JOIN `model` `m`
+                ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
+                ON `p`.`id_predmet` = `m`.`id_predmet`
+                WHERE `g`.`id_gradiva` = '$id_gradiva'";
                 $gradivo_result = mysqli_query($db, $gradivo_query);
                 $gradivo_count = mysqli_num_rows($gradivo_result);
                 
@@ -302,10 +302,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--TOP-->        
                         <div class='top'>     
                             <div class='title_con' id='title_div'>
-                                <input type='text' name='title' class='title' value='".$row["`g`.`naslov`"]."' required maxlength='50' id='title_field' onfocus='on_change(1)' onblur='on_change(2)'>
+                                <input type='text' name='title' class='title' value='".$row["naslov"]."' required maxlength='50' id='title_field' onfocus='on_change(1)' onblur='on_change(2)'>
                             </div>
                             <div class='subject_con title'>
-                                ".$row["`p`.`ime`"]."
+                                ".$row["p_ime"]."
                             </div>
                         </div>
                         <!--TOP-->
@@ -317,7 +317,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--MID-->
                         <div class='mid'>
                             <div class='text_con'>
-                                <textarea name='description' id='textarea_field' required placeholder='vpišite besedilo...' oninput='textAreaSize()' onfocus='on_change(3)' onblur='on_change(4)'>".$row["`g`.`opis`"]."</textarea>
+                                <textarea name='description' id='textarea_field' required placeholder='vpišite besedilo...' oninput='textAreaSize()' onfocus='on_change(3)' onblur='on_change(4)'>".$row["opis"]."</textarea>
                             </div>
                         </div>
                         <!--MID-->
