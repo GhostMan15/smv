@@ -331,7 +331,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         //PRILOGE - ADMIN
                         $priloge_query = "SELECT * FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `priloga` = '1';";
-                        $priloge_result = mysqli_query($db, $priloge_result);
+                        $priloge_result = mysqli_query($db, $priloge_query);
                         $priloge_count = mysqli_num_rows($priloge_result);
 
                         if($priloge_count != 0){
