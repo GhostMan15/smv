@@ -28,10 +28,6 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_gradiva = $_GET['gradivo']; 
 
-    //get form text data
-    $title = mysqli_escape_string($db, $_POST['title']);
-    $description = mysqli_escape_string($db, $_POST['description']);
-
     //get file data
     $file = $_FILES["file"];
     $file_name = $_FILES["file"]["name"];
@@ -45,10 +41,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //not supported
     $not_supported = ["exe", "ini", "dll"];
 
-    //student
+    /*----------------------------------student----------------------------------*/
     if($user_type == 2){
         //check if user uploaded the file
-        if($image_temp_name != null && $image_name != ""){
+        if($file_temp_name != null && $file_name != ""){
             //check file type
             for($i = 0; $i < count($not_supported); $i++){
                 if($file_real_ext == $not_supported[$i]){
@@ -79,7 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ";
                     $insert_result = mysqli_query($db, $insert_query);
 
-                    $new_upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
+                    $new_upload_query = "SELECT * FROM `oddaja` 
+                    WHERE `id_user` = '$id'
+                    ORDER BY `id_oddaja` DESC;";
                     $new_upload_result = mysqli_query($db, $new_upload_query);
                     $new_upload_rows = mysqli_fetch_assoc($new_upload_result);
 
@@ -94,9 +92,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //if the user has uploaded a file already, carry out update
                 else{
                     $id_oddaja = $upload_rows['id_oddaja'];
+                    $file_full_path = "Files/" . $id_oddaja . "." . $upload_rows['file_ext'];
                     if(move_uploaded_file($file_temp_name, $file_full_path)){
-                        $update_query = "
-                        UPDATE `oddaja`
+                        $update_query = "UPDATE `oddaja`
                         SET `ocena` = NULL, `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
                         WHERE `id_oddaja` = '$id_oddaja';
                         ";
@@ -108,9 +106,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
+    /*----------------------------------student----------------------------------*/
 
-    //admin, teacher
+
+    /*----------------------------------admin, teacher----------------------------------*/
     else{
+        //get form text data
+        $title = mysqli_escape_string($db, $_POST['title']);
+        $title = trim($title);
+        $description = mysqli_escape_string($db, $_POST['description']);
+        $description = trim($description);
+        $date_due = mysqli_escape_string($db, $_POST['date_due']);
+
         //check proper string lengths and that they are not empty
         if(strlen($description) > 1024){
             $allgood = false;
@@ -128,15 +135,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //if all is good do updates and upload files if there was any
         if($allgood){
-            $gradivo_update = "
-            UPDATE `gradiva`
+            //update description, title, and date
+            $gradivo_update = "UPDATE `gradiva`
             SET `naslov` = '$title', `opis` = '$description'
             WHERE `id_gradiva` = '$id_gradiva';
             ";
-            $gradivo_result = mysqli_query($db, $gradivo_result);
+            $gradivo_result = mysqli_query($db, $gradivo_update);
 
             //check if teacher uploaded the file
-            if($image_temp_name != null && $image_name != ""){
+            if($file_temp_name != null && $file_name != ""){
                 //check file type
                 for($i = 0; $i < count($not_supported); $i++){
                     if($file_real_ext == $not_supported[$i]){
@@ -157,9 +164,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id' AND `id_gradiva` = '$id_gradiva'";
                     $upload_result = mysqli_query($db, $upload_query);
                     $upload_rows = mysqli_fetch_assoc($upload_result);
-                    $upload_count = mysqli_num_rows($upload_result);
+                    /*$upload_count = mysqli_num_rows($upload_result);*/
 
-                    //if the user hasnt uploaded a file yet, carry out insert into
+                    /*if the user hasnt uploaded a file yet, carry out insert into
                     if($upload_count == 0){
                         $insert_query = "
                         INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
@@ -177,14 +184,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         if(!move_uploaded_file($file_temp_name, $file_full_path)){
                             $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
                         }
-                    }
+                    }*/
 
-                    //if the user has uploaded a file already, carry out update
+                    $insert_query = "
+                    INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
+                    VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '1', NULL);
+                    ";
+                    $insert_result = mysqli_query($db, $insert_query);
+
+                    $new_upload_query = "SELECT * FROM `oddaja` 
+                    WHERE `id_user` = '$id'
+                    ORDER BY `id_oddaja` DESC;"
+                    ;
+                    $new_upload_result = mysqli_query($db, $new_upload_query);
+                    $new_upload_rows = mysqli_fetch_assoc($new_upload_result);
+
+                    $new_id_oddaja = $new_upload_rows['id_oddaja'];
+                    $file_full_path = "Files/" . $new_id_oddaja . "." . $file_real_ext;
+
+                    if(!move_uploaded_file($file_temp_name, $file_full_path)){
+                        $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
+                    }    
+
+                    /*if the user has uploaded a file already, carry out update
                     else{
                         $id_oddaja = $upload_rows['id_oddaja'];
+                        $file_full_path = "Files/" . $id_oddaja . "." . $upload_rows['file_ext'];
                         if(move_uploaded_file($file_temp_name, $file_full_path)){
-                            $update_query = "
-                            UPDATE `oddaja`
+                            $update_query = "UPDATE `oddaja`
                             SET `ocena` = NULL, `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
                             WHERE `id_oddaja` = '$id_oddaja';
                             ";
@@ -193,11 +220,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
                         }
                     }
+                    */
                 }
             }
 
         }
     }
+    /*----------------------------------admin, teacher----------------------------------*/
 }
 ?>
 
@@ -277,10 +306,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //query for data in tables gradiva, model, predmeti
                 $id_gradiva = $_GET['gradivo']; 
-                /*$gradivo_query = "SELECT `g`.*, `m`.*, `p`.* FROM `gradiva` `g` JOIN `model` `m`
-                ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
-                ON `p`.`id_predmet` = `m`.`id_predmet`
-                WHERE `g`.`id_gradiva` = '$id_gradiva';";*/
                 $gradivo_query = "SELECT `g`.*, `m`.`id_modula` AS `m_id_modula`, `p`.`id_predmet` AS `p_id_predmet`, `p`.`ime` AS `p_ime` FROM `gradiva` `g` JOIN `model` `m`
                 ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
                 ON `p`.`id_predmet` = `m`.`id_predmet`
@@ -288,14 +313,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $gradivo_result = mysqli_query($db, $gradivo_query);
                 $gradivo_count = mysqli_num_rows($gradivo_result);
                 
-                echo"<script>alert('ba');</script>";
+                /*echo"<script>alert('ba');</script>";*/
 
                 //result found
                 if($gradivo_count != 0){
                     $row = mysqli_fetch_assoc($gradivo_result);
+                    
+                    //check if logged in user is indeed part of the subject
+                    $id_predmet = $row["p_id_predmet"];
+                    $user_exists_query = "SELECT `u`.*
+                    FROM `predmeti` `p` JOIN `ucilnica` `u`
+                        ON `p`.`id_predmet` = `u`.`id_predmet`
+                    WHERE `p`.`id_predmet` = '$id_predmet'
+                    AND `u`.`id_user` = '$id';
+                    ";
+                    $user_exists_result = mysqli_query($db, $user_exists_query);
+                    $user_exists_count = mysqli_num_rows($user_exists_result);
 
-                    //ADMIN,TEACHERS
-                    if($user_type == 0 || $user_type == 1){
+                    //*-------------------------------ADMIN, TEACHERS-------------------------------*/
+                    if($user_type == 0 || ($user_exists_count != 0 && $user_type == 1)){
 
                         //TOP - ADMINS
                         echo"
@@ -335,8 +371,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $priloge_count = mysqli_num_rows($priloge_result);
 
                         if($priloge_count != 0){
+                            //create variable for counting the attachments
                             $i = 1;
-                            $containedFiles = false;
+                            //$containedFiles = false;
+
                             while($priloge_row = mysqli_fetch_assoc($priloge_result)){
                                 $filename = "Files/" . $priloge_row['id_oddaja'] . "." . $priloge_row['file_ext'];
 
@@ -347,7 +385,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class='title2'>Priloge</div>
                                         <div class='prof_files'>
                                         ";
-                                        $containedFiles = true;
+                                        //$containedFiles = true;
                                     }
 
                                     echo"
@@ -391,7 +429,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $i++;
                                 }
                             }
-                            if($containedFiles){
+
+                            if($i > 1){
                                 echo"
                                 </div>
                                 <!--PRILOGE-->
@@ -427,13 +466,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         echo"
                         <tr class='due'>
-                            <td class='t_left'>
+                            <td class='t_left bottom_row'>
                                 Rok oddaje
                             </td>
-                            <td class='date_due'>
+                            <td class='date_due bottom_row'>
                                 <input type='date' required class='date_picker' name='date_due'>
                             </td>
                         </tr>
+                        </table>
                         ";
 
                         //DODAJ PRILOGO
@@ -462,8 +502,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ";
 
                     }
-                    //STUDENTS
-                    else{
+                    /*-------------------------------ADMIN, TEACHERS-------------------------------*/
+
+                    /*-------------------------------STUDENTS-------------------------------*/
+                    else if(($user_exists_count != 0 && $user_type == 2)){
 
                         //TOP - STUDENTS
                         echo"
@@ -503,7 +545,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         if($priloge_count != 0){
                             $i = 1;
-                            $containedFiles = false;
                             while($priloge_row = mysqli_fetch_assoc($priloge_result)){
                                 $filename = "Files/" . $priloge_row['id_oddaja'] . "." . $priloge_row['file_ext'];
 
@@ -514,7 +555,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class='title2'>Priloge</div>
                                         <div class='prof_files'>
                                         ";
-                                        $containedFiles = true;
                                     }
 
                                     echo"
@@ -558,7 +598,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     $i++;
                                 }
                             }
-                            if($containedFiles){
+                            if($i > 1){
                                 echo"
                                 </div>
                                 <!--PRILOGE-->
@@ -707,7 +747,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--BOTTOM-->
                         ";
                     }
+                    /*-------------------------------STUDENTS-------------------------------*/
+
+                    else{
+                        header("location: class.php");
+                    }
                 }
+
                 else{
                     header("location: class.php");
                 }
