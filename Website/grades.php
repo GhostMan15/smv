@@ -3,7 +3,7 @@ include('Scripts/config.php');
 //START THE SESSION
 session_start();
 
-if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'])) {
+if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'], $_GET['gradivo'])) {
     header('location: login.php');
 }
 
@@ -79,25 +79,74 @@ else {
     <!--NAV-->
 
     <?php
-    
+        //check if class material exists
+        $id_gradiva = $_GET['gradivo'];
+        $exists_query = "SELECT `g`.`id_gradiva`, `g`.`naslov` AS `g_naslov`, `p`.`id_predmet` AS `p_id_predmet` 
+        FROM `gradiva` `g` JOIN `model` `m`
+            ON `g`.`id_modula` = `m`.`id_modela` JOIN `predmeti` `p`
+            ON `m`.`id_predmet` = `p`.`id_predmet`
+        WHERE `g`.`id_gradiva` = '$id_gradiva';";
+        $exists_result = mysqli_query($db, $exists_query);
+        $exists_count = mysqli_num_rows($exists_result);
+
+        if($exists_count != 0){
+            //check if user is a teacher or admin assigned to the class
+            $user_query = "SELECT `id_user`
+            FROM `ucilnica` `u` JOIN `predmeti` `p`
+                ON `p`.`id_predmet` = `u`.`id_predmet`
+            WHERE `u`.`id_user` = '$id';";
+            $user_result = mysqli_query($db, $user_query);
+            $user_count = mysqli_num_rows($user_result);
+
+            if($user_type == 0 || ($user_count != 0 && $user_type == 1)){
+                //display all submissions, if there are any
+                $sub_query = "SELECT * FROM `oddaja` 
+                WHERE `id_gradiva` = '$id_gradiva' AND `priloga` = '0';"; 
+                $sub_result = mysqli_query($db, $sub_query);
+                $sub_count = mysqli_num_rows($sub_result);
+
+                //display submissions
+                if($sub_count != 0){
+                    $material_row = mysqli_fetch_assoc($exists_result);
+                    echo"
+                    <!--CONTAINER-->
+                        <div class='container'>
+                            <div class='title'>
+                                <p>
+                                    Oddaje za nalogo ($sub_count)
+                                    <br>
+                                    \"" . $material_row['g_naslov'] . "\"
+                                </p>
+                            </div>
+
+                            <div class='content'>
+                    ";
+                    
+                    while($row = mysqli_fetch_assoc($sub_result)){
+                        echo"    
+                                <div class='oddaja'>
+                                    <iframe src='sub.php?oddaja=". $row['id_oddaja'] ."'></iframe>
+                                </div> 
+                        ";
+                    }
+
+                    echo"
+                            </div>
+                        </div>
+                    <!--CONTAINER-->
+                    ";
+
+                }
+            }
+            else{
+                header("location: course.php?id=");
+            }
+        }
+        else{
+            header("location: class.php");
+        }
     ?>
 
-    <!--CONTAINER
-    <div class="container">
-        <div class="title">
-            <p>
-                Oddaje za nalogo (10)
-                <br>
-                "Naloga1"
-            </p>
-        </div>
-
-        <div class="content">
-            <div class="oddaja">
-                <iframe src="sub.php"></iframe>
-            </div>
-        </div>
-    </div>
-    CONTAINER-->
+    
 </body>
 </html>

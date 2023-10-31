@@ -137,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if($allgood){
             //update description, title, and date
             $gradivo_update = "UPDATE `gradiva`
-            SET `naslov` = '$title', `opis` = '$description'
+            SET `naslov` = '$title', `opis` = '$description', `datum_do` = '$date_due' 
             WHERE `id_gradiva` = '$id_gradiva';
             ";
             $gradivo_result = mysqli_query($db, $gradivo_update);
@@ -306,7 +306,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 //query for data in tables gradiva, model, predmeti
                 $id_gradiva = $_GET['gradivo']; 
-                $gradivo_query = "SELECT `g`.*, `m`.`id_modula` AS `m_id_modula`, `p`.`id_predmet` AS `p_id_predmet`, `p`.`ime` AS `p_ime` FROM `gradiva` `g` JOIN `model` `m`
+                $gradivo_query = "SELECT `g`.*, `m`.`id_modula` AS `m_id_modula`, `p`.`id_predmet` AS `p_id_predmet`, `p`.`ime` AS `p_ime` 
+                FROM `gradiva` `g` JOIN `model` `m`
                 ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
                 ON `p`.`id_predmet` = `m`.`id_predmet`
                 WHERE `g`.`id_gradiva` = '$id_gradiva'";
@@ -318,6 +319,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //result found
                 if($gradivo_count != 0){
                     $row = mysqli_fetch_assoc($gradivo_result);
+                    $oddaja = $row['oddaja'];
                     
                     //check if logged in user is indeed part of the subject
                     $id_predmet = $row["p_id_predmet"];
@@ -392,7 +394,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class='prof_row'>
                                     ";
 
-                                    if($priloge_row['file_ext'] == 'png' || $priloge_row['file_ext'] == 'jpg' || $priloge_row['file_ext'] == 'jpeg' || $priloge_row['file_ext'] == 'webp'){
+                                    if($priloge_row['file_ext'] == 'png' || $priloge_row['file_ext'] == 'jpg' || $priloge_row['file_ext'] == 'jpeg' || $priloge_row['file_ext'] == 'webp' || $priloge_row['file_ext'] == 'jfif' || $priloge_row['file_ext'] == 'gif'){
                                         echo"
                                         <img src='Pictures/img_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$priloge_row['id_oddaja']."' class='delete_text'>(-)</a>
                                         ";
@@ -440,41 +442,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         
 
                         //STANJE NALOGE - ADMIN
-                        echo"
-                        <!--STANJE ODDAJE-->
-                        <div class='title2'>Stanje naloge</div>
-                        <table class='table'>
-                        ";
+                        if($oddaja == 1){
+                            echo"
+                            <!--STANJE ODDAJE-->
+                            <div class='title2'>Stanje naloge</div>
+                            <table class='table'>
+                            ";
 
-                        echo"
-                        <tr class='submission'>
-                            <td class='t_left'>
-                                Stanje oddaj
-                            </td> 
-                        ";
+                            echo"
+                            <tr class='submission'>
+                                <td class='t_left'>
+                                    Stanje oddaj
+                                </td> 
+                            ";
 
-                        $oddano_query = "SELECT DISTINCT `id_user` FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `priloga` = '0';";
-                        $oddano_result = mysqli_query($db, $oddano_query);
-                        $oddano_count = mysqli_num_rows($oddano_result);
+                            $oddano_query = "SELECT DISTINCT `id_user` FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `priloga` = '0';";
+                            $oddano_result = mysqli_query($db, $oddano_query);
+                            $oddano_count = mysqli_num_rows($oddano_result);
 
-                        echo"
-                            <td class='submit_status'>
-                                $oddano_count oddanih
-                            </td>
-                        </tr>
-                        ";
+                            //oddane naloge
+                            if($oddano_count > 0){
+                                echo"
+                                <td class='submit_status'>
+                                    $oddano_count oddanih <sup><a class='download_link accepted' href='grades.php?gradivo='$id_gradiva'>(Ogled)</a></sup>
+                                </td>
+                                </tr>
+                            ";
+                            }
 
-                        echo"
-                        <tr class='due'>
-                            <td class='t_left bottom_row'>
-                                Rok oddaje
-                            </td>
-                            <td class='date_due bottom_row'>
-                                <input type='date' required class='date_picker' name='date_due'>
-                            </td>
-                        </tr>
-                        </table>
-                        ";
+                            //nobene oddane
+                            else{
+                                echo"
+                                <td class='submit_status'>
+                                    $oddano_count oddanih
+                                </td>
+                                </tr>
+                            ";
+                            }
+                            
+
+                            echo"
+                            <tr class='due'>
+                                <td class='t_left bottom_row'>
+                                    Rok oddaje
+                                </td>
+                                <td class='date_due bottom_row'>
+                                    <input type='date' required class='date_picker' name='date_due' value='". $row["datum_do"] ."'>
+                                </td>
+                            </tr>
+                            </table>
+                            ";
+                        }
+                        
 
                         //DODAJ PRILOGO
                         echo"
@@ -561,7 +580,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <div class='prof_row'>
                                     ";
 
-                                    if($priloge_row['file_ext'] == 'png' || $priloge_row['file_ext'] == 'jpg' || $priloge_row['file_ext'] == 'jpeg' || $priloge_row['file_ext'] == 'webp'){
+                                    if($priloge_row['file_ext'] == 'png' || $priloge_row['file_ext'] == 'jpg' || $priloge_row['file_ext'] == 'jpeg' || $priloge_row['file_ext'] == 'webp' || $priloge_row['file_ext'] == 'jfif' || $priloge_row['file_ext'] == 'gif'){
                                         echo"
                                         <img src='Pictures/img_file.png' class='file_icon'> <a href='$filename' class='download_link' download='Priloga_$i'>Priloga_$i.". $priloge_row['file_ext'] ."</a>
                                         ";
@@ -607,146 +626,155 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         }
                         
                         //STANJE NALOGE - STUDENTS
-                        $oddano_query = "SELECT * FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `id_user` = '$id';";
-                        $oddano_result = mysqli_query($db, $oddano_query);
-                        $oddano_count = mysqli_num_rows($oddano_result);
+                        if($oddaja == 1){
+                            $oddano_query = "SELECT * FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `id_user` = '$id';";
+                            $oddano_result = mysqli_query($db, $oddano_query);
+                            $oddano_count = mysqli_num_rows($oddano_result);
 
-                        //oddana naloga
-                        if($oddano_count != 0){
-                            $oddano_row = mysqli_fetch_assoc($oddano_result);
-                            $raw_date = $row[`g`.`datum_do`];
-                            $split_date = explode("-", $raw_date);
-                            $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
+                            //oddana naloga
+                            if($oddano_count != 0){
+                                $oddano_row = mysqli_fetch_assoc($oddano_result);
+                                $raw_date = $row['datum_do'];
+                                $split_date = explode("-", $raw_date);
+                                $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
 
-                            $raw_add_date = $oddano_row["datum_oddaje"];
-                            $split_add_date = explode("-", $raw_date);
-                            $new_add_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
-                            
-                            echo"
-                            <!--STANJE ODDAJE-->
-                            <div class='title2'>Stanje naloge</div>
-                            <table class='table'>
-                                <tr class='submission'>
-                                    <td class='t_left'>
-                                        Stanje
-                                    </td> 
-                                    <td class='submit_status submitted_text'>
-                                        Oddano
-                                    </td>
-                                </tr>
-                                <tr class='due'>
-                                    <td class='t_left'>
-                                        Rok oddaje
-                                    </td>
-                                    <td class='date_due'>
-                                        $new_date
-                                    </td>
-                                </tr>
-                                <tr class='date_added'>
-                                    <td class='t_left'>
-                                        Datum oddaje
-                                    </td>
-                                    <td class='date_added'>
-                                        $new_add_date
-                                    </td>
-                                </tr>
-                                <tr class='mark'>
-                                    <td class='t_left bottom_row'>
-                                        Ocena
-                                    </td>
-                            ";
-                            if($oddano_row["ocena"] != ""){
+                                $raw_add_date = $oddano_row["datum_oddaje"];
+                                $split_add_date = explode("-", $raw_date);
+                                $new_add_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
+                                
                                 echo"
-                                    <td class='bottom_row'>
-                                        ". $oddano_row["ocena"]  ." / 100
-                                    </td>
-                                </tr>
+                                <!--STANJE ODDAJE-->
+                                <div class='title2'>Stanje naloge</div>
+                                <table class='table'>
+                                    <tr class='submission'>
+                                        <td class='t_left'>
+                                            Stanje
+                                        </td> 
+                                        <td class='submit_status submitted_text'>
+                                            Oddano
+                                        </td>
+                                    </tr>
+                                    <tr class='due'>
+                                        <td class='t_left'>
+                                            Rok oddaje
+                                        </td>
+                                        <td class='date_due'>
+                                            $new_date
+                                        </td>
+                                    </tr>
+                                    <tr class='date_added'>
+                                        <td class='t_left'>
+                                            Datum oddaje
+                                        </td>
+                                        <td class='date_added'>
+                                            $new_add_date
+                                        </td>
+                                    </tr>
+                                    <tr class='mark'>
+                                        <td class='t_left bottom_row'>
+                                            Ocena
+                                        </td>
                                 ";
+                                if($oddano_row["ocena"] != ""){
+                                    echo"
+                                        <td class='bottom_row'>
+                                            ". $oddano_row["ocena"]  ." / 100
+                                        </td>
+                                    </tr>
+                                    ";
+                                }
+                                else{
+                                    echo"
+                                        <td class='bottom_row'>
+                                            Neocenjeno
+                                        </td>
+                                    </tr>
+                                    ";
+                                }
+                                echo"
+                                </table>
+                                <!--STANJE ODDAJE-->
+                                ";
+
+                                echo"
+                                <!--ODDAJA-->
+                                <div class='submit_title'>
+                                    <div class='title2'>Ponovna oddaja</div>
+                                    <div class='accepted'>(največ 10MB)</div>
+                                </div>";
+                                
                             }
+
+                            //neoddana naloga
                             else{
+                                $oddano_row = mysqli_fetch_assoc($oddano_result);
+                                $raw_date = $row['datum_do'];
+                                $split_date = explode("-", $raw_date);
+                                $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
+                                
                                 echo"
-                                    <td class='bottom_row'>
-                                        Neocenjeno
-                                    </td>
-                                </tr>
-                                ";
+                                <!--STANJE ODDAJE-->
+                                <div class='title2'>Stanje naloge</div>
+                                <table class='table'>
+                                    <tr class='submission'>
+                                        <td class='t_left'>
+                                            Stanje
+                                        </td> 
+                                        <td class='submit_status submitted_text'>
+                                            Neoddano
+                                        </td>
+                                    </tr>
+                                    <tr class='due'>
+                                        <td class='t_left'>
+                                            Rok oddaje
+                                        </td>
+                                        <td class='date_due'>
+                                            $new_date
+                                        </td>
+                                    </tr>
+                                    <tr class='date_added'>
+                                        <td class='t_left'>
+                                            Datum oddaje
+                                        </td>
+                                        <td class='date_added'>
+                                            /
+                                        </td>
+                                    </tr>
+                                    <tr class='mark'>
+                                        <td class='t_left bottom_row'>
+                                            Ocena
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!--STANJE ODDAJE-->
+                                ";     
+                                
+                                echo"
+                                <!--ODDAJA-->
+                                <div class='submit_title'>
+                                    <div class='title2'>Oddaja</div>
+                                    <div class='accepted'>(največ 10MB)</div>
+                                </div>";
                             }
+
+                            //ODAJA NALOGE
                             echo"
-                            </table>
-                            <!--STANJE ODDAJE-->
-                            ";
-                            
-                        }
-
-                        //neoddana naloga
-                        else{
-                            $oddano_row = mysqli_fetch_assoc($oddano_result);
-                            $raw_date = $row[`g`.`datum_do`];
-                            $split_date = explode("-", $raw_date);
-                            $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
-                            
-                            echo"
-                            <!--STANJE ODDAJE-->
-                            <div class='title2'>Stanje naloge</div>
-                            <table class='table'>
-                                <tr class='submission'>
-                                    <td class='t_left'>
-                                        Stanje
-                                    </td> 
-                                    <td class='submit_status submitted_text'>
-                                        Neoddano
-                                    </td>
-                                </tr>
-                                <tr class='due'>
-                                    <td class='t_left'>
-                                        Rok oddaje
-                                    </td>
-                                    <td class='date_due'>
-                                        $new_date
-                                    </td>
-                                </tr>
-                                <tr class='date_added'>
-                                    <td class='t_left'>
-                                        Datum oddaje
-                                    </td>
-                                    <td class='date_added'>
-                                        /
-                                    </td>
-                                </tr>
-                                <tr class='mark'>
-                                    <td class='t_left bottom_row'>
-                                        Ocena
-                                    </td>
-                                </tr>
-                            </table>
-                            <!--STANJE ODDAJE-->
-                            ";           
-                        }
-
-                        //ODAJA NALOGE
-                        echo"
-                        <!--ODDAJA-->
-                        <div class='submit_title'>
-                            <div class='title2'>Oddaja</div>
-                            <div class='accepted'>(največ 10MB)</div>
-                        </div>
-                        
-                        <div class='submit_con'>
-                            <div class='file_upload_con'>
-                                <input type='file' name='file' required class='file_upload'>
+                            <div class='submit_con'>
+                                <div class='file_upload_con'>
+                                    <input type='file' name='file' required class='file_upload'>
+                                </div>
+                                <div class='submit_btn_con'>
+                                    <input type='submit' class='submit_btn' value='Oddaj'>
+                                </div>
                             </div>
-                            <div class='submit_btn_con'>
-                                <input type='submit' class='submit_btn' value='Oddaj'>
-                            </div>
-                        </div>
-                        <!--ODDAJA-->";
-
+                            <!--ODDAJA-->";
+                        }
 
                         echo"
                         </div>
                         <!--BOTTOM-->
                         ";
-                    }
+                    } 
                     /*-------------------------------STUDENTS-------------------------------*/
 
                     else{
@@ -757,7 +785,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 else{
                     header("location: class.php");
                 }
-               
+
             }
             else{
                 header("location: class.php");
