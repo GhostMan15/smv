@@ -182,11 +182,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="bannerVP">
         <div class="navbar">
         <?php
-            /*echo"<script>
-                alert($user_type);
-                alert($id);
-            </script>";*/
-
             //teachers
             if ($user_type == 1) {
                 echo "

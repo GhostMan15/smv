@@ -19,8 +19,8 @@ else {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" type="text" href="Stylesheets/MojeOcene.css">
+    <title>Ocene</title>
+    <link rel="stylesheet" type="text/css" href="Stylesheets/MojeOcene.css">
     <link rel="stylesheet" type="text/css" href="Stylesheets/navbar.css">
 </head>
 
@@ -78,7 +78,80 @@ else {
     
     <!--CONTAINER-->
     <div class='container'>
+
+        <!--MAIN-->
+        <div class='main'>
         
+        <?php
+        if(isset($_GET['id'])){
+            $id_user = $_GET['id'];
+            //check to see if user exists and is a student
+            $user_query = "SELECT * FROM `user` WHERE `id_user` = '$id_user';";
+            $user_result = mysqli_query($db, $user_query);
+            $user_count = mysqli_num_rows($user_result);
+            $user_row = mysqli_fetch_assoc($user_result);
+
+            if($user_count > 0 && $user_row['user_type'] == 2){
+                //get all classes that the user is assigned to 
+                /*------------------------------------TO DO---------------------------*/
+            }
+        }
+        ?>
+
+            
+            <!--TITLE-->
+            <div class='top'>
+                <p class='title'>
+                    Redovalnica
+                </p>
+
+                <p>
+                    <a class='link' href='vp.php?id=x' target='__blank__'>Mark Sadnik</a>
+                </p>
+            </div>
+            <!--TITLE-->
+
+            <!--TABLE-->
+            <div class='mid'>
+
+                <!--PREDMET-->
+                <div class='row'>
+                        <div class='sub_name'>
+                            <a href='course.php?id=x' class='link'>MAT</a>
+                        </div>
+
+                        <div class='grade_row'>
+                            <div class='grade'>
+                                <a href='grades.php?oddaja=x' class='link'>100</a>
+                            </div>
+
+                            <div class='grade'>
+                                <a href='material.php?gradivo=x' class='link'>20</a>
+                            </div>
+                        </div>
+
+                        <div class='avg_row green'>
+                            90%
+                        </div>
+                </div>
+                <!--PREDMET-->
+
+                <!--AVG-->
+                <div class='bottom_row'> 
+                        <div class='avg_title bold'>
+                            Povprečje
+                        </div>
+                        <div class='avg_row green bold'>
+                            75%
+                        </div>
+                </div>
+                <!--AVG-->
+            </div>
+            <!--TABLE-->
+
+            <!--BOTTOM-->
+        </div>
+        <!--MAIN-->
     </div>
     <!--CONTAINER-->
 </body>

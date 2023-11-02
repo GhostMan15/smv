@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $id_oddaja = $_GET['oddaja'];
 
         //get submission data
-        $oddaja_query = "SELECT `o`.* , `p`.*, `g`.*
+        $oddaja_query = "SELECT `o`.* , `p`.`id_predmet` AS `p_id_predmet`, `g`.*
         FROM `oddaja` `o` JOIN `gradiva` `g`
             ON  `g`.`id_gradiva` = `o`.`id_gradiva` JOIN `model` `m`
             ON `m`.`id_modula` = `g`.`id_modula` JOIN `predmeti` `p`
@@ -86,19 +86,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $oddaja_row = mysqli_fetch_assoc($oddaja_result);
             $id_predmet = $oddaja_row['`p`.`id_predmet`'];
 
-            //query to see if user is a professor teaching the subject or admin
+            //query to see if user is an admin or professor teaching the subject
             $prof_query = "SELECT `us`.*
             FROM `user` `us` JOIN `ucilnica` `u`
                 ON `us`.`id_user` = `u`.`id_user` JOIN `predmeti` `p`
                 ON `u`.`id_predmet` = `p`.`id_predmet`
-            WHERE `us`.`id_user` = '$id' AND `u`.`user_type` = '1';
+            WHERE `us`.`id_user` = '$id' AND `u`.`user_type` = '1' AND `p`.`id_predmet` = '$id_predmet';
             ";
             $prof_result = mysqli_query($db, $prof_query);
             $prof_count = mysqli_num_rows($prof_result);
 
             //if rows are returned, display page
-            if($prof_count != 0 || $user_type == 0){
-                $user_data_query = "SELECT `us`.*, `o`.* 
+            if($user_type == 0 || $prof_count != 0){
+                $user_data_query = "SELECT `us`.*, `ocena`, `file_ext`, `komentar`
                 FROM `user` `us` JOIN `oddaja` `o`
                     ON `us`.`id_user` = `o`.`id_user`
                 WHERE `o`.`id_oddaja` = '$id_oddaja';
@@ -113,15 +113,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--PROFILE-->
                         <div class='profile_con left'>
                             <div>
-                                <img src='Pictures/Profile_Pictures/pfp_" . $user_data_row["`us`.`id_user`"] .".". $user_data_row["`us`.`img_ext`"] ."' class='pfp_img'> 
+                                <img src='Pictures/Profile_Pictures/pfp_" . $user_data_row["`id_user`"] .".". $user_data_row["img_ext"] ."' class='pfp_img'> 
                             </div>
-                            <div class='username'>". $user_data_row["`us`.`username`"] ."</div>     
+                            <div class='username'>". $user_data_row["username"] ."</div>     
                         </div>
                         <!--PROFILE-->
 
                         <!--OCENA-->
                         <div class='grade_con right'>
-                            <span class='title'>Ocena:</span> <input type='number' name='grade' class='grade_input' value='" . $user_data_row["`o`.`ocena`"] ."' max='100' maxlength='3' id='grade_input' onfocus='on_change(1)' oninput='on_change(1)' onblur='on_change(2)' required> / 100
+                            <span class='title'>Ocena:</span> <input type='number' name='grade' class='grade_input' value='" . $user_data_row["ocena"] ."' max='100' maxlength='3' id='grade_input' onfocus='on_change(1)' oninput='on_change(1)' onblur='on_change(2)' required> / 100
                         </div>
                         <!--OCENA-->
                     </div>
@@ -142,8 +142,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ";
 
                 //render different icons, depending on file extension
-                $file_ext = $user_data_row['`o`.`file_ext`'];
-                $file_name = $user_data_row["`us`.`ime`"] . $user_data_row["`us`.`priimek`"] . "-" . $oddaja_row['`g`.`naslov`'];
+                $file_ext = $user_data_row['file_ext'];
+                $file_name = $user_data_row["ime"] . $user_data_row["priimek"] . "-" . $oddaja_row['naslov'];
 
                 if($file_ext == "png"){
                     echo"
@@ -199,7 +199,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo"
                     <!--KOMENTAR-->
                     <div class='comment_con right'>
-                        <span class='title'>Komentar:</span> <textarea name='comment' maxlength='100'>". $user_data_row['`o`.`komentar`'] ."</textarea>
+                        <span class='title'>Komentar:</span> <textarea name='comment' maxlength='100'>". $user_data_row['komentar'] ."</textarea>
                     </div>
                     <!--KOMENTAR-->
                 </div>
