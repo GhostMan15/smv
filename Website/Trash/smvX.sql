@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 03, 2023 at 02:59 PM
+-- Generation Time: Nov 03, 2023 at 09:47 AM
 -- Server version: 10.6.12-MariaDB-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.14
 
@@ -108,9 +108,8 @@ INSERT INTO `predmeti` (`id_predmet`, `ime`, `kratica`, `opis`) VALUES
 --
 
 CREATE TABLE `ucilnica` (
-  `id_ucilnica` int(11) NOT NULL,
   `id_predmet` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
+  `id_user` int(11) DEFAULT NULL,
   `user_type` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -216,9 +215,8 @@ ALTER TABLE `predmeti`
 -- Indexes for table `ucilnica`
 --
 ALTER TABLE `ucilnica`
-  ADD PRIMARY KEY (`id_ucilnica`),
-  ADD KEY `id_predmet` (`id_predmet`),
-  ADD KEY `id_user` (`id_user`);
+  ADD PRIMARY KEY (`id_predmet`),
+  ADD KEY `fk_user_id` (`id_user`);
 
 --
 -- Indexes for table `user`
@@ -259,7 +257,7 @@ ALTER TABLE `predmeti`
 -- AUTO_INCREMENT for table `ucilnica`
 --
 ALTER TABLE `ucilnica`
-  MODIFY `id_ucilnica` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_predmet` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -294,8 +292,8 @@ ALTER TABLE `oddaja`
 -- Constraints for table `ucilnica`
 --
 ALTER TABLE `ucilnica`
-  ADD CONSTRAINT `ucilnica_ibfk_1` FOREIGN KEY (`id_predmet`) REFERENCES `predmeti` (`id_predmet`),
-  ADD CONSTRAINT `ucilnica_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+  ADD CONSTRAINT `fk_user_id` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`),
+  ADD CONSTRAINT `id_predmet` FOREIGN KEY (`id_predmet`) REFERENCES `predmeti` (`id_predmet`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
