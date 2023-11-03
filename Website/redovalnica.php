@@ -303,9 +303,9 @@ else {
                             /*------------------------TABLE------------------------*/
                         }
 
-                        //the user is another student trying to acces grades - redirect to home.php
+                        //the user is another student trying to access grades - redirect to own profile
                         else{
-                            header("location: home.php");
+                            header("location: vp.php");
                         }
                     }
 

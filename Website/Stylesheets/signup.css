@@ -1,0 +1,109 @@
+.container{
+    display: grid;
+    justify-content: center;
+    width: 100vw;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.main{
+    display: grid;
+    justify-content: center;
+    width: 50vw;
+    border: 1px solid black;
+    border-radius: 0.5vw;
+    padding: 1vw;
+    text-align: center;
+    font-size: 1.25vw;
+}
+
+.main > div{
+    margin: 0.5vw;
+}
+
+
+.bold{
+    font-weight: bold;
+}
+
+.title{
+    font-size: 1.5vw;
+}
+
+a{
+    color: black;
+    text-decoration: none; 
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.title_con{
+    width: 60ch;
+    text-align: center;
+}
+
+.dropdown{
+    font-size: 1.25vw;
+    outline: none;
+    border: 1px solid transparent;
+}
+
+.dropdown:hover{
+    border-bottom: 1px solid black;
+}
+
+.btn_con, .dropdown_con{
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+}
+
+.dropdown_con > div{
+    margin: 0.1vw;
+}
+
+.btn_con > div{
+    margin: 0.5vw;
+}
+
+.img{
+    width: 2vw;
+    height: 2vw;
+}
+
+.submit_btn_con, .dropdown_div{
+    text-align: left;
+}
+
+.back_btn_con, .dropdown_title{
+    text-align: right;
+}
+
+.back_btn{
+    border: none;
+    border-radius: 2vw;
+    background-color: #19172C;
+    height: 2.2vw;
+    width: 2.2vw;
+    padding: 0.1vw;
+}
+
+.back_btn:hover{
+    background-color: #443dac;
+}
+
+.submit_btn{
+    font-size: 1vw;
+    width: 10ch;
+    height: 2vw;
+    border-radius: 0.5vw;
+    background-color: white;
+    border: 1px solid black;
+}
+
+.submit_btn:hover{
+    background-color: #19172C;
+    color: white;
+}

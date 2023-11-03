@@ -4,14 +4,14 @@ include("Scripts/config.php");
 session_start();
 
 //if the user isn't logged in / session variables aren't set, redirect to login
-if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"])) {
-    header("location: Scripts/logout.php");
+if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"]), $_GET['id']) {
+  header("location: Scripts/logout.php");
 }
 //if the user is logged in, allow access
 else {
-    $username = $_SESSION["username"];
-    $id = $_SESSION["id"];
-    $user_type =  $_SESSION["user_type"];
+  $username = $_SESSION["username"];
+  $id = $_SESSION["id"];
+  $user_type =  $_SESSION["user_type"];
 }
 ?>
 <!DOCTYPE html>
@@ -29,7 +29,41 @@ else {
 <body>
 <div>
         
-        <?php
+<?php
+        $class_id = $_GET['id'];
+        //check that the course / subject exists
+        $class_exists_query = "SELECT *
+        FROM `predmeti` `p`
+        WHERE `p`.`id_predmet` = '$class_id';
+        ";
+        $class_exists_result = mysqli_query($db, $class_exists_query);
+        $class_exists_count = mysqli_num_rows($class_exists_result);
+
+        //class exists - carry out display code
+        if($class_exists_count > 0){
+            //if the user is a teacher or student, check if they are signed up to the class
+            $user_query = "SELECT * 
+            FROM `ucilnica` `u`
+            WHERE `id_predmet` = '$class_id'
+            AND `id_user` = '$id'; 
+            ";  
+            $user_result = mysqli_query($db, $user_query);
+            $user_count = mysqli_num_rows($user_result);
+
+            //user isn't signed up to class and isn't an admin
+            if($user_count == 0 && $user_type != 0){
+                //if the user is a teacher - redirect to class.php (only admin can sign up teachers)
+                if($user_type == 1){
+                    header("location: class.php");
+                }
+                //if the user is a student redirect to class signup prompt
+                else{
+                    header("location: Scripts/signup.php?id=$class_id");
+                }
+            }
+
+            //user is signed up to class
+            else{
                 //teachers
                 if ($user_type == '1') {
                     echo "<div class='navbar_div'> <div class = 'navbar'>
@@ -45,28 +79,25 @@ else {
                     </div>
                     ";
 
-                    $id = $_GET['id'];
-                    $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id';";
+                    $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$class_id';";
                     $predmeti_res = mysqli_query($db, $predmeti_query);
                     $predmet = mysqli_fetch_assoc($predmeti_res);
     
-                    $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
+                    $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$class_id';";
                     $model_res = mysqli_query($db, $model_query);
                     
                     
-             echo" <div class='vsebina'>
-                    <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
-                     </div>
-                     <div class='vsebina-poglavje'>            <!--MODEL-->";
+                    echo" <div class='vsebina'>
+                            <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
+                            </div>
+                            <div class='vsebina-poglavje'>            <!--MODEL-->";
                             
-                     while($rows = mysqli_fetch_assoc($model_res)){      
-                        
-                    
+                    while($rows = mysqli_fetch_assoc($model_res)){      
                         echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
-                        echo"<div class='asd'><a href=AddVaja.php?id_predmet='$id'<p class='plusek'> + </p></a></div> ";
+                        echo"<div class='asd'><a href=AddVaja.php?id_predmet='$class_id'<p class='plusek'> + </p></a></div> ";
     
     
-                        $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
+                        $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '" .$rows['id_modula']. "';";
                         $grad_res = mysqli_query($db, $grad_query);
                         $grad_num = mysqli_num_rows($grad_res);
                         $g = 1;
@@ -74,16 +105,16 @@ else {
     
                         while ($rowss = mysqli_fetch_assoc($grad_res)){
                           echo" <div class='gradivo'> 
-                          <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
+                          <div class='gradivo-item'><a href='material.php?gradivo=".$rowss['id_gradiva']."'> " . $rowss['naslov'] ."</a> </div>
                           </div>";
                           if ($g >= $grad_num){
                             echo"<hr>";
                           }
                           $g++;
-                        }   
-                       }
-                        
+                        }
                     }
+                        
+                }
                 
                 //students
                 else if ($user_type == '2') {
@@ -98,44 +129,41 @@ else {
                     </div>
                     </div>
                     ";
-                            
-                $id = $_GET['id'];
-                $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id';";
-                $predmeti_res = mysqli_query($db, $predmeti_query);
-                $predmet = mysqli_fetch_assoc($predmeti_res);
+                    $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$class_id';";
+                    $predmeti_res = mysqli_query($db, $predmeti_query);
+                    $predmet = mysqli_fetch_assoc($predmeti_res);
 
-                $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
-                $model_res = mysqli_query($db, $model_query);
+                    $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$class_id';";
+                    $model_res = mysqli_query($db, $model_query);
                 
 
-         echo" <div class='vsebina'>
-                <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
-                 </div>
-                 <div class='vsebina-poglavje'>             <!--MODEL-->";
+                    echo" <div class='vsebina'>
+                              <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
+                          </div>
+                          <div class='vsebina-poglavje'>             <!--MODEL-->";
                         
-                 while($rows = mysqli_fetch_assoc($model_res)){      
-                    
-                    echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
+                    while($rows = mysqli_fetch_assoc($model_res)){      
+                        echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
 
+                        $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
+                        $grad_res = mysqli_query($db, $grad_query);
+                        $grad_num = mysqli_num_rows($grad_res);
+                        $g = 1;
 
-                    $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
-                    $grad_res = mysqli_query($db, $grad_query);
-                    $grad_num = mysqli_num_rows($grad_res);
-                    $g = 1;
+                        while ($rowss = mysqli_fetch_assoc($grad_res)){
+                            echo" <div class='gradivo'> 
+                            <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
+                            </div>";
 
-
-                    while ($rowss = mysqli_fetch_assoc($grad_res)){
-                      echo" <div class='gradivo'> 
-                      <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
-                      </div>";
-                      if ($g >= $grad_num){
-                        echo"<hr>";
-                      }
-                      $g++;
+                            if ($g >= $grad_num){
+                              echo"<hr>";
+                            }
+                          
+                            $g++;
+                        }   
                     }   
-                   }   
-    
                 }
+
                 //admin
                 else {
                     echo "<div class='navbar_div'> <div class = 'navbar'>
@@ -150,48 +178,50 @@ else {
                     </div>
                     </div>
                     ";
+    
+                    $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$class_id';";
+                    $predmeti_res = mysqli_query($db, $predmeti_query);
+                    $predmet = mysqli_fetch_assoc($predmeti_res);
 
-                $id = $_GET['id'];
-                $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id';";
-                $predmeti_res = mysqli_query($db, $predmeti_query);
-                $predmet = mysqli_fetch_assoc($predmeti_res);
-                
+                    $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$class_id';";
+                    $model_res = mysqli_query($db, $model_query);
 
-                $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$id';";
-                $model_res = mysqli_query($db, $model_query);
-                
+                    echo" <div class='vsebina'>
+                            <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
+                            </div>
+                            <div class='vsebina-poglavje'>            <!--MODEL-->";
+                              
+                    while($rows = mysqli_fetch_assoc($model_res)){      
+                        $idmod = $rows['id_modula'];
+                        echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
+                        echo"<div class='asd'><a href=AddVaja.php?id_predmet=$class_id&id_modula=$idmod><p class='plusek'> + </p></a></div> ";
+                          
+                        $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
+                        $grad_res = mysqli_query($db, $grad_query);
+                        $grad_num = mysqli_num_rows($grad_res);
+                        $g = 1;
 
-         echo" <div class='vsebina'>
-                <div class='vsebina-naslov'>". $predmet['ime'] ."<br>  <!--PREDMET-->
-                 </div>
-                 <div class='vsebina-poglavje'>            <!--MODEL-->";
-                        
-                 while($rows = mysqli_fetch_assoc($model_res)){      
-                    $idmod = $rows['id_modula'];
-                    echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
-                    echo"<div class='asd'><a href=AddVaja.php?id_predmet=$id&id_modula=$idmod><p class='plusek'> + </p></a></div> ";
-                    
-
-
-                    $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
-                    $grad_res = mysqli_query($db, $grad_query);
-                    $grad_num = mysqli_num_rows($grad_res);
-                    $g = 1;
-
-
-                    while ($rowss = mysqli_fetch_assoc($grad_res)){
-                      echo" <div class='gradivo'> 
-                      <div class='gradivo-item'><a href='material.php?gradivo=$rowss[id_gradiva]'> $rowss[naslov] </a> </div>
-                      </div>";
-                      if ($g >= $grad_num){
-                        echo"<hr>";
-                      }
-                      $g++;
-                    }   
-                   }
-                    
+                        while ($rowss = mysqli_fetch_assoc($grad_res)){
+                          echo" <div class='gradivo'> 
+                            <div class='gradivo-item'><a href='material.php?gradivo=" . $rowss['id_gradiva'] ."'> " . $rowss['naslov'] . "</a> </div>
+                          </div>";
+              
+                          if ($g >= $grad_num){
+                            echo"<hr>";
+                          }
+                            $g++;
+                        }   
+                    }
                 }
-                ?>
+            }
+        }
+
+        //subject doesn't exist - redirect to class.php
+        else{
+            header("location: class.php");
+        }
+              
+?>
 
 </body>
 </html>
