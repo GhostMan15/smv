@@ -200,7 +200,7 @@ else {
 
                 echo"
                 <div class='container'>
-        <div class='asd'><a href='AddPredmet.php' class='plusek'>+</a></div> 
+        <div class='asd'><a href='AddPredmet.php' class='plusek'>+</a></div> <div class='asd'><a href='AddPredmet.php' class='minusek'>-</a></div> 
         <div class='Predmeti'>
         <table class='miza'> ";
         

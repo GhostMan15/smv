@@ -78,12 +78,30 @@
 .plusek:hover{
     background-color: green;
 }
+.minusek{
+    border: 1px solid black;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 35px;
+    padding: 2px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+}
+.minusek:hover{
+    background-color: red;
+}
 .asd{
    width: 0%;
    display: block;
-   padding-bottom: 10px
+   padding-bottom: 10px;
 }
+
 .asd a{
     color: black;
     text-decoration: none;
 }
+
