@@ -107,3 +107,13 @@ a:hover{
     background-color: #19172C;
     color: white;
 }
+
+.error{
+    display: grid;
+    justify-content: center;
+    margin-top: 10px;
+    width: 50vw;
+    color: red;
+    font-size: 1vw;
+    text-align: center;
+}

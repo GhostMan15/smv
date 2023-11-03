@@ -4,14 +4,14 @@ include("Scripts/config.php");
 session_start();
 
 //if the user isn't logged in / session variables aren't set, redirect to login
-if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"]), $_GET['id']) {
-  header("location: Scripts/logout.php");
+if (!isset($_SESSION["id"], $_SESSION["username"], $_SESSION["user_type"], $_GET['id'])) {
+    header("location: Scripts/logout.php");
 }
 //if the user is logged in, allow access
 else {
-  $username = $_SESSION["username"];
-  $id = $_SESSION["id"];
-  $user_type =  $_SESSION["user_type"];
+    $username = $_SESSION["username"];
+    $id = $_SESSION["id"];
+    $user_type =  $_SESSION["user_type"];
 }
 ?>
 <!DOCTYPE html>

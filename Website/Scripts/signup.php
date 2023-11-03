@@ -3,15 +3,15 @@ include('config.php');
 //START THE SESSION
 session_start();
 
-if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'])) {
-    header('location: ../login.php');
-}
-
 $ime = "";
 $priimek = "";
 
+if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'], $_GET['id'])) {
+    header('location: ../login.php');
+}
+
 //if the user is logged in, allow access
-else {
+else{
     $username = $_SESSION['username'];
     $id = $_SESSION['id'];
 
@@ -24,6 +24,75 @@ else {
     $pass = $_SESSION['pass'];
     $user_type = $type_assoc['user_type'];
     $_SESSION['user_type'] = $user_type;
+}
+
+$allgood = true;
+$error = "";
+
+
+//on form submit
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    $user_id = $id;
+    $id_predmet= $_SESSION['id_predmet'];
+
+    //check whether the dropdown was displayed
+    if(isset($_POST['id_user']) && $user_type == 0){
+        $user_id = $_POST['id_user'];
+    }
+
+    //check that an admin didn't select his own ID
+    if($user_type == 0 && $user_id == $id){
+        $error .= "Kot administrator se ne morete prijaviti na predmete. <br>";
+        $allgood = false;
+    }   
+
+    //check that the user ID is specified
+    if($user_id == "" || $user_id == 0){
+        $error .= "Izbrati rabite enega uporabnika. <br>";
+        $allgood = false;
+    }
+
+    //check that the class ID is specified
+    if($id_predmet == 0 || $id_predmet != ""){
+        $error .= "Predmet je potrebno določiti. <br>";
+        $allgood = false;
+    }
+
+    //try to carry out insert into
+    if($allgood){
+        //get data on specified user - user type needed in order to insert into 'ucilnica' table
+        $user_data_query = "SELECT * FROM `user`
+        WHERE `id_user` = '$user_id';
+        ";
+        $user_data_result = mysqli_query($db, $user_data_query);
+        $user_data_count = mysqli_num_rows($user_data_result);
+
+        if($user_data_count > 0){
+            //get user type
+            $user_data_row = mysqli_fetch_assoc($user_data_result);
+            $user_data_type = $user_data_row['user_type'];
+            
+            //try 'insert into'
+            $insert_query = "INSERT INTO `ucilnica` (`id_ucilnica`, `id_predmet`, `id_user`, `user_type`)
+            VALUES(DEFAULT, '$id_predmet', '$user_id', '$user_data_type');
+            ";
+
+            //successful INSERT INTO - redirect to the subject
+            if(mysqli_query($db, $insert_query)){
+                header("location: ../course.php?id=$id_predmet");      
+            }
+            //failed INSERT INTO
+            else{
+                $error .= "Ni se dalo prijaviti na predmet. Se opravičujemo za napako. <br>";
+            }
+        }
+        else{
+            $error .= "Uporabnik ne obstaja. <br>";
+        }
+    }
+    else{
+        $error .= "Ni se dalo prijaviti na predmet. Odpravite omenjene napake <br>";
+    }
 }
 ?>
 
@@ -86,11 +155,12 @@ else {
 
     <!--CONTAINER-->
     <div class='container'>
-        <form class='main' method='post'>
+        <form class='main' method='post' enctype='multipart/form-data'>
         
         <?php
-        if(isset($_GET['id'])){
             $id_predmet = $_GET['id'];
+            $_SESSION['id_predmet'] = $id_predmet;
+
             //check that class exists
             $class_query = "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id_predmet';";
             $class_result = mysqli_query($db, $class_query);
@@ -116,13 +186,14 @@ else {
 
                     //display HTML
                     $class_row = mysqli_fetch_assoc($class_result);
+                    $_SESSION['id_predmet'] = $class_row['id_predmet'];
                     echo"
                     <div class='title_con'>
                         <p class='title'>
                             Prijava na predmet:
                         </p>
                         <p class='title bold'>
-                            " . $class_row['kratica'] . . "-" . $class_row['ime'] . "
+                            " . $class_row['kratica'] . " - " . $class_row['ime'] . "
                         </p>
                     </div>
                     ";
@@ -140,7 +211,7 @@ else {
                             WHERE `id_predmet` = '$id_predmet'
                         );
                         ";
-                        $users_result = mysqli_result($db, $users_query);
+                        $users_result = mysqli_query($db, $users_query);
                         $users_count = mysqli_num_rows($users_result);
 
                         //if there are users to display, render dropdown
@@ -201,6 +272,10 @@ else {
                             <input type='submit' class='submit_btn btn' value='Prijava'>
                         </div>
                     </div>";
+
+                    /*echo"<script> 
+                    alert('$id_predmet');
+                    </script>";*/
                 }
             
             }
@@ -208,50 +283,13 @@ else {
             else{
                 header("location: ../class.php");
             }
-        }
-        //variable not set
-        else{
-            header("location: ../class.php");
-        }
         ?>
-
-        <!--
-            <div class='title_con'>
-                <p class='title'>
-                Prijava na predmet:
-                </p>
-                <p class='title bold'>
-                NUP - upravas
-                </p>
-            </div>
-
-            <div class='user_con'> 
-                Učenec: <a href='../vp.php'>Mark Sadnik</a>
-            </div>-->
-
-            <!--DROPWDONW - ADMIN
-            <div class='dropdown_con'>
-                <div class='dropdown_title'>
-                    Uporabnik:
-                </div>
-                <div class='dropdown_div'>
-                    <select name='id_user' class='dropdown'>
-                        <option value='135'>(U) Mark Sadnik</option>
-                    </select>
-                </div>
-            </div>
-            DROPDOWN - ADMIN-->
-
-            <!--
-            <div class='btn_con'>
-                <div class='back_btn_con'>
-                    <button type='button' class='back_btn btn' onclick='go_back()'><img src='../Pictures/back.png' class='img'></button>
-                </div>
-                <div class='submit_btn_con'>
-                    <input type='submit' class='submit_btn btn' value='Prijava'>
-                </div>
-            </div>-->
         </form>
+        <div class='error'>
+            <?php 
+            echo $error; 
+            ?>
+        </div>
     </div>
     <!--CONTAINER-->
 </body>
