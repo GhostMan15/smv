@@ -274,6 +274,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <ul>
                         <li> <a href='home.php'>Domov</a></li>
                         <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                        <li><a href='redovalnica.php'>Ocene</a></li>
                         <li> <a href='vp.php'>Vaš Profil</a></li>
                         <li> <a href='Scripts/logout.php'>Odjava</a></li>
                     </ul>

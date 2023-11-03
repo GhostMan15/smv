@@ -49,7 +49,7 @@ if(isset($_SESSION["register_message"])){
                 echo "
                 <a href='home.php'><img src='Pictures/logo1.png' class='logo'></a>
                 <ul>
-                    <li id='checked'> <a href='home.php'>Domov</a></li>
+                    <li> <a href='home.php'>Domov</a></li>
                     <li> <a href='class.php'>Predmeti</a></li>
                     <li> <a href='users.php'>Učenci</a></li>
                     <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
@@ -60,14 +60,15 @@ if(isset($_SESSION["register_message"])){
             //students
             else if ($user_type == '2') {
                 echo "
-                <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
-                <ul>
-                    <li id='checked'><a href='home.php'>Domov</a></li>
-                    <li> <a href='class.php'>Predmeti</a></li>
-                    <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                    <li> <a href='Scripts/logout.php'>Odjava</a></li>
-                </ul>
-                ";
+                    <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
+                    <ul>
+                        <li> <a href='home.php'>Domov</a></li>
+                        <li> <a href='class.php'>Predmeti</a></li>
+                        <li><a href='redovalnica.php'>Ocene</a></li>
+                        <li> <a href='vp.php'>Vaš Profil</a></li>
+                        <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                    </ul>
+                    ";
             }
             //admin
             else {

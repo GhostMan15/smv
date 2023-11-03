@@ -106,7 +106,7 @@ else {
                         $is_teacher = false;
                         
                         //loop through all possible teachers
-                        while($class_row = mysqli_fetch_assoc($class_result) && $is_teacher == false){
+                        while($class_row = mysqli_fetch_assoc($class_result)){
                             $id_predmet = $class_row['id_predmet'];
                             $tmp_query = "SELECT * 
                             FROM `ucilnica`
@@ -266,36 +266,38 @@ else {
                             //PREDMET
 
                             //AVG
-                            $avg_total = floor($total_count / $grade_count);
-                            echo"
-                            <!--AVG-->
-                            <div class='bottom_row'> 
-                                    <div class='avg_title bold'>
-                                        Povprečje
+                            if($total_count != 0){
+                                $avg_total = floor($total_count / $grade_count);
+                                echo"
+                                <!--AVG-->
+                                <div class='bottom_row'> 
+                                        <div class='avg_title bold'>
+                                            Povprečje
+                                        </div>
+                                ";
+
+                                if($avg_total >= 50){
+                                    echo"
+                                    <div class='avg_row green bold'>
+                                        " . $avg_total. "%
                                     </div>
-                            ";
-
-                            if($avg_total >= 50){
+                                    ";
+                                }
+                                else{
+                                    echo"
+                                    <div class='avg_row red bold'>
+                                        " . $avg_total ."%
+                                    </div>
+                                    ";
+                                }
+                                        
                                 echo"
-                                <div class='avg_row green bold'>
-                                    $avg_total%
                                 </div>
+                                <!--AVG-->
                                 ";
+                                //AVG
                             }
-                            else{
-                                echo"
-                                <div class='avg_row red bold'>
-                                    $avg_total%
-                                </div>
-                                ";
-                            }
-                                    
-                            echo"
-                            </div>
-                            <!--AVG-->
-                            ";
-                            //AVG
-
+                            
                             echo"
                             </div>
                             <!--TABLE-->
@@ -367,6 +369,11 @@ else {
                 header("location: home.php");
             }
         }
+        
+        //if user is a student, display own grades
+        else if($user_type==2){
+            header("location: redovalnica.php?id=$id");
+        }
 
         //GET variable not set
         else{
@@ -378,7 +385,7 @@ else {
         <!--MAIN-->
 
             
-            <!--TITLE-->
+            <!--TITLE
             <div class='top'>
                 <p class='title'>
                     Redovalnica
@@ -388,12 +395,12 @@ else {
                     <a class='link' href='vp.php?id=x' target='__blank__'>Mark Sadnik</a>
                 </p>
             </div>
-            <!--TITLE-->
+            TITLE-->
 
-            <!--TABLE-->
+            <!--TABLE
             <div class='mid'>
 
-                <!--PREDMET-->
+                PREDMET
                 <div class='row'>
                         <div class='sub_name'>
                             <a href='course.php?id=x' class='link'>MAT</a>
@@ -413,9 +420,9 @@ else {
                             $avg_total%
                         </div>
                 </div>
-                <!--PREDMET-->
+                PREDMET
 
-                <!--AVG-->
+                AVG
                 <div class='bottom_row'> 
                         <div class='avg_title bold'>
                             Povprečje
@@ -424,13 +431,13 @@ else {
                             75%
                         </div>
                 </div>
-                <!--AVG-->
+                AVG
             </div>
-            <!--TABLE-->
+            TABLE
 
-            <!--BOTTOM-->
+            BOTTOM
         </div>
-        <!--MAIN-->
+        MAIN-->
     </div>
     <!--CONTAINER-->
 </body>

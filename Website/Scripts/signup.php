@@ -6,7 +6,7 @@ session_start();
 $ime = "";
 $priimek = "";
 
-if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'], $_GET['id'])) {
+if (!isset($_SESSION['id'], $_SESSION['username'], $_SESSION['user_type'], $_SESSION['pass'])) {
     header('location: ../login.php');
 }
 
@@ -33,7 +33,7 @@ $error = "";
 //on form submit
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $user_id = $id;
-    $id_predmet= $_SESSION['id_predmet'];
+    //$id_predmet = $_SESSION['id_predmet'];
 
     //check whether the dropdown was displayed
     if(isset($_POST['id_user']) && $user_type == 0){
@@ -48,15 +48,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     //check that the user ID is specified
     if($user_id == "" || $user_id == 0){
-        $error .= "Izbrati rabite enega uporabnika. <br>";
+        $error .= "Izbrati rabite enega uporabnika.<br>";
         $allgood = false;
     }
 
     //check that the class ID is specified
-    if($id_predmet == 0 || $id_predmet != ""){
-        $error .= "Predmet je potrebno določiti. <br>";
-        $allgood = false;
-    }
+    //if($id_predmet == 0 || $id_predmet != ""){
+        //$error .= "Predmet je potrebno določiti.<br>";
+        //$allgood = false;
+    //}
+
+    /*$error .= "$id_predmet<br>$user_id<br>";*/
 
     //try to carry out insert into
     if($allgood){
@@ -74,24 +76,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             
             //try 'insert into'
             $insert_query = "INSERT INTO `ucilnica` (`id_ucilnica`, `id_predmet`, `id_user`, `user_type`)
-            VALUES(DEFAULT, '$id_predmet', '$user_id', '$user_data_type');
+            VALUES(DEFAULT, '". $_SESSION['id_predmet'] . "', '$user_id', '$user_data_type');
             ";
 
             //successful INSERT INTO - redirect to the subject
             if(mysqli_query($db, $insert_query)){
-                header("location: ../course.php?id=$id_predmet");      
+                header("location: ../course.php?id=". $_SESSION['id_predmet']);      
             }
             //failed INSERT INTO
             else{
-                $error .= "Ni se dalo prijaviti na predmet. Se opravičujemo za napako. <br>";
+                $error .= "Ni se dalo prijaviti na predmet. Se opravičujemo za napako.<br>";
             }
         }
         else{
-            $error .= "Uporabnik ne obstaja. <br>";
+            $error .= "Uporabnik ne obstaja.<br>";
         }
     }
     else{
-        $error .= "Ni se dalo prijaviti na predmet. Odpravite omenjene napake <br>";
+        $error .= "Ni se dalo prijaviti na predmet. Odpravite omenjene napake.<br>";
     }
 }
 ?>
@@ -126,11 +128,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     echo "
                     <a href='home.php'><img src='../Pictures/logo2.png' class='logo'></a>
                     <ul>
-                        <li> <a href='home.php'>Domov</a></li>
-                        <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                        <li> <a href='redovalnica.php'>Ocene</a></li>
-                        <li> <a href='vp.php'>Vaš Profil</a></li>
-                        <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                        <li> <a href='../home.php'>Domov</a></li>
+                        <li id='checked'> <a href='../class.php'>Predmeti</a></li>
+                        <li> <a href='../redovalnica.php'>Ocene</a></li>
+                        <li> <a href='../vp.php'>Vaš Profil</a></li>
+                        <li> <a href='logout.php'>Odjava</a></li>
                     </ul>
                     ";
                 }
@@ -139,12 +141,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                     echo "
                     <a href='home.php'><img src='../Pictures/logo0.png' class='logo'></a>
                     <ul>
-                        <li> <a href='home.php'>Domov</a></li>
-                        <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                        <li><a href='redovalnica.php'>Redovalnica</a></li>
-                        <li> <a href='users.php'>Uporabniki</a></li>
-                        <li> <a href='vp.php'>Vaš Profil</a></li>
-                        <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                        <li> <a href='../home.php'>Domov</a></li>
+                        <li id='checked'> <a href='../class.php'>Predmeti</a></li>
+                        <li><a href='../redovalnica.php'>Redovalnica</a></li>
+                        <li> <a href='../users.php'>Uporabniki</a></li>
+                        <li> <a href='../vp.php'>Vaš Profil</a></li>
+                        <li> <a href='logout.php'>Odjava</a></li>
                     </ul>
                     ";
                 }    
@@ -155,11 +157,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     <!--CONTAINER-->
     <div class='container'>
-        <form class='main' method='post' enctype='multipart/form-data'>
+        <form class='main' method="post">
         
         <?php
+        if(isset($_GET['id'])){
             $id_predmet = $_GET['id'];
-            $_SESSION['id_predmet'] = $id_predmet;
+            if(!isset($_SESSION['id_predmet']) && $id_predmet != 0){
+                $_SESSION['id_predmet'] = $id_predmet;
+            }
 
             //check that class exists
             $class_query = "SELECT * FROM `predmeti` WHERE `id_predmet` = '$id_predmet';";
@@ -272,10 +277,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                             <input type='submit' class='submit_btn btn' value='Prijava'>
                         </div>
                     </div>";
-
-                    /*echo"<script> 
-                    alert('$id_predmet');
-                    </script>";*/
                 }
             
             }
@@ -283,6 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             else{
                 header("location: ../class.php");
             }
+        }
         ?>
         </form>
         <div class='error'>
