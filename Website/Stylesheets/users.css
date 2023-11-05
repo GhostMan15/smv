@@ -84,7 +84,7 @@ body{
     font-size: 1vw;
 }
 
-.delete_btn, .profile_btn{
+.delete_btn, .profile_btn, .grade_btn{
     background-color: white;
     border: none;
 }
@@ -94,6 +94,19 @@ body{
     height: 1.5vw;
     border: none;
     object-fit: contain;
+}
+
+.grade_img{
+    width: 1.5vw;
+    height: 1.5vw;
+    object-fit: contain;
+}
+
+.grade_btn{
+    width: 2vw;
+    height: 2vw;
+    border: 1px solid black;
+    border-radius: 2vw;
 }
 
 .delete_btn{
@@ -116,6 +129,10 @@ body{
     object-fit: cover;
 }
 
+.profile_btn{
+    margin-right: 5px;
+}
+
 .profile_img:hover{
     background-color: blue;
 }
@@ -128,6 +145,11 @@ body{
 
 .user_link:hover{
     text-decoration: underline;
+}
+
+.grade_btn:hover{
+    background-color: lightgray;
+    border: 2px solid black;
 }
 
 

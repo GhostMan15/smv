@@ -129,13 +129,13 @@ if ($user_type != 0 && $user_type != 1) {
 
                     while($row = mysqli_fetch_assoc($student_result)){
                         echo "
-                                    <tr>
-                                        <td class='username_data'>
-                                            <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
-                                        </td>
-                                        <td class='delete_data'>
-                                            <button type='button' class='delete_btn table_btn' onclick='delete_user(". $row['id_user'] .")'><img class='delete_img img' src='Pictures/delete.png'></button>
-                                        </td>
+                        <tr>
+                            <td class='username_data'>
+                                <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>                                        
+                            </td>
+                            <td class='delete_data'>
+                                <button type='button' class='delete_btn table_btn' onclick='delete_user(". $row['id_user'] .")'><img class='delete_img img' src='Pictures/delete.png'></button>
+                            </td>
                         ";
                         
                         if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
@@ -152,33 +152,55 @@ if ($user_type != 0 && $user_type != 1) {
                             </td>
                             ";
                         }
+
+                        echo"
+                            <td class='grade_data'>
+                                <button type='button' class='grade_btn table_btn' onclick='grade(". $row['id_user'] .")'><img class='grade_img img' src='Pictures/doc_icon.png'></button>
+                            </td>
+                        ";
                         
-                        echo"</tr>";
+                        echo"
+                        </tr>
+                        ";
                     }
 
                     echo"
                     </table>
                     </div>
-                    </div>";
+                    </div>
+                    ";
                 }
 
                 //professor
                 else if($user_type == 1){
+                    //get all students that the teacher teaches
+                    $student_teacher_query = "SELECT DISTINCT `us`.*
+                    FROM `ucilnica` `u1` JOIN `ucilnica` `u2` 
+                        ON `u1`.`id_predmet` = `u2`.`id_predmet` JOIN `user` `us` 
+                        ON `u2`.`id_user` = `us`.`id_user`
+                    WHERE `u1`.`id_user` = '$id' 
+                    AND `u1`.`id_user` != `u2`.`id_user`
+                    AND `us`.`user_type` = 2
+                    ";
+                    $student_teacher_result = mysqli_query($db, $student_teacher_query);
+                    $student_teacher_count = mysqli_num_rows($student_teacher_result);
+
+
                     echo"
                     <div class='students_con'>
                             <div class='students_title title'>
-                                <button class='title_btn'>Učenci ($student_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic1' onclick='toggle(1)'></button>
+                                <button class='title_btn'>Učenci ($student_teacher_count) <img src='Pictures/triangle_up.png' class='btn_pic' id='pic1' onclick='toggle(1)'></button>
                             </div>
                             <div class='students_list' id='table1'>
                                 <table class='student_table table'>
                     ";
 
-                    while($row = mysqli_fetch_assoc($student_result)){
+                    while($row = mysqli_fetch_assoc($student_teacher_result)){
                         echo "
-                                    <tr>
-                                        <td class='username_data'>
-                                            <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
-                                        </td>
+                        <tr>
+                            <td class='username_data'>
+                                <a class='user_link' href='vp.php?id=". $row['id_user'] ."' target='__blank__'>". $row['username'] ."</a>
+                            </td>
                         ";
                         
                         if($row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_". $row['id_user'] . "." . $row["img_ext"])){
@@ -196,7 +218,15 @@ if ($user_type != 0 && $user_type != 1) {
                             ";
                         }
                         
-                        echo"</tr>";
+                        echo"
+                            <td class='grade_data'>
+                                <button type='button' class='grade_btn table_btn' onclick='grade(". $row['id_user'] .")'><img class='grade_img img' src='Pictures/doc_icon.png'></button>
+                            </td>
+                        ";
+                        
+                        echo"
+                        </tr>
+                        ";
                     }
 
                     echo"

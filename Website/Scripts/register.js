@@ -16,6 +16,10 @@ function delete_user(x){
     window.location.href = "Scripts/delete.php?type=2&id=" + x;
 }
 
+function grade(x){
+    window.open("redovalnica.php?id=" + x, "__blank__");
+}
+
 function toggle(x){
     //Students table
     if(x==1){
