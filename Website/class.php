@@ -52,7 +52,7 @@ else {
                   </div>
                   </div>
       ";
-      
+
       $predmeti_query = "SELECT * FROM `predmeti`;";
       $predmeti_res = mysqli_query($db, $predmeti_query);
       $predmeti_num = mysqli_num_rows($predmeti_res);
@@ -72,10 +72,10 @@ else {
         if ($predmeti_num > $i && $i != $predmeti_num) {
           $i++;
 
-          echo " <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "' target='__blank__'>" . $rows['ime'] . "</a></td></tr> ";
+          echo " <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> ";
         } else {
 
-          echo "  <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "' target='__blank__'>" . $rows['ime'] . "</a></td></tr> <tr><td rowspan='1'></td></tr> ";
+          echo "  <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> <tr><td rowspan='1'></td></tr> ";
         }
       }
 
@@ -125,10 +125,10 @@ else {
         if ($predmeti_num > $i && $i != $predmeti_num) {
           $i++;
 
-          echo " <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "' target='__blank__'>" . $rows['ime'] . "</a></td></tr> ";
+          echo " <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> ";
         } else {
 
-          echo "  <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "' target='__blank__'>" . $rows['ime'] . "</a></td></tr> <tr><td rowspan='1'></td></tr> ";
+          echo "  <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> <tr><td rowspan='1'></td></tr> ";
         }
       }
 
@@ -182,10 +182,10 @@ else {
         if ($predmeti_num > $i && $i != $predmeti_num) {
           $i++;
 
-          echo " <tr><td> <a class='HrefPredmetMain' href='course.php?id=" . $rows['id_predmet'] . "' target='__blank__'>" . $rows['ime'] . "</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon trashcan' </a> </td> </tr> ";
+          echo " <tr><td> <a class='HrefPredmetMain' href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon trashcan' </a> </td> </tr> ";
         } else {
 
-          echo "  <tr><td> <a class='HrefPredmetMain' href='course.php?id=" . $rows['id_predmet'] . "' target='__blank__'>" . $rows['ime'] . "</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon trashcan' </a></td></tr> <tr><td rowspan='1'></td></tr> ";
+          echo "  <tr><td> <a class='HrefPredmetMain' href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon trashcan' </a></td></tr> <tr><td rowspan='1'></td></tr> ";
         }
       }
 
