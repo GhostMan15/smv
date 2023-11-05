@@ -200,7 +200,7 @@ else {
 
                 echo"
                 <div class='container'>
-        <div class='asd'><a href='AddPredmet.php' class='plusek'>+</a></div> 
+        <div class='kontainer'><div class='plusek'><a href='AddPredmet.php'>+</a></div><div class='plusek'><img src='Pictures/edit.png' id='edit'></div> </div>
         <div class='Predmeti'>
         <table class='miza'> ";
         
@@ -211,12 +211,12 @@ else {
             {
                  $i++;
                  
-               echo" <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' </a> </td> </tr> "; 
+               echo" <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' id='trashcan' </a> </td> </tr> "; 
                 
            }
                 else{
                     
-                  echo"  <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' </a></td></tr> <tr><td rowspan='1'></td></tr> ";
+                  echo"  <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' id='trashcan' </a></td></tr> <tr><td rowspan='1'></td></tr> ";
                 }
            }
            
