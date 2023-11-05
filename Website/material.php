@@ -526,13 +526,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     /*-------------------------------STUDENTS-------------------------------*/
                     else if(($user_exists_count != 0 && $user_type == 2)){
-
                         //TOP - STUDENTS
                         echo"
                         <!--TOP-->        
                         <div class='top'>     
                             <div class='title_con' id='title_div'>
-                                <input type='text' name='title' class='title' value='".$row["`g`.`naslov`"]."' readonly required maxlength='50' id='title_field' onfocus='on_change(1)' onblur='on_change(2)'>
+                                <input type='text' name='title' class='title' value='".$row["naslov"]."' readonly required maxlength='50' id='title_field' onfocus='on_change(1)' onblur='on_change(2)'>
                             </div>
                             <div class='subject_con title'>
                                 MAT
@@ -546,7 +545,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--MID-->
                         <div class='mid'>
                             <div class='text_con'>
-                                <textarea name='description' id='textarea_field' readonly required placeholder='vpišite besedilo...' oninput='textAreaSize()' onfocus='on_change(3)' onblur='on_change(4)'>".$row["`g`.`opis`"]."</textarea>
+                                <textarea name='description' id='textarea_field' readonly required placeholder='vpišite besedilo...' oninput='textAreaSize()' onfocus='on_change(3)' onblur='on_change(4)'>".$row["opis"]."</textarea>
                             </div>
                         </div>
                         <!--MID-->
@@ -560,7 +559,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         //PRILOGE - STUDENTS
                         $priloge_query = "SELECT * FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `priloga` = '1';";
-                        $priloge_result = mysqli_query($db, $priloge_result);
+                        $priloge_result = mysqli_query($db, $priloge_query);
                         $priloge_count = mysqli_num_rows($priloge_result);
 
                         if($priloge_count != 0){
@@ -628,13 +627,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         
                         //STANJE NALOGE - STUDENTS
                         if($oddaja == 1){
-                            $oddano_query = "SELECT * FROM `oddaja` WHERE `id_gradiva` = '$id_gradiva' AND `id_user` = '$id';";
+                            $oddano_query = "SELECT `o`.*, `us`.`ime`, `us`.`priimek` 
+                            FROM `oddaja` `o` JOIN `user` `us`
+                                ON `o`.`id_user` = `us`.`id_user` 
+                            WHERE `id_gradiva` = '$id_gradiva' 
+                            AND `id_user` = '$id';
+                            ";
                             $oddano_result = mysqli_query($db, $oddano_query);
                             $oddano_count = mysqli_num_rows($oddano_result);
+                            $oddano_row = mysqli_fetch_assoc($oddano_result);
+                            $filename = "Files/". $oddano_row['id_oddaja'] . "." . $oddano_row['file_ext'];
 
                             //oddana naloga
-                            if($oddano_count != 0){
-                                $oddano_row = mysqli_fetch_assoc($oddano_result);
+                            if($oddano_count > 0 && file_exists($filename)){
+                                $download_name = $oddano_row['ime'] . $oddano_row['priimek'] . "-" . $row["naslov"];
+                                //$oddano_row = mysqli_fetch_assoc($oddano_result);
                                 $raw_date = $row['datum_do'];
                                 $split_date = explode("-", $raw_date);
                                 $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
@@ -699,6 +706,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 echo"
                                 <!--ODDAJA-->
+                                <div class='upload_title'>
+                                    <div class='title2'>Oddano</div>
+                                </div>
+
+                                <div class='student_files'>
+                                ";
+
+                                //images
+                                if($oddano_row['file_ext'] == 'png'){
+                                    echo"
+                                    <img src='Pictures/img_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
+                                    ";
+                                }
+                                //compressed formats
+                                else if($oddano_row['file_ext'] == 'zip'){
+                                    echo"
+                                    <img src='Pictures/zip_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
+                                    ";
+                                }
+                                //pdf
+                                else if($oddano_row['file_ext'] == 'pdf'){
+                                    echo"
+                                    <img src='Pictures/pdf_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
+                                    ";
+                                }
+
+                                echo"
+
+                                </div>
+
                                 <div class='submit_title'>
                                     <div class='title2'>Ponovna oddaja</div>
                                     <div class='accepted'>(največ 10MB)</div>
@@ -738,12 +775,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             Datum oddaje
                                         </td>
                                         <td class='date_added'>
-                                            /
+                                            \
                                         </td>
                                     </tr>
                                     <tr class='mark'>
                                         <td class='t_left bottom_row'>
                                             Ocena
+                                        </td>
+                                        <td class='bottom_row'>
+                                            \
                                         </td>
                                     </tr>
                                 </table>
