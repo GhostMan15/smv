@@ -29,20 +29,20 @@
   
 
 
- .miza a {
+ .HrefPredmetMain {
     position: relative;
     text-decoration:none;
     color: grey;
  }
- .miza a:link{
+ .HrefPredmetMain:link{
       text-decoration:none;
       color: grey;
  }
- .miza a:hover{
+ .HrefPredmetMain:hover{
       text-decoration:none;
       color: black;
  }
- .miza a:after{
+ .HrefPredmetMain:after{
       content: "";
       position: absolute;
       background-color: palevioletred;
@@ -53,7 +53,7 @@
       transition: 0.3s;
  }
   
- .miza a:hover:after{
+ .HrefPredmetMain:hover:after{
       width: 100%;
  }
  .container{
@@ -93,6 +93,7 @@
 }
 .minusek:hover{
     background-color: red;
+    text-decoration: none;
 }
 .asd{
    width: 0%;
@@ -103,5 +104,10 @@
 .asd a{
     color: black;
     text-decoration: none;
+}
+.trashIcon{
+    width: 20px; 
+    height: 20px;
+    transform: translate(10px,2px);
 }
 
