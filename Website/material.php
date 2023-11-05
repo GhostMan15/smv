@@ -716,19 +716,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 //images
                                 if($oddano_row['file_ext'] == 'png'){
                                     echo"
+                                    <img src='Pictures/png_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
+                                    ";
+                                }
+                                else if($oddano_row['file_ext'] == 'jpg' || $oddano_row['file_ext'] == 'jpeg' || $oddano_row['file_ext'] == 'gif' || $oddano_row['file_ext'] == 'jfif' || $oddano_row['file_ext'] == 'webp'){
+                                    echo"
                                     <img src='Pictures/img_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
                                     ";
                                 }
                                 //compressed formats
-                                else if($oddano_row['file_ext'] == 'zip'){
+                                else if($oddano_row['file_ext'] == 'zip' || $oddano_row['file_ext'] == '7z' ||  $oddano_row['file_ext'] == 'rar' || $oddano_row['file_ext'] == 'tar' || $oddano_row['file_ext'] == 'gz'){
                                     echo"
                                     <img src='Pictures/zip_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
                                     ";
                                 }
-                                //pdf
+
+                                //pdf, documents
                                 else if($oddano_row['file_ext'] == 'pdf'){
                                     echo"
                                     <img src='Pictures/pdf_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
+                                    ";
+                                }
+                                else if($oddano_row['file_ext'] == 'doc' || $oddano_row['file_ext'] == 'docx' || $oddano_row['file_ext'] == 'odt'){
+                                    echo"
+                                    <img src='Pictures/doc_file.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
+                                    ";
+                                }
+
+                                //others
+                                else{   
+                                    echo"
+                                    <img src='Pictures/file_default.png' class='file_icon'> <a href='$filename' class='download_link' download='$download_name'>$download_name.". $oddano_row['file_ext'] ."</a> <a href='Scripts/delete.php?type=1&id=".$oddano_row['id_oddaja']."' class='delete_text'>(-)</a>
                                     ";
                                 }
 
