@@ -240,6 +240,10 @@ if($type == 4){
                     WHERE `id_gradiva` = '" . $gradiva_exists_row['id_gradiva'] . "'";
                     $oddaja_del_result = mysqli_query($db, $oddaja_del_query);
                 }
+
+                //delete children materials
+                $gradiva_del_query = "DELETE FROM `gradiva` WHERE `id_modula` = '". $mod_exists_row['id_modula'] ."'";
+                $gradiva_del_result = mysqli_query($db, $gradiva_del_query);
             }
 
             //delete module
