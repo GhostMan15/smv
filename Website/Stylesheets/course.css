@@ -6,6 +6,10 @@
      font-size: 3vw;
      margin-bottom: 20px;
 }
+.vsebina-naslov a{
+     color: black;
+     text-decoration: none;
+}
 .vsebina-poglavje a {
     position: relative;
     text-decoration:none;
@@ -21,16 +25,7 @@
       text-decoration:none;
       color: black;
  }
-.vsebina-poglavje a:after{
-      content: "";
-      position: absolute;
-      background-color: palevioletred;
-      height: 3px;
-      width: 0;
-      left: 0;
-      bottom: -5px;
-      transition: 0.3s;
- }
+
  
   
 .vsebina-poglavje a:hover:after{
@@ -59,17 +54,7 @@
  .gradivo a:hover{
        text-decoration:none;
        color: black;
-  }
- .gradivo a:after{
-       content: "";
-       position: absolute;
-       background-color: palevioletred;
-       height: 3px;
-       width: 0;
-       left: 0;
-       bottom: -5px;
-       transition: 0.3s;
-  }
+ }
 .plusek{
      border: 1px solid black;
      border-radius: 6px;
@@ -78,7 +63,7 @@
      padding: 2px;
      width: 35px;
      height: 35px;
-     display: flex;
+     display: grid;
      justify-content: center;
      text-align: center;
      vertical-align: middle;
@@ -89,4 +74,13 @@
 .asd{
     width: 0%;
     display: block;
+}
+.continue{
+     border: 1px solid #000;
+     width: 60px;
+}
+
+.kontainer{
+     display: grid;
+     grid-template-columns: repeat(2, 3vw);
 }
