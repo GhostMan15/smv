@@ -249,4 +249,8 @@ else {
 </body>
 <!--BODY-->
 
+<!--SCRIPT-->
+<script src='Scripts/edit.js'></script>
+<!--SCRIPT-->
+
 </html>
