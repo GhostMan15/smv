@@ -98,13 +98,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //if rows are returned, display page
             if($user_type == 0 || $prof_count != 0){
-                $user_data_query = "SELECT `us`.*, `ocena`, `file_ext`, `komentar`
+                $user_data_query = "SELECT `us`.*, `ocena`, `file_ext`, `komentar`, `datum_oddaje` 
                 FROM `user` `us` JOIN `oddaja` `o`
                     ON `us`.`id_user` = `o`.`id_user`
                 WHERE `o`.`id_oddaja` = '$id_oddaja';
                 ";
                 $user_data_result = mysqli_query($db, $user_data_query);
                 $user_data_row = mysqli_fetch_assoc($user_data_result);
+
+                //format YYYY-MM-DD
+                $raw_date = $user_data_row['datum_oddaje'];
+                $split_date = explode("-", $raw_date);
+                //fromat DD.MM.YYYY
+                $new_date = $split_date[2] . "." . $split_date[1] . "." . $split_date[0]; 
 
                 //TOP
                 echo"
@@ -136,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--ODDAJA-->
                         <div class='file_con left'>
                             <div class='title'>
-                                Oddaja:
+                                Oddaja <sup><span class='date'>(". $new_date .")</span></sup>
                             </div>
                             <div>
                 ";
