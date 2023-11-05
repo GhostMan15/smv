@@ -209,7 +209,7 @@ else {
                           if ($g >= $grad_num){
                             echo"<hr>";
                           }
-                            $g++;
+                            $g++;   
                         }   
                     }
                 }
@@ -225,6 +225,8 @@ else {
 
 </body>
 <!--SCRIPT-->
-<script src='Scripts/edit.js'></script>
+<script src='Scripts/edit.js'>
+    EditMode();
+</script>
 <!--SCRIPT-->
 </html>
