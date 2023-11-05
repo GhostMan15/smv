@@ -18,7 +18,7 @@ body {
     padding: 15px;
     margin-top: 20px;
     width: 35%;
-    height: 200px;
+    min-height: 200px;
     border-radius: 16px;
     align-items: center;
     text-align: center;
@@ -27,8 +27,7 @@ body {
 .Main2{
     margin: auto;
     position: relative;
-    padding: 15px;
-    margin-top: 50px;
+    padding: 15px;  
     width: 35%;
     height: 5vh;
     border-radius: 16px;

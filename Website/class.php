@@ -211,12 +211,12 @@ else {
             {
                  $i++;
                  
-               echo" <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=4&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' </a> </td> </tr> "; 
+               echo" <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' </a> </td> </tr> "; 
                 
            }
                 else{
                     
-                  echo"  <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=4&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' </a></td></tr> <tr><td rowspan='1'></td></tr> ";
+                  echo"  <tr><td> <a class='HrefPredmetMain' href='course.php?id=". $rows['id_predmet'] ."' target='__blank__'>". $rows['ime'] ."</a><a href='Scripts/delete.php?type=3&id=$rows[id_predmet]'><img src='Pictures/trash.png'  class='trashIcon' </a></td></tr> <tr><td rowspan='1'></td></tr> ";
                 }
            }
            

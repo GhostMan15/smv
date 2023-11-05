@@ -43,7 +43,7 @@ else {
         <form action="" method="POST" >
             Naslov: <input type="text" class="text_field" name="naslov" value=""> <br><br>
             Opis: <input type="text" class="text_field" name="opis" value=""> <br><br>
-            Samo za branje? <input type="radio" name="boolean" value="0"> Da 
+            Samo za branje?<br> <input type="radio" name="boolean" value="0"> Da 
             <input type="radio" name="boolean" value="1"> Ne <br><br>
             <input type="submit" name="submit" value="Ustvari">
         </form>
