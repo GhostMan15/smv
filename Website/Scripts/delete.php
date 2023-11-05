@@ -194,4 +194,110 @@ if($type == 3){
     header("location: ../class.php");
 }
 
+//delete module
+if($type == 4){
+    //check that module exists
+    $mod_exists_query = "SELECT `m`.* 
+    FROM `model` `m` JOIN `predmeti` `p`
+        ON `m`.`id_predmet` = `p`.`id_predmet` 
+    WHERE `id_modula` = '$get_id'; 
+    ";
+    $mod_exists_result = mysqli_query($db, $mod_del_query);
+    $mod_exists_count = mysqli_num_rows($mod_exists_result);
+
+    //module exists
+    if($mod_exists_count > 0){
+        $mod_exists_row = mysqli_fetch_assoc($mod_exists_result);
+
+        //check that user is an admin or teacher
+        if($user_type == 1 || $user_type == 0){
+            //if user is a teacher, check that he is teaching the class
+            if($user_type == 1){
+                $teacher_query = "SELECT * FROM `ucilnica`
+                WHERE `id_user` = '$id'
+                AND `id_predmet` = '". $mod_exists_row['id_predmet'] ."';
+                ";
+                $teacher_result = mysqli_query($db, $teacher_query);
+                $teacher_count = mysqli_num_rows($teacher_result);
+                
+                //if not, redirect to class.php
+                if($teacher_result <= 0){
+                    header("location: ../class.php");
+                }
+            }
+
+            //check if module has any children rows in gradiva and oddaja table
+            $gradiva_exists_query = "SELECT * FROM `gradiva`
+            WHERE `id_modula` = '". $mod_exists_row['id_modula'] ."'
+            ";
+            $gradiva_exists_result = mysqli_query($db, $gradiva_exists_query);
+            $gradiva_exists_count = mysqli_num_rows($gradiva_exists_result);
+
+            //if there are rows in gradiva, loop through each one and delete associated submissions in oddaja
+            if($gradiva_exists_count > 0){
+                while($gradiva_exists_row = mysqli_fetch_assoc($gradiva_exists_result)){
+                    $oddaja_del_query = "DELETE FROM `oddaja` 
+                    WHERE `id_gradiva` = '" . $gradiva_exists_row['id_gradiva'] . "'";
+                    $oddaja_del_result = mysqli_query($db, $oddaja_del_query);
+                }
+            }
+
+            //delete module
+            $module_del_query = "DELETE FROM `model` WHERE `id_modula` = '$get_id'";
+            $module_del_result = mysqli_query($db, $module_del_query);
+        }
+
+        header("location: ../course.php?id=". $mod_exists_row['id_predmet']);
+    }
+
+    header("location: ../class.php");
+}
+
+
+//delete material
+if($type == 5){
+    //check if user is an admin or teacher
+    if($user_type == 0 || $user_type == 1){
+        $gradiva_exists_query = "SELECT `g`.*, `p`.`id_predmet` 
+        FROM `gradiva` `g` JOIN `model` `m`
+            ON `g`.`id_modula` = `m`.`id_modula` JOIN `p`.`id_predmet`
+            ON `m`.`id_predmet` = `p`.`id_predmet`  
+        WHERE `id_gradiva` = '$get_id'";
+        $gradiva_exists_result = mysqli_query($db, $gradiva_exists_query);
+        $gradiva_exists_count = mysqli_num_rows($gradiva_exists_result);
+
+        //material exists
+        if($gradiva_exists_result > 0){
+            $g_temp_row = mysqli_fetch_assoc($gradiva_exists_result);
+            //if the user is a teacher, check that he is assigned to the class
+            if($user_type == 1){
+                $teacher_g_query = "SELECT FROM `ucilnica`
+                WHERE `id_user` = '$id' 
+                AND `id_predmet` = '" . $g_temp_row['id_predmet'] . "'";
+                $teacher_g_result = mysqli_query($db, $teacher_g_query);
+                $teacher_g_count = mysqli_num_rows($teacher_g_result);
+
+                if($teacher_g_count <= 0){
+                    header("location: ../class.php");
+                }
+            }
+            
+
+            //delete all related submissions, should there be any
+            while($gradiva_exists_row = mysqli_fetch_assoc($gradiva_exists_result)){
+                $oddaja_del_query = "DELETE FROM `oddaja` 
+                WHERE `id_gradiva` = '" . $gradiva_exists_row['id_gradiva'] . "'";
+                $oddaja_del_result = mysqli_query($db, $oddaja_del_query);
+            }
+
+            //delete class material
+            $gradiva_del_query = "DELETE FROM `gradiva` WHERE `id_gradiva` = '$get_id'";
+            $gradiva_del_result = mysqli_query($db, $gradiva_del_query);
+
+            header("location: course.php?id=" . $g_temp_row['id_predmet']);
+        }
+    }
+
+    header("location: ../class.php");
+}
 ?>
