@@ -202,7 +202,7 @@ if($type == 4){
         ON `m`.`id_predmet` = `p`.`id_predmet` 
     WHERE `id_modula` = '$get_id'; 
     ";
-    $mod_exists_result = mysqli_query($db, $mod_del_query);
+    $mod_exists_result = mysqli_query($db, $mod_exists_query);
     $mod_exists_count = mysqli_num_rows($mod_exists_result);
 
     //module exists
