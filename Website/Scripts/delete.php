@@ -284,11 +284,11 @@ if($type == 5){
             
 
             //delete all related submissions, should there be any
-            while($gradiva_exists_row = mysqli_fetch_assoc($gradiva_exists_result)){
-                $oddaja_del_query = "DELETE FROM `oddaja` 
-                WHERE `id_gradiva` = '" . $gradiva_exists_row['id_gradiva'] . "'";
-                $oddaja_del_result = mysqli_query($db, $oddaja_del_query);
-            }
+            /*while($gradiva_exists_row = mysqli_fetch_assoc($gradiva_exists_result)){*/
+            $oddaja_del_query = "DELETE FROM `oddaja` 
+            WHERE `id_gradiva` = '" . $g_temp_row['id_gradiva'] . "'";
+            $oddaja_del_result = mysqli_query($db, $oddaja_del_query);
+            //}
 
             //delete class material
             $gradiva_del_query = "DELETE FROM `gradiva` WHERE `id_gradiva` = '$get_id'";
