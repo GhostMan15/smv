@@ -13,6 +13,10 @@ else {
     $id = $_SESSION["id"];
     $user_type =  $_SESSION["user_type"];
 }
+$id_predmeta = $_GET['id_predmet'];
+$query = "SELECT * FROM `predmeti` WHERE `id_predmet` = $id_predmeta;";
+$query_res = mysqli_query($db, $query);
+$predmet = mysqli_fetch_assoc($query_res);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,13 +27,11 @@ else {
     <title>Ultis</title>
 </head>
 <body>
-  
-    <div class="Main1"> Dodajanje novega predmeta
+<div class="Main1"> Dodajanje novega Modula v predmet <?php echo"$predmet[ime]"; ?>
     <div class="Main"> 
         <form action="" method="POST" >
             Naslov: <input type="text" name="naslov" value=""> <br><br>
-            Kratica: <input type="text" name="kratica" value=""> <br><br>
-            Opis: <input type="text" name="opis" value=""> <br><br>
+            Opis: <input type="text" name="opis" value="">
             <input type="submit" name="submit" value="Ustvari">
         </form>
     </div>
@@ -39,20 +41,14 @@ else {
     <?php 
         if (isset($_POST['submit'])) {
             
-            $naslov = $_POST["naslov"];
+            $ime = $_POST["naslov"];
             $opis = $_POST["opis"];
-            $kratica = $_POST["kratica"];
             
+            $query_insert = "INSERT INTO `model` VALUES(DEFAULT,'$id_predmeta','$ime','$opis');";      
+            mysqli_query($db, $query_insert);
 
-            $query = "INSERT INTO `predmeti` VALUES(DEFAULT,'$naslov','$kratica','$opis');";      
-            mysqli_query($db, $query);
-
-            header("Location: AddPredmet.php");
+            header("Location: class.php");
         }
     ?>
-    
-
-   
-    
 </body>
 </html>
