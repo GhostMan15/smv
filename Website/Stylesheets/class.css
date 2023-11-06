@@ -1,17 +1,20 @@
-.bannerr{
+.bannerr {
     width: 100%;
     height: 963px;
 }
-.slikica{
-    width: 450px; 
-    height: 149px; 
+
+.slikica {
+    width: 450px;
+    height: 149px;
 }
-.slikicaDIV{
-    width: 450px; 
-    height: 149px; 
+
+.slikicaDIV {
+    width: 450px;
+    height: 149px;
     transform: translate(133%, -149px);
 }
-.Predmeti{
+
+.Predmeti {
     position: relative;
     top: 10%;
     font-size: 1.25vw;
@@ -20,50 +23,57 @@
     border: 1px solid black;
     border-radius: 1vw;
     text-decoration: none;
- 
+
 }
-.miza{
+
+.miza {
     padding: 1vw;
     justify-content: center;
     text-decoration: none;
 }
 
- .HrefPredmetMain {
+.HrefPredmetMain {
     position: relative;
-    text-decoration:none;
+    text-decoration: none;
     color: grey;
- }
- .HrefPredmetMain:link{
-      text-decoration:none;
-      color: grey;
- }
- .HrefPredmetMain:hover{
-      text-decoration:none;
-      color: black;
- }
- .HrefPredmetMain:after{
-      content: "";
-      position: absolute;
-      background-color: palevioletred;
-      height: 3px;
-      width: 0;
-      left: 0;
-      bottom: -5px;
-      transition: 0.3s;
-      text-decoration: none;
- }
-  
- .HrefPredmetMain:hover:after{
-      width: 100%;
- }
-.container{
+}
+
+.HrefPredmetMain:link {
+    text-decoration: none;
+    color: grey;
+}
+
+.HrefPredmetMain:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.HrefPredmetMain:after {
+    content: "";
+    position: absolute;
+    background-color: palevioletred;
+    height: 3px;
+    width: 0;
+    left: 0;
+    bottom: -5px;
+    transition: 0.3s;
+    text-decoration: none;
+}
+
+.HrefPredmetMain:hover:after {
+    width: 100%;
+}
+
+.container {
     margin: auto;
     position: relative;
-    top: 8px;
+    margin-top: 0.25vw;
+    /*top: 10px;*/
     width: 70%;
 }
 
-.plusek, .minusek{
+.plusek,
+.minusek {
     border: 1px solid black;
     border-radius: 0.5vw;
     /*margin-top: 0.5vw;*/
@@ -77,29 +87,16 @@
     vertical-align: middle;
 }
 
-.plusek:hover{
+.plusek:hover {
     background-color: green;
 }
 
-/*.minusek{
-    border: 1px solid black;
-    border-radius: 12px;
-    margin-top: 10px;
-    font-size: 35px;
-    padding: 2px;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    vertical-align: middle;
-}*/
-.minusek:hover{
+.minusek:hover {
     background-color: red;
     text-decoration: none;
 }
 
-.kontainer{
+.kontainer {
     display: grid;
     grid-template-columns: auto 3vw 3vw;
     grid-template-rows: auto;
@@ -107,26 +104,42 @@
     /*padding-bottom: 10px;*/
 }
 
-.kontainer > div{
+.kontainer>div {
     margin: 0.5vw;
 }
 
-.title{
+.title {
     font-size: 1.5vw;
     margin-top: 0.35vw;
 }
 
-.kontainer a{
+.kontainer a {
     color: black;
     text-decoration: none;
 }
 
-.trashIcon{
-    width: 20px; 
+.trashIcon {
+    width: 20px;
     height: 20px;
-    transform: translate(10px,2px);
+    transform: translate(10px, 2px);
 }
-.edit{
-    width: 30px; 
+
+.edit {
+    width: 30px;
     height: 30px;
+}
+
+.arrow_img {
+    width: 0.75vw;
+    height: 0.75vw;
+}
+
+.btn {
+    font-size: 1.5vw;
+    border: none;
+    background-color: white;
+}
+
+.btn:hover {
+    text-decoration: underline;
 }

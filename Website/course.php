@@ -118,15 +118,18 @@ else {
                 
                 //students
                 else if ($user_type == '2') {
-                    echo "<div class='navbar_div'> <div class = 'navbar'>
-                    <a href='index.html'><img src='Pictures/logo2.png' class='logo'></a>
-                    <ul>
-                        <li><a href='home.php'>Domov</a></li>
-                        <li id='checked'> <a href='class.php'>Predmeti</a></li>
-                        <li> <a href='vp.php?id=".$id."'>Vaš Profil</a></li>
-                        <li> <a href='Scripts/logout.php'>Odjava</a></li>
-                    </ul>
-                    </div>
+                    echo "
+                    <div class='navbar_div'> 
+                        <div class = 'navbar'>
+                            <a href='home.php'><img src='Pictures/logo2.png' class='logo'></a>
+                            <ul>
+                                <li> <a href='home.php'>Domov</a></li>
+                                <li id='checked'> <a href='class.php'>Predmeti</a></li>
+                                <li> <a href='redovalnica.php'>Ocene</a></li>
+                                <li> <a href='vp.php'>Vaš Profil</a></li>
+                                <li> <a href='Scripts/logout.php'>Odjava</a></li>
+                            </ul>
+                        </div>
                     </div>
                     ";
                     $predmeti_query =  "SELECT * FROM `predmeti` WHERE `id_predmet` = '$class_id';";
@@ -187,7 +190,23 @@ else {
                     $model_res = mysqli_query($db, $model_query);
 
                     echo" <div class='vsebina'>
-                            <div class='vsebina-naslov'>". $predmet['ime'] ."<div class='kontainer'>  <a class='plusek' href='AddModul.php?id_predmet=$class_id'>+</a> </div>
+                            <div class='vsebina-naslov'>
+                                <div> 
+                                    <input type='text' id='text_field' class='text_field' name='sub_name' oninput='FieldWidth()' onfocus='FieldFocus(1)' onblur='FieldFocus(2)' value='" . $predmet['ime'] . "' maxlength='50'>
+                                </div> 
+                                <div>
+                                    <a class='plusek' href='AddModul.php?id_predmet=$class_id'>+</a> 
+                                </div>
+                                <div>
+                                    <div class='plusek'>
+                                        <img class='edit_img' src='Pictures/edit.png' id='edit' onclick='EditMode()'>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class='plusek'>
+                                        <button type='submit' class='submit_btn'><img class='edit_img' src='Pictures/checkmark.png' id='edit' onclick='EditMode()'></button>
+                                    </div>
+                                </div>
                             </div>
                             <div class='vsebina-poglavje'>            <!--MODEL-->";
                               
@@ -227,6 +246,7 @@ else {
 <!--SCRIPT-->
 <script src='Scripts/edit.js'>
     EditMode();
+    FieldWidth();
 </script>
 <!--SCRIPT-->
 </html>

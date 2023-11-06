@@ -4,8 +4,16 @@
 
 }
 .vsebina-naslov{
-     font-size: 3vw;
+     font-size: 2vw;
+     display: flex;
+     flex-direction: row;
+     /*grid-template-rows: auto;
+     grid-template-columns: auto auto auto auto;*/
      margin-bottom: 20px;
+}
+
+.vsebina-naslov > div{
+     margin-right: 0.25vw;
 }
 .vsebina-naslov a{
      color: black;
@@ -57,17 +65,17 @@
        color: black;
  }
 .plusek{
-     border: 1px solid black;
-     border-radius: 6px;
-     margin-top: 10px;
-     font-size: 35px;
-     padding: 2px;
-     width: 35px;
-     height: 35px;
-     display: grid;
-     justify-content: center;
-     text-align: center;
-     vertical-align: middle;
+    border: 1px solid black;
+    border-radius: 0.5vw;
+    margin-top: 0.25vw;
+    font-size: 1.5vw;
+    padding: 0.2vw;
+    width: 1.5vw;
+    height: 1.5vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
 }
 .plusek:hover{
      background-color: green;
@@ -81,8 +89,26 @@
      width: 60px;
 }
 
+.edit_img{
+     height: 1.5vw;
+     width: 1.5vw;
+}
+
 .kontainer{
      display: grid;
      grid-template-columns: auto 3vw 3vw;
      width: 10%;
+}
+
+.submit_btn{
+     width: 1.5vw;
+     height: 1.5vw;
+     background-color: transparent;
+     border: none;
+}
+
+.text_field{
+     border: 1px solid transparent;
+     font-size: 2vw;
+     outline: none;
 }
