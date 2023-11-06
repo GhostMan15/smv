@@ -32,8 +32,9 @@ else {
             Opis: <input class="text_field" type="text" name="opis" value=""> <br><br>
             <input type="submit" name="submit" value="Ustvari">
         </form>
+        <div class="Main2"> <a href="class.php"><img src="Pictures/back.png" class="slika"></a> </div>
     </div>
-    <div class="Main2"> <a href="class.php"><img src="Pictures/back.png" class="slika"></a> </div>
+    
     </div>
 
     <?php 

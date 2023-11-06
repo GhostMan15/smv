@@ -234,6 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     //MODULI
                     while($rows = mysqli_fetch_assoc($model_res)){      
                         $idmod = $rows['id_modula'];
+                        
                         echo"
                         <!--MODUL-->
                         <div class='poglavje'>
