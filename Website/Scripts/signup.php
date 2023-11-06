@@ -52,14 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $allgood = false;
     }
 
-    //check that the class ID is specified
-    //if($id_predmet == 0 || $id_predmet != ""){
-        //$error .= "Predmet je potrebno določiti.<br>";
-        //$allgood = false;
-    //}
-
-    /*$error .= "$id_predmet<br>$user_id<br>";*/
-
     //try to carry out insert into
     if($allgood){
         //get data on specified user - user type needed in order to insert into 'ucilnica' table

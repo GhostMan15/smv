@@ -41,10 +41,10 @@ else {
     <div class="Main1"> Dodajanje nove vaje v <?php echo $poglavje['Naslov']; ?>
     <div class="Main"> 
         <form action="" method="POST" >
-            Naslov: <input type="text" class="text_field" name="naslov" value=""> <br><br>
-            Opis: <input type="text" class="text_field" name="opis" value=""> <br><br>
-            Samo za branje?<br> <input type="radio" name="boolean" value="0"> Da 
-            <input type="radio" name="boolean" value="1"> Ne <br><br>
+            Naslov: <input type="text" class="text_field" name="naslov" value="" required> <br><br>
+            Opis: <input type="text" class="text_field" name="opis" value="" required> <br><br>
+            Samo za branje?<br> <input type="radio" name="boolean" value="0" required> Da 
+            <input type="radio" name="boolean" value="1" required> Ne <br><br>
             <input type="submit" name="submit" value="Ustvari">
         </form>
     </div>
@@ -61,12 +61,15 @@ else {
             $query = "INSERT INTO `gradiva` VALUES(DEFAULT,'$bool',NULL,'','$ime','$opis','$mod');";      
             mysqli_query($db, $query);
 
-            header("Location: AddVaja.php?id_predmet=$id&id_modula=$mod");
+            $new_id_query = "SELECT * FROM `gradiva`
+            WHERE `id_modula` = '$mod' 
+            ORDER BY `id_gradiva` DESC  
+            ";
+            $new_id_result = mysqli_query($db, $new_id_query);
+            $new_id_row = mysqli_fetch_assoc($new_id_result);
+
+            header("Location: material.php?gradivo=" . $new_id_row['id_gradiva']);
         }
     ?>
-    
-
-   
-    
 </body>
 </html>
