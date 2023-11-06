@@ -27,9 +27,9 @@ else {
     <div class="Main1"> Dodajanje novega predmeta
     <div class="Main"> 
         <form action="" method="POST" >
-            Naslov: <input type="text" name="naslov" value=""> <br><br>
-            Kratica: <input type="text" name="kratica" value=""> <br><br>
-            Opis: <input type="text" name="opis" value=""> <br><br>
+            Naslov: <input class="text_field" type="text" name="naslov" value=""> <br><br>
+            Kratica: <input class="text_field" type="text" name="kratica" value=""> <br><br>
+            Opis: <input class="text_field" type="text" name="opis" value=""> <br><br>
             <input type="submit" name="submit" value="Ustvari">
         </form>
     </div>
