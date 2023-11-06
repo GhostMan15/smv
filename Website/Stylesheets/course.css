@@ -3,7 +3,8 @@
      padding: 30px;
 
 }
-.vsebina-naslov{
+
+.vsebina-naslov {
      font-size: 2vw;
      display: flex;
      flex-direction: row;
@@ -12,103 +13,139 @@
      margin-bottom: 20px;
 }
 
-.vsebina-naslov > div{
+.vsebina-naslov>div {
      margin-right: 0.25vw;
 }
-.vsebina-naslov a{
+
+.vsebina-naslov a {
      color: black;
      text-decoration: none;
 }
+
 .vsebina-poglavje a {
-    position: relative;
-    text-decoration:none;
-    color: black;
-    font-size: 1.5vw;
-    font-weight: bold;
- }
-.vsebina-poglavje a:link{
-      text-decoration:none;
-      color: black;
- }
-.vsebina-poglavje a:hover{
-      text-decoration:none;
-      color: black;
- }
-
- 
-  
-.vsebina-poglavje a:hover:after{
-      width: 100%;
- }
-
- .gradivo{
-      margin-top: 10px;
-      margin-bottom: 10px;
-  
- }
- .gradivo-item{
-      padding-left: 15px;
-      
- }.gradivo a {
      position: relative;
-     text-decoration:none;
+     text-decoration: none;
+     color: black;
+     font-size: 1.5vw;
+}
+
+.vsebina-poglavje a:link {
+     text-decoration: none;
+     color: black;
+}
+
+.vsebina-poglavje a:hover {
+     text-decoration: none;
+     color: black;
+}
+
+
+
+.vsebina-poglavje a:hover:after {
+     width: 100%;
+}
+
+.gradivo {
+     margin-top: 10px;
+     margin-bottom: 10px;
+
+}
+
+.gradivo-item {
+     padding-left: 15px;
+
+}
+
+.gradivo a {
+     position: relative;
+     text-decoration: none;
      color: grey;
      font-size: 1.4vw;
-     
-  }
- .gradivo a:link{
-       text-decoration:none;
-       color: grey;
-  }
- .gradivo a:hover{
-       text-decoration:none;
-       color: black;
- }
-.plusek{
-    border: 1px solid black;
-    border-radius: 0.5vw;
-    margin-top: 0.25vw;
-    font-size: 1.5vw;
-    padding: 0.2vw;
-    width: 1.5vw;
-    height: 1.5vw;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    vertical-align: middle;
+
 }
-.plusek:hover{
+
+.gradivo a:link {
+     text-decoration: none;
+     color: grey;
+}
+
+.gradivo a:hover {
+     text-decoration: none;
+     color: black;
+}
+
+.plusek {
+     border: 1px solid black;
+     border-radius: 0.5vw;
+     margin-top: 0.25vw;
+     font-size: 1.5vw;
+     padding: 0.2vw;
+     width: 1.5vw;
+     height: 1.5vw;
+     display: flex;
+     justify-content: center;
+     text-align: center;
+     vertical-align: middle;
+}
+
+.plusek:hover {
      background-color: green;
 }
-.asd{
-    width: 0%;
-    display: block;
+
+.asd {
+     width: 0%;
+     display: block;
 }
-.continue{
+
+.continue {
      border: 1px solid #000;
      width: 60px;
 }
 
-.edit_img{
+.edit_img {
      height: 1.5vw;
      width: 1.5vw;
 }
 
-.kontainer{
+.kontainer {
      display: grid;
      grid-template-columns: auto 3vw 3vw;
      width: 10%;
 }
 
-.submit_btn{
+.submit_btn {
      width: 1.5vw;
      height: 1.5vw;
      background-color: transparent;
      border: none;
 }
 
-.text_field{
+.text_field, .text_field2 {
      border: 1px solid transparent;
-     font-size: 2vw;
      outline: none;
+     width: auto;
+}
+
+.text_field {
+     font-size: 2vw;
+     font-weight: bold;
+}
+
+.poglavje{
+     display: flex;
+     flex-direction: row;
+}
+
+.poglavje > div{
+     margin-right: 0.25vw;
+}
+
+.delete_img{
+     width: 1.5vw;
+     height: 1.5vw;
+}
+
+input:disabled{
+     background-color: white !important;
+     color: black;
 }

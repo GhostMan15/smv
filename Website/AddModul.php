@@ -20,35 +20,68 @@ $predmet = mysqli_fetch_assoc($query_res);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Stylesheets/Predmet.css">
     <title>Ultis</title>
 </head>
+
 <body>
-<div class="Main1"> Dodajanje novega Modula v predmet <?php echo"$predmet[ime]"; ?>
-    <div class="Main"> 
-        <form action="" method="POST" >
-            Naslov: <input type="text" name="naslov" value=""> <br><br>
-            Opis: <input type="text" name="opis" value="">
-            <input type="submit" name="submit" value="Ustvari">
-        </form>
-    </div>
-    <div class="Main2"> <a href="class.php"><img src="Pictures/back.png" class="slika"></a> </div>
-    </div>
+    <form action="" class='Main' method="POST" class="form">
+        <!--GLAVNI NASLOV-->
+        <div class="title">
+            Dodajanje novega Modula v predmet <b><?php echo "$predmet[ime]"; ?></b>
+        </div>
+        <!--NASLOV-->
+        <div>
+            Naslov:
+        </div>
+        <div>
+            <input type="text" class='text_field' name="naslov" value="" required>
+        </div>
+        <!--NASLOV-->
 
-    <?php 
-        if (isset($_POST['submit'])) {
-            
-            $ime = $_POST["naslov"];
-            $opis = $_POST["opis"];
-            
-            $query_insert = "INSERT INTO `model` VALUES(DEFAULT,'$id_predmeta','$ime','$opis');";      
-            mysqli_query($db, $query_insert);
+        <!--OPIS-->
+        <div>
+            Opis:
+        </div>
+        <div>
+            <input type="text" class='text_field' name="opis" value="" required>
+        </div>
+        <!--OPIS-->
 
-            header("Location: class.php");
-        }
+        <!--SUBMIT-->
+        <div class="submit_con">
+            <div>
+                <a href="class.php"><img src="Pictures/back.png" class="slika"></a>
+            </div>
+            <div>
+                <input type="submit" class="submit_btn" name="submit" value="Ustvari">
+            </div>
+        </div>
+        <!--SUBMIT-->
+
+        <!--BACK-->
+        <div>
+
+        </div>
+        <!--BACK-->
+    </form>
+
+    <?php
+    if (isset($_POST['submit'])) {
+
+        $ime = $_POST["naslov"];
+        $opis = $_POST["opis"];
+
+        $query_insert = "INSERT INTO `model` VALUES(DEFAULT,'$id_predmeta','$ime','$opis');";
+        mysqli_query($db, $query_insert);
+
+        header("Location: class.php");
+    }
     ?>
 </body>
+
 </html>
