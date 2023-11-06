@@ -12,23 +12,21 @@
     transform: translate(133%, -149px);
 }
 .Predmeti{
-  position: relative;
-  top: 10%;
-   font-size: 20px;
+    position: relative;
+    top: 10%;
+    font-size: 1.25vw;
     width: 100%;
     margin: auto;
     border: 1px solid black;
-    border-radius: 17px;
+    border-radius: 1vw;
     text-decoration: none;
  
 }
 .miza{
- padding: 19px;
- justify-content: center;
- text-decoration: none;
+    padding: 1vw;
+    justify-content: center;
+    text-decoration: none;
 }
-  
-
 
  .HrefPredmetMain {
     position: relative;
@@ -58,29 +56,32 @@
  .HrefPredmetMain:hover:after{
       width: 100%;
  }
- .container{
-     margin: auto;
-     position: relative;
-     top: 8px;
-     width: 70%;
- }
- .plusek{
+.container{
+    margin: auto;
+    position: relative;
+    top: 8px;
+    width: 70%;
+}
+
+.plusek, .minusek{
     border: 1px solid black;
-    border-radius: 12px;
-    margin-top: 10px;
-    font-size: 35px;
-    padding: 2px;
-    width: 35px;
-    height: 35px;
+    border-radius: 0.5vw;
+    /*margin-top: 0.5vw;*/
+    font-size: 1.5vw;
+    padding: 0.2vw;
+    width: 1.5vw;
+    height: 1.5vw;
     display: flex;
     justify-content: center;
     text-align: center;
     vertical-align: middle;
 }
+
 .plusek:hover{
     background-color: green;
 }
-.minusek{
+
+/*.minusek{
     border: 1px solid black;
     border-radius: 12px;
     margin-top: 10px;
@@ -92,7 +93,7 @@
     justify-content: center;
     text-align: center;
     vertical-align: middle;
-}
+}*/
 .minusek:hover{
     background-color: red;
     text-decoration: none;
@@ -100,15 +101,26 @@
 
 .kontainer{
     display: grid;
-    grid-template-columns: repeat(2, 3vw);
-    width: 0%;
-    padding-bottom: 10px;
+    grid-template-columns: auto 3vw 3vw;
+    grid-template-rows: auto;
+    /*width: 0%;*/
+    /*padding-bottom: 10px;*/
+}
+
+.kontainer > div{
+    margin: 0.5vw;
+}
+
+.title{
+    font-size: 1.5vw;
+    margin-top: 0.35vw;
 }
 
 .kontainer a{
     color: black;
     text-decoration: none;
 }
+
 .trashIcon{
     width: 20px; 
     height: 20px;
@@ -118,4 +130,3 @@
     width: 30px; 
     height: 30px;
 }
-

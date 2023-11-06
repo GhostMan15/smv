@@ -53,45 +53,64 @@ else {
                   </div>
       ";
 
-      $predmeti_query = "SELECT * FROM `predmeti`;";
+      $predmeti_query = "SELECT DISTINCT `p`.* 
+      FROM `predmeti` `p` JOIN `ucilnica` `u`
+        ON `p`.`id_predmet` = `u`.`id_predmet`
+      WHERE `u`.`id_user` = '$id';
+      ";
       $predmeti_res = mysqli_query($db, $predmeti_query);
       $predmeti_num = mysqli_num_rows($predmeti_res);
       $i = 1;
 
-      @$id = $_GET['id'];
+      /*@$id = $_GET['id'];
       $moduli_query = "SELECT * FROM `model` WHERE `id_predmet` = '$id';";
-      $moduli_res = mysqli_query($db, $moduli_query);
+      $moduli_res = mysqli_query($db, $moduli_query);*/
 
       echo "
-                  <div class='container'>
-          <div class='asd'><a href='AddPredmet.php' class='plusek'>+</a></div> 
+        <div class='container'>
+          <div class='kontainer'>
+              <div><p class='title'>Moji predmeti</p></div>
+          </div>
           <div class='Predmeti'>
-          <table class='miza'> ";
+            <table class='miza'> 
+      ";
 
-      while ($rows = mysqli_fetch_assoc($predmeti_res)) {      //tuki se izpisejo vsi predmeti iz db
-        if ($predmeti_num > $i && $i != $predmeti_num) {
-          $i++;
-
-          echo " <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> ";
-        } else {
-
-          echo "  <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> <tr><td rowspan='1'></td></tr> ";
+      //tuki se izpisejo vsi predmeti iz db
+      if($predmeti_num > 0){
+        while ($rows = mysqli_fetch_assoc($predmeti_res)) {      
+          if ($predmeti_num > $i && $i != $predmeti_num) {
+            $i++;
+  
+            echo " <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> ";
+          } else {
+  
+            echo "  <tr><td> <a href='course.php?id=" . $rows['id_predmet'] . "'>" . $rows['ime'] . "</a></td></tr> <tr><td rowspan='1'></td></tr> ";
+          }
         }
-      }
-
-      if (isset($id)) { {
-          while ($vrstice = mysqli_fetch_assoc($moduli_res)) {
-            echo " <tr><td> <a href='$$$'> $vrstice[Naslov] </a> </td></tr> ";
+  
+        if (isset($id)) { {
+            while ($vrstice = mysqli_fetch_assoc($moduli_res)) {
+              echo " <tr><td> <a href='$$$'> $vrstice[Naslov] </a> </td></tr> ";
+            }
           }
         }
       }
 
+      else{
+        echo"
+        <tr>
+          <td>Trenutno še ne učite nobenega predmeta</td>
+        </tr>
+        ";
+      }
+
       echo "
-          </table>
+            </table>
           </div>
         </div>
         ";
     }
+
     //students
     else if ($user_type == '2') {
       echo "<div class='navbar_div'> <div class = 'navbar'>
@@ -106,19 +125,30 @@ else {
                   </div>
       ";
 
-      $predmeti_query = "SELECT * FROM `predmeti`;";
+      $predmeti_query = "SELECT DISTINCT `p`.* 
+      FROM `predmeti` `p` JOIN `ucilnica` `u`
+        ON `p`.`id_predmet` = `u`.`id_predmet`
+      WHERE `u`.`id_user` = '$id';
+      ";
       $predmeti_res = mysqli_query($db, $predmeti_query);
       $predmeti_num = mysqli_num_rows($predmeti_res);
       $i = 1;
 
-      @$id = $_GET['id'];
+      /*@$id = $_GET['id'];
       $moduli_query = "SELECT * FROM `model` WHERE `id_predmet` = '$id';";
-      $moduli_res = mysqli_query($db, $moduli_query);
+      $moduli_res = mysqli_query($db, $moduli_query);*/
 
+      /*MOJI PREDMETI - UČENEC*/
       echo "
-                  <div class='container'>
+      <div class='container'>
+          <div class='kontainer'>
+              <div><p class='title'>Moji predmeti</p></div>
+              <!--<div class='plusek'><a href='AddPredmet.php'>+</a></div>-->
+              <div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode()'></div>
+          </div>
+
           <div class='Predmeti'>
-          <table class='miza'> 
+              <table class='miza'> 
       ";
 
       while ($rows = mysqli_fetch_assoc($predmeti_res)) {      //tuki se izpisejo vsi predmeti iz db
@@ -143,6 +173,11 @@ else {
           </div>
         </div>
       ";
+      /*MOJI PREDMETI - UČENEC*/
+
+      /*OSTALI PREDMETI - UČENEC*/
+
+      /*OSTALI PREDMETI - UČENEC*/
     }
 
     //admin
@@ -169,13 +204,18 @@ else {
       @$id = $_GET['id'];
       $moduli_query = "SELECT * FROM `model` WHERE `id_predmet` = '$id';";
       $moduli_res = mysqli_query($db, $moduli_query);
-
+                
 
       echo "
-                  <div class='container'>
-          <div class='kontainer'><div class='plusek'><a href='AddPredmet.php'>+</a></div><div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode()'></div> </div>
+      <div class='container'>
+          <div class='kontainer'>
+              <div><p class='title'>Predmeti</p></div>
+              <div class='plusek'><a href='AddPredmet.php'>+</a></div>
+              <div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode()'></div>
+          </div>
+
           <div class='Predmeti'>
-          <table class='miza'> 
+              <table class='miza'> 
       ";
 
       while ($rows = mysqli_fetch_assoc($predmeti_res)) {      //tuki se izpisejo vsi predmeti iz db
