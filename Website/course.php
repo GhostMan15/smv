@@ -187,7 +187,7 @@ else {
                     $model_res = mysqli_query($db, $model_query);
 
                     echo" <div class='vsebina'>
-                            <div class='vsebina-naslov'>". $predmet['ime'] ."<div class='kontainer'>  <a class='plusek' href=$$>+</a> </div>
+                            <div class='vsebina-naslov'>". $predmet['ime'] ."<div class='kontainer'>  <a class='plusek' href='AddModul.php?id_predmet=$class_id'>+</a> </div>
                             </div>
                             <div class='vsebina-poglavje'>            <!--MODEL-->";
                               
