@@ -119,8 +119,8 @@
 }
 
 .trashIcon {
-    width: 20px;
-    height: 20px;
+    width: 1vw;
+    height: 1vw;
     transform: translate(10px, 2px);
 }
 
