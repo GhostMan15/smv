@@ -249,6 +249,8 @@ if($type == 4){
             //delete module
             $module_del_query = "DELETE FROM `model` WHERE `id_modula` = '$get_id'";
             $module_del_result = mysqli_query($db, $module_del_query);
+
+            header("location: ../course.php?id=". $mod_exists_row['id_predmet']);
         }
 
         header("location: ../course.php?id=". $mod_exists_row['id_predmet']);

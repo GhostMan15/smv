@@ -1,11 +1,10 @@
 let editMode = true;
 let showClasses = true;
 
-function EditMode(){
+function EditMode(x){
     //edit mode is on already, hide trashcans
     if(editMode){
         var elements = document.getElementsByClassName("trashcan");
-        //jQuery(".trashcan").css("display", "none");
         for(var i = 0; i < elements.length; i++){
             elements[i].style.display = "none";
         }
@@ -14,11 +13,20 @@ function EditMode(){
     //edit mode is off, show trashcans
     else{
         var elements = document.getElementsByClassName("trashcan");
-        //jQuery(".trashcan").css("display", "inline");
         for(var i = 0; i < elements.length; i++){
             elements[i].style.display = "inline";
         }
         editMode = true;
+    }
+    
+    //used on course.php to lock the subject name text field
+    if(x == 2){
+        if(editMode){
+            document.getElementById('text_field').disabled = false;
+        }
+        else{
+            document.getElementById('text_field').disabled = true;
+        }
     }
 }
 
@@ -61,3 +69,6 @@ function FieldFocus(x){
         document.getElementById('text_field').style.borderBottomColor = "transparent";
     }
 }
+
+FieldWidth();
+EditMode();

@@ -2,64 +2,40 @@ body {
     height: 100vh;
     width: 100vw;
     margin: 0;
+    display: grid;
     justify-content: center;
-    display: flex;
     background-size: cover;
     background-image: url(../Pictures/science_pattern.jpg);
     backdrop-filter: blur(12px);
     color: white;
     font-family: sans-serif;
 }
+
 .Main{
-    margin: auto;
-    
-    position: relative;
+    display: grid;
+    justify-content: center;
+    text-align: center;
     font-size: 1.4vw;
-    padding: 15px;
-    margin-top: 20px;
-    width: 35%;
-    height: 200px;
-    border-radius: 16px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+    width: 35vw;
+    height: 22.5vw;
+    margin: 10vw 32vw;
+    border: 1px solid white;
+    border-radius: 1vw;
 }
-.Main2{
-    margin: auto;
-    
-    position: relative;
-    padding: 15px;
-    margin-top: 5vw;
-    width: 35%;
-    height: 100px;
-    border-radius: 16px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
+
+.Main > div{
+    margin: 0.5vw;
 }
 
 .forma{
     padding: 14px;
 }
-.Main1{
-    font-size: 2vw;
-    margin: auto;
-    margin-top: 50px;
-    position: relative;
-    padding: 15px;
-    width: 35%;
-    height: 55%;
-    border-radius: 16px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    border-radius: 20px;
-    
-}
+
 .slika{
-    width: 50px;
-    height: 50px;
+    width: 2vw;
+    height: 2vw;
 }
+
 .text_field{
     background-color: rgba(25,26,47,0);
     outline: none;
@@ -67,4 +43,38 @@ body {
     border-bottom: 1px solid white;
     color: white;
     width: 15vw;
+}
+
+.text_field{
+    background-color: transparent;
+    border-bottom: 1px solid white;
+}
+
+.submit_con{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.submit_con > div{
+    margin: 0.25vw;
+}
+
+.submit_btn{
+    background-color: transparent;
+    font-size: 1vw;
+    padding: 0.25vw;
+    border-radius: 0.25vw;
+    width: 10ch;
+    color: white;
+    border: 1px solid white;
+}
+
+.title{
+    font-size: 1.75vw;
+}
+
+.submit_btn:hover{
+    background-color: rgba(25,26,47);
+    border: 2px solid white;
 }

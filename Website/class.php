@@ -135,7 +135,7 @@ else {
             <div class='kontainer'>
               <div><p class='title'>Moji predmeti</p></div>
               <div></div>
-              <div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode()'></div>
+              <div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode(1)'></div>
             </div>
 
             <div class='Predmeti'>
@@ -237,7 +237,7 @@ else {
           <div class='kontainer'>
               <div><p class='title'>Predmeti</p></div>
               <div class='plusek'><a href='AddPredmet.php'>+</a></div>
-              <div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode()'></div>
+              <div class='plusek'><img src='Pictures/edit.png' id='edit' onclick='EditMode(1)'></div>
           </div>
 
           <div class='Predmeti'>

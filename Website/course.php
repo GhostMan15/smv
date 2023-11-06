@@ -13,6 +13,23 @@ else {
     $id = $_SESSION["id"];
     $user_type =  $_SESSION["user_type"];
 }
+
+//on save changes - update class name - ADMIN ONLY
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if($user_type == 0){
+        $sub_name = mysqli_escape_string($db, $_POST['sub_name']);
+        $sub_name = trim($sub_name);
+
+        if($sub_name != ""){
+            $update_query = "UPDATE `predmeti`
+            SET `ime` = '$sub_name'
+            WHERE `id_predmet` = '". $_SESSION['id_predmet'] ."'
+            ";
+            $update_result = mysqli_query($db, $update_query);
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +48,7 @@ else {
         
 <?php
         $class_id = $_GET['id'];
+        $_SESSION['id_predmet'] = $class_id;
         //check that the course / subject exists
         $class_exists_query = "SELECT *
         FROM `predmeti` `p`
@@ -189,31 +207,50 @@ else {
                     $model_query = "SELECT * FROM `model` WHERE  `id_predmet` = '$class_id';";
                     $model_res = mysqli_query($db, $model_query);
 
-                    echo" <div class='vsebina'>
+                    //NASLOV PREDMETA
+                    echo" 
+                        <form method='post' class='vsebina'>
                             <div class='vsebina-naslov'>
                                 <div> 
-                                    <input type='text' id='text_field' class='text_field' name='sub_name' oninput='FieldWidth()' onfocus='FieldFocus(1)' onblur='FieldFocus(2)' value='" . $predmet['ime'] . "' maxlength='50'>
-                                </div> 
+                                    <input type='text' id='text_field' class='text_field' name='sub_name' oninput='FieldWidth()' onfocus='FieldFocus(1)' onblur='FieldFocus(2)' value='" . $predmet['ime'] . "' maxlength='50' required disabled>
+                                </div>
                                 <div>
+                                    <div class='plusek'>
+                                        <img class='edit_img' src='Pictures/edit.png' id='edit' onclick='EditMode(2)'>
+                                    </div>
+                                </div> 
+                                <div class='trashcan'>
                                     <a class='plusek' href='AddModul.php?id_predmet=$class_id'>+</a> 
                                 </div>
-                                <div>
+                                <div class='trashcan'>
                                     <div class='plusek'>
-                                        <img class='edit_img' src='Pictures/edit.png' id='edit' onclick='EditMode()'>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class='plusek'>
-                                        <button type='submit' class='submit_btn'><img class='edit_img' src='Pictures/checkmark.png' id='edit' onclick='EditMode()'></button>
+                                        <button type='submit' class='submit_btn'><img class='edit_img' src='Pictures/checkmark.png' id='edit'></button>
                                     </div>
                                 </div>
                             </div>
-                            <div class='vsebina-poglavje'>            <!--MODEL-->";
+                            <div class='vsebina-poglavje'>            
+                    ";
                               
+                    //MODULI
                     while($rows = mysqli_fetch_assoc($model_res)){      
                         $idmod = $rows['id_modula'];
-                        echo"<div class='kontainer'> <a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> 
-                        <a class='plusek' href=AddVaja.php?id_predmet=$class_id&id_modula=$idmod>+</a> <a class='plusek' href='Scripts/delete.php?type=4&id=$idmod'>-</a></div> ";
+                        
+                        echo"
+                        <!--MODUL-->
+                        <div class='poglavje'>
+                            <div>
+                                <a class='vsebina-poglavje1'>$rows[Naslov]</a>
+                            </div>
+
+                            <div class='trashcan'>
+                                <a class='plusek' href=AddVaja.php?id_predmet=$class_id&id_modula=$idmod>+</a> 
+                            </div>
+
+                            <div class='trashcan'>
+                                <a href='Scripts/delete.php?type=4&id=$idmod' class='plusek'><img src='Pictures/trash.png' class='delete_img'></a>
+                            </div> 
+                        </div>
+                        ";
                           
                         $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
                         $grad_res = mysqli_query($db, $grad_query);
@@ -221,13 +258,15 @@ else {
                         $g = 1;
 
                         while ($rowss = mysqli_fetch_assoc($grad_res)){
-                          echo" <div class='gradivo'> 
-                            <div class='gradivo-item'><a href='material.php?gradivo=" . $rowss['id_gradiva'] ."'> " . $rowss['naslov'] . "</a> </div>
-                          </div>";
+                            echo" 
+                            <div class='gradivo'> 
+                                <div class='gradivo-item'><a href='material.php?gradivo=" . $rowss['id_gradiva'] ."'> " . $rowss['naslov'] . "</a> </div>
+                            </div>
+                            ";
               
-                          if ($g >= $grad_num){
-                            echo"<hr>";
-                          }
+                            if ($g >= $grad_num){
+                                echo"<hr>";
+                            }
                             $g++;   
                         }   
                     }
@@ -244,9 +283,6 @@ else {
 
 </body>
 <!--SCRIPT-->
-<script src='Scripts/edit.js'>
-    EditMode();
-    FieldWidth();
-</script>
+<script src='Scripts/edit.js'></script>
 <!--SCRIPT-->
 </html>
