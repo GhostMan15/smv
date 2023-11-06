@@ -17,10 +17,20 @@ body {
     text-align: center;
     font-size: 1.4vw;
     width: 35vw;
+    padding-top: 1vw;
     height: 22.5vw;
-    margin: 10vw 32vw;
+    margin: 1vw 32vw;
     border: 1px solid white;
     border-radius: 1vw;
+}
+.Main1{
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.4vw;
+    width: 35vw;
+    height: 2vw;
+    margin-top: 5vw;
 }
 
 .Main > div{
