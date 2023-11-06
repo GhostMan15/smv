@@ -70,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 //if the user hasnt uploaded a file yet, carry out insert into
                 if($upload_count == 0){
                     $insert_query = "
-                    INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
-                    VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '0', NULL);
+                    INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`)
+                    VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '0');
                     ";
                     $insert_result = mysqli_query($db, $insert_query);
 
@@ -116,8 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $title = trim($title);
         $description = mysqli_escape_string($db, $_POST['description']);
         $description = trim($description);
-        $date_due = mysqli_escape_string($db, $_POST['date_due']);
-
+        
         //check proper string lengths and that they are not empty
         if(strlen($description) > 1024){
             $allgood = false;
@@ -136,10 +135,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //if all is good do updates and upload files if there was any
         if($allgood){
             //update description, title, and date
-            $gradivo_update = "UPDATE `gradiva`
-            SET `naslov` = '$title', `opis` = '$description', `datum_do` = '$date_due' 
-            WHERE `id_gradiva` = '$id_gradiva';
-            ";
+            if(isset($_POST['date_due'])){
+                $date_due = mysqli_escape_string($db, $_POST['date_due']);
+                $gradivo_update = "UPDATE `gradiva`
+                SET `naslov` = '$title', `opis` = '$description', `datum_do` = '$date_due' 
+                WHERE `id_gradiva` = '$id_gradiva';
+                ";
+            }
+            else{
+                $gradivo_update = "UPDATE `gradiva`
+                SET `naslov` = '$title', `opis` = '$description'
+                WHERE `id_gradiva` = '$id_gradiva';";
+            }
+            
             $gradivo_result = mysqli_query($db, $gradivo_update);
 
             //check if teacher uploaded the file
@@ -166,29 +174,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $upload_rows = mysqli_fetch_assoc($upload_result);
                     /*$upload_count = mysqli_num_rows($upload_result);*/
 
-                    /*if the user hasnt uploaded a file yet, carry out insert into
-                    if($upload_count == 0){
-                        $insert_query = "
-                        INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
-                        VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '1', NULL);
-                        ";
-                        $insert_result = mysqli_query($db, $insert_query);
-
-                        $new_upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id'";
-                        $new_upload_result = mysqli_query($db, $new_upload_query);
-                        $new_upload_rows = mysqli_fetch_assoc($new_upload_result);
-
-                        $new_id_oddaja = $new_upload_rows['id_oddaja'];
-                        $file_full_path = "Files/" . $new_id_oddaja . "." . $file_real_ext;
-
-                        if(!move_uploaded_file($file_temp_name, $file_full_path)){
-                            $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
-                        }
-                    }*/
-
                     $insert_query = "
-                    INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`, `komentar`)
-                    VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '1', NULL);
+                    INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`)
+                    VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '1');
                     ";
                     $insert_result = mysqli_query($db, $insert_query);
 
@@ -205,22 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if(!move_uploaded_file($file_temp_name, $file_full_path)){
                         $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
                     }    
-
-                    /*if the user has uploaded a file already, carry out update
-                    else{
-                        $id_oddaja = $upload_rows['id_oddaja'];
-                        $file_full_path = "Files/" . $id_oddaja . "." . $upload_rows['file_ext'];
-                        if(move_uploaded_file($file_temp_name, $file_full_path)){
-                            $update_query = "UPDATE `oddaja`
-                            SET `ocena` = NULL, `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
-                            WHERE `id_oddaja` = '$id_oddaja';
-                            ";
-                        }
-                        else{
-                            $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
-                        }
-                    }
-                    */
                 }
             }
 
