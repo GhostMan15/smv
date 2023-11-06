@@ -14,7 +14,6 @@ body {
 .Main{
     display: grid;
     justify-content: center;
-    /*flex-direction: column;*/
     text-align: center;
     font-size: 1.4vw;
     width: 35vw;
@@ -31,19 +30,6 @@ body {
 .forma{
     padding: 14px;
 }
-
-/*
-.Main1{
-    display: grid;
-    padding: 1vw;
-    margin: 17vw 32vw;
-    border-radius: 16px;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    border-radius: 20px;
-}
-*/
 
 .slika{
     width: 2vw;
