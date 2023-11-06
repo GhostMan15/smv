@@ -212,8 +212,8 @@ else {
                               
                     while($rows = mysqli_fetch_assoc($model_res)){      
                         $idmod = $rows['id_modula'];
-                        echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
-                        echo"<div class='kontainer'><a class='plusek' href=AddVaja.php?id_predmet=$class_id&id_modula=$idmod>+</a> <a class='plusek' href='Scripts/delete.php?type=4&id=$idmod'>-</a></div> ";
+                        echo"<div class='kontainer'> <a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> 
+                        <a class='plusek' href=AddVaja.php?id_predmet=$class_id&id_modula=$idmod>+</a> <a class='plusek' href='Scripts/delete.php?type=4&id=$idmod'>-</a></div> ";
                           
                         $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '$rows[id_modula]';";
                         $grad_res = mysqli_query($db, $grad_query);
