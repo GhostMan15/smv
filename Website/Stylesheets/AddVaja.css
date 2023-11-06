@@ -51,9 +51,6 @@ body {
     align-items: center;
     text-align: center;
     justify-content: center;
-    border-radius: 20px;
-    border: 1px solid white;
-    background-color: rgb(56, 55, 58);
 }
 .slika{
     width: 50px;
