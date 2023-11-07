@@ -119,7 +119,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--PROFILE-->
                         <div class='profile_con left'>
                             <div>
+                ";
+
+                if($user_data_row["img_ext"] != "" && file_exists("Pictures/Profile_Pictures/pfp_" . $user_data_row["id_user"] .".". $user_data_row["img_ext"])){
+                    echo"
                                 <img src='Pictures/Profile_Pictures/pfp_" . $user_data_row["id_user"] .".". $user_data_row["img_ext"] ."' class='pfp_img'> 
+                    ";
+                }
+                else{
+                    echo"
+                                <img src='Pictures/unknown.jpg' class='pfp_img'> 
+                    ";
+                }      
+                echo"
                             </div>
                             <div class='username'>". $user_data_row["username"] ."</div>     
                         </div>
@@ -197,6 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo"
                         <div>
                             <input type='submit' value='Oceni' class='submit_btn'>
+                        </div>
                         </div>
                     </div>
                     <!--ODDAJA-->

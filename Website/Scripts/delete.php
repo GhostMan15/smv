@@ -43,11 +43,11 @@ if($type == 1){
             $delete_result = mysqli_query($db, $delete_query);
 
             //redirect back to material.php
-            header("location: ../material.php?gradivo='". $del_row["id_gradiva"] ."'");
+            header("location: ../material.php?gradivo=". $del_row["id_gradiva"]);
         }
         else{
             //redirect back to material.php
-            header("location: ../material.php?gradivo='". $del_row["id_gradiva"] ."'");
+            header("location: ../material.php?gradivo=". $del_row["id_gradiva"]);
         }   
     }    
     else{

@@ -62,13 +62,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             //if all is good try to upload
             if($allgood){
-                $upload_query = "SELECT * FROM `oddaja` WHERE `id_user` = '$id' AND `id_gradiva` = '$id_gradiva'";
+                $upload_query = "SELECT * FROM `oddaja` 
+                WHERE `id_user` = '$id' 
+                AND `id_gradiva` = '$id_gradiva'";
                 $upload_result = mysqli_query($db, $upload_query);
                 $upload_rows = mysqli_fetch_assoc($upload_result);
                 $upload_count = mysqli_num_rows($upload_result);
 
                 //if the user hasnt uploaded a file yet, carry out insert into
-                if($upload_count > 0){
+                if($upload_count == 0){
                     $insert_query = "
                     INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`)
                     VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '0');
@@ -93,11 +95,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 else{
                     $id_oddaja = $upload_rows['id_oddaja'];
                     $file_full_path = "Files/" . $id_oddaja . "." . $upload_rows['file_ext'];
+                    
                     if(move_uploaded_file($file_temp_name, $file_full_path)){
                         $update_query = "UPDATE `oddaja`
-                        SET `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
+                        SET `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext'
                         WHERE `id_oddaja` = '$id_oddaja';
                         ";
+                        if(!mysqli_query($db, $update_query)){
+                            $error .= "Datoteke ni šlo posodobiti. Se opravičujemo za napako. <br>";
+                        }
                     }
                     else{
                         $error .= "Datoteke ni šlo naložiti. Se opravičujemo za napako. <br>";
@@ -200,6 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     /*----------------------------------admin, teacher----------------------------------*/
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -603,7 +610,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             FROM `oddaja` `o` JOIN `user` `us`
                                 ON `o`.`id_user` = `us`.`id_user` 
                             WHERE `id_gradiva` = '$id_gradiva' 
-                            AND `us`.`id_user` = '$id';
+                            AND `us`.`id_user` = '$id'
+                            ORDER BY `id_oddaja` DESC;
                             ";
                             $oddano_result = mysqli_query($db, $oddano_query);
                             $oddano_count = mysqli_num_rows($oddano_result);
@@ -622,7 +630,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 if($row['datum_do'] != "" || $row['datum_do'] != "0000-00-00"){
                                     $raw_date = $row['datum_do'];
                                     $split_date = explode("-", $raw_date);
-                                    $new_date = $split_date[0]; 
+                                    $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
                                     $isDate = true;
                                 }
 
