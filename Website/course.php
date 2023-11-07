@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             
                     while($rows = mysqli_fetch_assoc($model_res)){      
                         echo"<a href = '' class='vsebina-poglavje1'>$rows[Naslov] </a> <br>";
-                        echo"<div class='asd'><a href=AddVaja.php?id_predmet='$class_id'<p class='plusek'> + </p></a></div> ";
+                        echo"<div class='asd'><a href='AddVaja.php?id_predmet=$class_id'><p class='plusek'> + </p></a></div> ";
     
     
                         $grad_query = "SELECT * FROM `gradiva` WHERE  `id_modula` = '" .$rows['id_modula']. "';";
@@ -243,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </div>
 
                             <div class='trashcan'>
-                                <a class='plusek' href=AddVaja.php?id_predmet=$class_id&id_modula=$idmod>+</a> 
+                                <a class='plusek' href='AddVaja.php?id_predmet=$class_id&id_modula=$idmod'>+</a> 
                             </div>
 
                             <div class='trashcan'>
