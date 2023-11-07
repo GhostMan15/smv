@@ -86,7 +86,7 @@ else {
             $exists_query = "SELECT `g`.`id_gradiva`, `g`.`naslov` AS `g_naslov`, `p`.`id_predmet` AS `p_id_predmet` 
             FROM `gradiva` `g` JOIN `model` `m`
                 ON `g`.`id_modula` = `m`.`id_modela` JOIN `predmeti` `p`
-                ON `m`.`id_predmet` = `p`.`id_predmet`
+                ON `p`.`id_predmet` = `m`.`id_predmet`
             WHERE `g`.`id_gradiva` = '$id_gradiva';";
             $exists_result = mysqli_query($db, $exists_query);
             $exists_count = mysqli_num_rows($exists_result);

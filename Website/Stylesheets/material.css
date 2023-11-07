@@ -171,6 +171,7 @@ td{
 
 .submit_title{
     display: inline-flex;
+    margin-top: 15px;
     /*grid-template-rows: auto;
     grid-template-columns: auto auto;*/
 }

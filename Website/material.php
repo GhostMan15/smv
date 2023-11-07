@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $upload_count = mysqli_num_rows($upload_result);
 
                 //if the user hasnt uploaded a file yet, carry out insert into
-                if($upload_count == 0){
+                if($upload_count > 0){
                     $insert_query = "
                     INSERT INTO `oddaja` (`id_oddaja`, `id_gradiva`, `ocena`, `datum_oddaje`, `id_user`, `file_ext`, `priloga`)
                     VALUES (DEFAULT, '$id_gradiva', NULL, CURRENT_DATE(), '$id', '$file_real_ext', '0');
@@ -776,7 +776,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 if($row['datum_do'] != "" || $row['datum_do'] != "0000-00-00"){
                                     $raw_date = $row['datum_do'];
                                     $split_date = explode("-", $raw_date);
-                                    $new_date = $split_date[0]; 
+                                    $new_date = $split_date[2] . "." . $split_date[1] . "." . $split_date[0]; 
                                     $isDate = true;
                                 }
 
