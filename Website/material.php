@@ -603,24 +603,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             FROM `oddaja` `o` JOIN `user` `us`
                                 ON `o`.`id_user` = `us`.`id_user` 
                             WHERE `id_gradiva` = '$id_gradiva' 
-                            AND `id_user` = '$id';
+                            AND `us`.`id_user` = '$id';
                             ";
                             $oddano_result = mysqli_query($db, $oddano_query);
                             $oddano_count = mysqli_num_rows($oddano_result);
                             $oddano_row = mysqli_fetch_assoc($oddano_result);
-                            $filename = "Files/". $oddano_row['id_oddaja'] . "." . $oddano_row['file_ext'];
+                            
 
                             //oddana naloga
-                            if($oddano_count > 0 && file_exists($filename)){
+                            if($oddano_count > 0){
+                                $filename = "Files/". $oddano_row['id_oddaja'] . "." . $oddano_row['file_ext'];
                                 $download_name = $oddano_row['ime'] . $oddano_row['priimek'] . "-" . $row["naslov"];
-                                //$oddano_row = mysqli_fetch_assoc($oddano_result);
-                                $raw_date = $row['datum_do'];
-                                $split_date = explode("-", $raw_date);
-                                $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
+                                $isDate = false;
+                                $isAddDate = false;
+                                $new_date = "";
+                                $new_add_date = "";
 
-                                $raw_add_date = $oddano_row["datum_oddaje"];
-                                $split_add_date = explode("-", $raw_date);
-                                $new_add_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
+                                if($row['datum_do'] != "" || $row['datum_do'] != "0000-00-00"){
+                                    $raw_date = $row['datum_do'];
+                                    $split_date = explode("-", $raw_date);
+                                    $new_date = $split_date[0]; 
+                                    $isDate = true;
+                                }
+
+                                if($oddano_row['datum_oddaje'] != "" || $oddano_row['datum_oddaje'] != "0000-00-00"){
+                                    $raw_add_date = $oddano_row["datum_oddaje"];
+                                    $split_add_date = explode("-", $raw_add_date);
+                                    $new_add_date = $split_add_date[2] . ". " . $split_add_date[1] . ". " . $split_add_date[0]; 
+                                    $isAddDate = true;
+                                }
                                 
                                 echo"
                                 <!--STANJE ODDAJE-->
@@ -639,7 +650,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             Rok oddaje
                                         </td>
                                         <td class='date_due'>
-                                            $new_date
+                                ";
+
+                                if($isDate){
+                                    echo $new_date;
+                                }
+                                else{
+                                    echo "\ ";
+                                }
+
+                                echo"
                                         </td>
                                     </tr>
                                     <tr class='date_added'>
@@ -647,7 +667,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             Datum oddaje
                                         </td>
                                         <td class='date_added'>
-                                            $new_add_date
+                                ";
+
+                                if($isAddDate){
+                                    echo $new_add_date;
+                                }
+                                else{
+                                    echo"
+                                    Nedoločen
+                                    ";
+                                }
+                                
+                                echo"
                                         </td>
                                     </tr>
                                     <tr class='mark'>
@@ -738,7 +769,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $oddano_row = mysqli_fetch_assoc($oddano_result);
                                 $raw_date = $row['datum_do'];
                                 $split_date = explode("-", $raw_date);
-                                $new_date = $split_date[2] . ". " . $split_date[1] . ". " . $split_date[0]; 
+                                $isDate = false;
+                                $new_date = "";
+                                $new_add_date = "";
+
+                                if($row['datum_do'] != "" || $row['datum_do'] != "0000-00-00"){
+                                    $raw_date = $row['datum_do'];
+                                    $split_date = explode("-", $raw_date);
+                                    $new_date = $split_date[0]; 
+                                    $isDate = true;
+                                }
+
                                 
                                 echo"
                                 <!--STANJE ODDAJE-->
@@ -757,7 +798,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             Rok oddaje
                                         </td>
                                         <td class='date_due'>
-                                            $new_date
+                                ";
+
+                                if($isDate){
+                                    echo $new_date;
+                                }
+                                else{
+                                    echo "Nedoločen";
+                                }
+                                
+                                echo"            
                                         </td>
                                     </tr>
                                     <tr class='date_added'>
