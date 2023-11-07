@@ -88,3 +88,11 @@ body {
     background-color: rgba(25,26,47);
     border: 2px solid white;
 }
+.knof{
+    background-color: grey;
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    width: 4vw;
+    height: 1.8vw;
+}

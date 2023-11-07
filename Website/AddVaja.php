@@ -45,7 +45,7 @@ else {
             Opis: <input type="text" class="text_field" name="opis" value="" required> <br><br>
             Samo za branje?<br> <input type="radio" name="boolean" value="0" required> Da 
             <input type="radio" name="boolean" value="1" required> Ne <br><br>
-            <input type="submit" name="submit" value="Ustvari">
+            <input class="knof" type="submit" name="submit" value="Ustvari">
         </form>
     </div>
     <div class="Main2"> <a href="class.php"><img src="Pictures/back.png" class="slika"></a> </div>
