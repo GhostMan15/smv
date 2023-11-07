@@ -506,7 +506,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type='text' name='title' class='title' value='".$row["naslov"]."' readonly required maxlength='50' id='title_field' onfocus='on_change(1)' onblur='on_change(2)'>
                             </div>
                             <div class='subject_con title'>
-                                MAT
+                            ".$row["p_ime"]."
                             </div>
                         </div>
                         <!--TOP-->
