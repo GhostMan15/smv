@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $file_full_path = "Files/" . $id_oddaja . "." . $upload_rows['file_ext'];
                     if(move_uploaded_file($file_temp_name, $file_full_path)){
                         $update_query = "UPDATE `oddaja`
-                        SET `ocena` = NULL, `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
+                        SET `datum_oddaje` = CURRENT_DATE(), `file_ext` = '$file_real_ext', `komentar` = NULL
                         WHERE `id_oddaja` = '$id_oddaja';
                         ";
                     }

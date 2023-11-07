@@ -34,7 +34,7 @@ if($type == 1){
     //check if submission exists
     if($del_exists_count != 0){
         $del_row = mysqli_fetch_assoc($del_exists_result);
-        $id_gradiva = $del_row['id_gradiva'];
+        //$id_gradiva = $del_row['id_gradiva'];
 
         //if user is the author of the upload or the admin, allow DELETE statement
         if($del_row["id_user"] == $id || $user_type == 0){
@@ -43,11 +43,11 @@ if($type == 1){
             $delete_result = mysqli_query($db, $delete_query);
 
             //redirect back to material.php
-            header("location: ../material.php?gradivo='$id_gradiva'");
+            header("location: ../material.php?gradivo='". $del_row["id_gradiva"] ."'");
         }
         else{
             //redirect back to material.php
-            header("location: ../material.php?gradivo='$id_gradiva'");
+            header("location: ../material.php?gradivo='". $del_row["id_gradiva"] ."'");
         }   
     }    
     else{
