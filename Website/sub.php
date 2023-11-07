@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //check if submission exists
         if($oddaja_count != 0){
             $oddaja_row = mysqli_fetch_assoc($oddaja_result);
-            $id_predmet = $oddaja_row['`p`.`id_predmet`'];
+            $id_predmet = $oddaja_row['p_id_predmet'];
 
             //query to see if user is an admin or professor teaching the subject
             $prof_query = "SELECT `us`.*
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <!--PROFILE-->
                         <div class='profile_con left'>
                             <div>
-                                <img src='Pictures/Profile_Pictures/pfp_" . $user_data_row["`id_user`"] .".". $user_data_row["img_ext"] ."' class='pfp_img'> 
+                                <img src='Pictures/Profile_Pictures/pfp_" . $user_data_row["id_user"] .".". $user_data_row["img_ext"] ."' class='pfp_img'> 
                             </div>
                             <div class='username'>". $user_data_row["username"] ."</div>     
                         </div>

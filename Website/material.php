@@ -437,7 +437,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             if($oddano_count > 0){
                                 echo"
                                 <td class='submit_status'>
-                                    $oddano_count oddanih <sup><a class='download_link accepted' href='grades.php?gradivo='$id_gradiva'>(Ogled)</a></sup>
+                                    $oddano_count oddanih <sup><a class='download_link accepted' href='grades.php?gradivo=$id_gradiva'>(Ogled)</a></sup>
                                 </td>
                                 </tr>
                             ";
